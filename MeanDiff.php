@@ -22,6 +22,7 @@ sec_session_start();
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="viz/Highcharts/js/highcharts.js"></script>		
+		<script src="viz/highcharts-regression.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -70,6 +71,5 @@ sec_session_start();
         <?php endif; ?>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script src="viz/MeanDiff/MeanDiff_charts.js"></script>
-		<script src="viz/highcharts-regression.js"></script>
     </body>
 </html>
