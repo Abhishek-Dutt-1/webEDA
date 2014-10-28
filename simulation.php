@@ -18,25 +18,18 @@ sec_session_start();
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-		<script src="viz/Highcharts/js/highcharts.js"></script>				
+		<script src="viz/Highcharts/js/highcharts.js"></script>
+		<script type='text/javascript' charset='utf-8' src='viz/gristmill-jquery-popbox/popbox.js'></script>		
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
         <link rel="stylesheet" href="styles/main.css" />
-		<link rel="stylesheet" href="viz/styles/charts.css" />		
+		<link rel="stylesheet" href="viz/styles/charts.css" />
+		<link rel='stylesheet' href='viz/gristmill-jquery-popbox/popbox.css' type='text/css'>
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
-		<script>
-			function submitForm(action)
-			{
-				document.getElementById('form1').action = action;
-				document.getElementById('form1').submit();
-			}
-			
-			
-		</script>
     </head>
     <body>
 	
@@ -54,7 +47,7 @@ sec_session_start();
 
 					<div style="clear: both;">
 						<div id="chartContainer2">
-							<h3 style="float:left;width:45%;">Contribution</h3>
+							<h3 style="float:left;width:45%;">Simulation</h3>
 							<div id="modelSelectDropdown">
 								<div class="select-wrapper">
 								<?php 
@@ -103,30 +96,53 @@ sec_session_start();
 							</div>
 						</div>
 						<div id="chartContainer3">
-							<div id="contribSeriesChart"></div>
-
 							<div style="clear: both;"></div>
+							<div id="simulationContainer">
+							
+								<div class="popboxContainer">
+									<div class='popbox'>
+										<a class='popboxOpen' href='#'>Options</a>
+										<div class='popboxCollapse'>
+											<div class='popboxBox'>
+												<div class='popboxArrow'></div>
+												<div class='popboxArrow-border'></div>
+												<div style="margin: 25px;">
+												
+													<div id="simulationInputContainer">
+														<label for="numPeriodSimulated">Simulation Period</label>
+														<input type="text" id="numPeriodSimulated" value=10>
+														
+														<div class="row uniform half collapse-at-2">
+															<div class="6u">
+																<input type="radio" id="priority-low" name="keepZero" value=false checked>
+																<label for="priority-low">Repeat Data</label>
+															</div>
+															<div class="6u">
+																<input type="radio" id="priority-normal" name="keepZero" value=true >
+																<label for="priority-normal">Keep All Data 0</label>
+															</div>
+														</div>
+														<blockquote>
+														Avoid simulation if model is based on monthly data. Use benchmarks instead.<br/>
+														If input data points are less than 30, we cannot simulate.
+														</blockquote>
+														
+														<a href="#" class="button alt small" id="updateSimulationChart">Update</a>
+														<!-- <a href="#" class="popboxClose button alt small">close</a>
+														-->
+													</div>
+												
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	<!-- end popbox -->
 								
-							<div id="avContributionChartContainer">
-								<h3>Average Contribution</h3>
-								<div id="avContributionChart"></div>
+								<div id="simulationTable">
+								</div>
 							</div>
-							
-							<div id="senstivityChartContainer">
-								<h3>Sensitivity</h3>
-								<div id="senstivityChart"></div>
-								<label for="investment">Investment Rs.</label><input type="text" id="investment" value=100>
-								<label for="periodAveraged">Period Averaged</label><input type="text" id="periodAveraged" value=3>
-								<div id="cprpInputContainer"></div>
-								<a href="#" class="button alt small" id="updateSensitivityChart">Update</a>
-							</div>
-						
-							<div style="clear: both;"></div>
-							
 						</div>
 					</div>
-					
-					
 					
 				</section>
 			</section>
@@ -144,6 +160,6 @@ sec_session_start();
 		
 		<script type="text/javascript">var modelId = "<?php echo $selectedModel; ?>";</script>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
-		<script src="viz/Contrib/contrib_charts.js"></script>
+		<script src="viz/Simulation/simulation_charts.js"></script>
     </body>
 </html>

@@ -35,48 +35,50 @@ function trendDataLoaded(data) {
         series: [{
             name: 'UCL3',
             data: data.dependent.UCL3,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'ShortDash',
+			color: '#058DC7',
 			marker:  { enabled: false }
         }, {
             name: 'UCL2',
             data: data.dependent.UCL2,
 			dashStyle: 'ShortDot',
-			color: 'grey',
+			color: '#50B432',
 			marker:  { enabled: false }
         }, {
             name: 'UCL1',
             data: data.dependent.UCL1,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'ShortDashDot',
+			color: '#ED561B',
 			marker:  { enabled: false }
         }, {
             name: 'Average',
             data: data.dependent.Average,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'Dot',
+			color: '#DDDF00',
 			marker:  { enabled: false }
         }, {
             name: 'LCL1',
             data: data.dependent.LCL1,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'Dash',
+			color: '#24CBE5',
 			marker:  { enabled: false }
         }, {
             name: 'LCL2',
             data: data.dependent.LCL2,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'LongDash',
+			color: '#64E572',
 			marker:  { enabled: false }
         }, {
             name: 'LCL3',
             data: data.dependent.LCL3,
-			dashStyle: 'ShortDot',
-			color: 'grey',
+			dashStyle: 'ShortDashDotDot',
+			color: '#FF9655',
 			marker:  { enabled: false }
         }, {
             name: data.dependent.name,
             data: data.dependent.data,
+			dashStyle:'Solid',
+			color: 'black',
 			marker:  { enabled: false }
         }],
 		credits: false
@@ -102,6 +104,7 @@ function edaDataLoaded(data) {
 	
 	// Create individual charts
 	data.independent.forEach( function(indep) {
+		
 		drawEDAChart(time, dep, indep);
 	});
 }
@@ -171,6 +174,7 @@ function drawEDAChart(time, dep, indep) {
         }, {
             name: indep.name,
             type: 'column',
+			color:'red',
             data: indep.data,
 
         }],

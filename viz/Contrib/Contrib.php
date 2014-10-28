@@ -77,7 +77,7 @@ function getModelData($modelId)
 		$modelTable = $row['model_table'];
 		$modelName = $row['model_name'];
 	}
-	$q = "SELECT * FROM $modelTable WHERE `Model No.` = '$modelName'" ;
+	$q = "SELECT * FROM `$modelTable` WHERE `Model No.` = '$modelName'" ;
 	$r = $mysqli->query( $q );
 	foreach($r as $row)
 	{
@@ -218,16 +218,85 @@ function calcCOSeries($data, $co)
 	}
 	return $retArray;
 }
-// Calc is not correct, prop typecasting problem
 function calcPowerSeries($coSeries, $power) {
-	return array_map( function($n) use ($power) { return $n^$power; }, $coSeries);
+	return array_map( function($n) use ($power) { return pow($n, $power); }, $coSeries);
 }
 function calcContribSeries($powerSeries, $coef) {
 	return array_map( function($n) use ($coef) { return $n*$coef; }, $powerSeries);
 }
 
+/*
+ * Calculate limits for yAxis of Contribution Series Chart to positive and negative variables do not overlap
+ */
+function calcLimitsForAxes($data)
+{
+
+	$pos = array_fill(0, count($data['modelData']['dependent']['data']), 0);
+	$neg = array_fill(0, count($data['modelData']['dependent']['data']), 0);
+
+	foreach($data['modelData']['independent'] as $indep)
+	{
+		foreach($indep['contribSeries'] as $in => $dataPoint)
+		{
+			if($indep['coef'] >= 0)
+			{
+				$pos[$in] += $dataPoint;
+			}
+			else
+			{
+				$neg[$in] += $dataPoint;
+			}
+		}
+	}
+	// Add intercept to positive contribSeries
+	$pos = array_map( function(){ return array_sum(func_get_args()); }, $pos, $data['modelData']['intercept']['contribSeries'] );
+	// get the max of either series
+	$yAxisLimit = ( max($pos) > abs( min($neg) ) ) ? max($pos) : abs(min($neg));
+	$yAxisLimit = ( max($data['modelData']['dependent']['data']) > $yAxisLimit )  ? max($data['modelData']['dependent']['data']) : $yAxisLimit;
+	$data['modelData']['yAxisMax'] = $yAxisLimit;
+	return $data;
+}
+
+/*
+ * Calculate average contributions
+ * Av Contribution Variable(i)= Sum(Variable(i)(contribSeries)) / Sum(AllContribSeries)
+ */
+function calcAverageContribution( $data )
+{
+	$contribDen = array_sum( $data['modelData']['intercept']['contribSeries'] );
+	foreach($data['modelData']['independent'] as $indep)
+	{
+		$contribDen += 	array_sum( $indep['contribSeries'] );
+	}
+	foreach($data['modelData']['independent'] as $key => $indep)
+	{
+		$data['modelData']['independent'][$key]['averageContribution'] = array_sum( $indep['contribSeries'] ) / $contribDen;
+	}
+	$data['modelData']['intercept']['averageContribution'] = array_sum( $data['modelData']['intercept']['contribSeries'] ) / $contribDen;
+	//var_dump($data['modelData']['independent']);
+	return $data;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BEGIN Saturation Curves
+
 if($_GET['dataType'] == 'contribSeries') {
 	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
 	$data = calcContributionSeries($data);
+	$data = calcLimitsForAxes($data);
+	$data = calcAverageContribution($data);
+	echo JSON_encode( $data );
+}
+if($_GET['dataType'] == 'saturationCurve') {
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
+	$data = calcContributionSeries($data);
+	$data = calcLimitsForAxes($data);
+	$data = calcAverageContribution($data);
+	echo JSON_encode( $data );
+}
+if($_GET['dataType'] == 'simlutionData') {
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
+	$data = calcContributionSeries($data);
+	$data = calcLimitsForAxes($data);
+	$data = calcAverageContribution($data);
 	echo JSON_encode( $data );
 }

@@ -12,6 +12,8 @@ sec_session_start();
     <head>
         <title>EDA</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->

@@ -9,6 +9,8 @@ sec_session_start();
 	<head>
         <title>Upload a new Model</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -57,10 +59,11 @@ sec_session_start();
 			<div class="row uniform half ollapse-at-2">
 				
 					<label for="file">Select the csv file to upload:</label>
-					<input type="file" name="file" id="file" ><br>
+					<input type="file" name="file" id="file" accept=".csv" ><br>
 			</div>
 			
 			<input type="submit" name="submit" value="Submit">
+			<a href="models.php" class="button alt">Cancel</a>
 			</form>
 		</section>
 		</section>

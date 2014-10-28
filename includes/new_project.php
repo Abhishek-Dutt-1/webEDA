@@ -11,10 +11,24 @@ if (login_check($mysqli) == true) :
 		 //echo $fname;
 		if ($fname==null || $fname=="")
 		{
-		echo "Please mention the Dataset Name";
-		return false;
+		echo "<div align='center'> Please mention the Project Name"; ?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+			<?php
+			return false;
 		}
 		//Write a database check for project name if exists
+		$q_CheckProjectName="select name from projects where name = '$fname'";				
+		$result = $mysqli->query($q_CheckProjectName);
+		if($result->num_rows > 0) 
+		{
+			echo "<div align='center'> Project Name Already Exists!!"; ?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+			<?php
+			return false;
+		}
+		
 		$q_insert_projects= "insert into projects(name,  created_date,modified_date) values ('$fname',now(),now())";
 		$mysqli->query($q_insert_projects);
 		

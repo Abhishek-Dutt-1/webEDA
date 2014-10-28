@@ -11,8 +11,10 @@ $_SESSION['tablename']="";
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EDA</title>
+        <title>EDA WEBTOOL - EDA</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -37,6 +39,11 @@ $_SESSION['tablename']="";
 				document.getElementById('form1').submit();
 			}
 			
+		</script>
+		<script type="text/javascript">
+			function confirm_delete() {
+				return confirm("Are you sure you wish to delete that EDA?");
+			}
 		</script>
     </head>
     <body>
@@ -63,7 +70,6 @@ $_SESSION['tablename']="";
 						<?php 
 								$userid=$_SESSION['user_id'];
 								$Projectid=$_SESSION['projectid'];
-								
 								$q_GetProjects="SELECT e.id,e.datasetname FROM eda_dataset e WHERE e.projects_id = $Projectid";		
 								$result = $mysqli->query($q_GetProjects);
 								foreach ( $result as $row)
@@ -79,12 +85,18 @@ $_SESSION['tablename']="";
 								<?php } ?>
 						</table>
 						<input type="submit" class="button" onclick="submitForm('eda.php')" value="OK" name="Action">
-						<input type="submit" class="button special" onclick="submitForm('delete_project.php')" value="Delete" name="Action">
-						<a href="index.html" class="button alt">Cancel</a>
+						<input type="submit" class="button special" onclick="return confirm_delete();" value="Delete" name="Action">
+						<a href="project.php" class="button alt">Cancel</a>
 				
 					</form>
 				</section>
 			</section>
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
+				</ul>
+			</footer>
 			
         <?php else : ?>
             <p>

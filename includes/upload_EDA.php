@@ -13,7 +13,11 @@ if (login_check($mysqli) == true) :
 		 //echo $fname;
 		if ($fname==null || $fname=="")
 		{
-		echo "Please mention the Dataset Name";
+		echo "<div align='center'> Please mention a Dataset Name";
+		?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+		<?php
 		return false;
 		}
 
@@ -73,14 +77,13 @@ if (login_check($mysqli) == true) :
 					$ccount++;
 					if(isset($columns)) $columns .= ', ';
 					else $columns="";
+					$column = trim($column);
 					$columns .= "`". "$column"."`". " varchar(50)";
 				}
-
+				
 				$create = "create table `$table` ($columns);";
 				echo $create;
 				$mysqli->query($create);
-				
-				
 				
 				if($mysqli->error) :
 				{
@@ -88,6 +91,7 @@ if (login_check($mysqli) == true) :
 					$_SESSION['tablecheck']="DataSet name already exits!";
 					$_SESSION['tablename']=$_POST["dataset"];
 					header('Location: ../create_eda.php');
+					//header("location:javascript://history.go(-1)");
 					return;
 				}
 				endif;
@@ -114,6 +118,11 @@ if (login_check($mysqli) == true) :
 		}
 		else {
 		  echo "<br><br><br> Invalid file : Please upload a csv file";
+		  ?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+		<?php
+		return false;
 		}
 else : 
 ?>

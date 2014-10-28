@@ -13,7 +13,11 @@ if (login_check($mysqli) == true) :
 		 //echo $fname;
 		if ($fname==null || $fname=="")
 		{
-		echo "Please mention the Model Name";
+		echo "<div align='center'> Please mention the Model Name";
+		?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+		<?php
 		return false;
 		}
 
@@ -134,6 +138,11 @@ if (login_check($mysqli) == true) :
 		}
 		else {
 		  echo "<br><br><br> Invalid file : Please upload a csv file";
+		  ?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+		<?php
+		return false;
 		}
 else : 
 ?>

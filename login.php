@@ -15,6 +15,8 @@ if (login_check($mysqli) == true) {
     <head>
         <title>Secure Login</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -36,7 +38,10 @@ if (login_check($mysqli) == true) {
 	
     <body>
 	<header id="header">
-				<h1><a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics</h1>
+			<h1>
+				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
+				<a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics 			
+			</h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
@@ -57,7 +62,7 @@ if (login_check($mysqli) == true) {
 				?> 
 				 <form action="includes/process_login.php" method="post" name="login_form">   
 					
-				<div align="center">
+				<div align="center" style="color:black">
 					<div class="4u">
 						<input type="text" name="email" id="email" value="" placeholder="Email" />
 					</div>
@@ -88,11 +93,11 @@ if (login_check($mysqli) == true) {
        <!-- <p>If you are done, please <a href="includes/logout.php">log out</a>.</p>
         <p>You are currently logged <?php echo $logged ?>.</p> -->
 	
-	<footer id="footer">
-				
+	<!-- Footer -->
+			<footer id="footer">
 				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
 				</ul>
-	</footer>
+			</footer>
     </body>
 </html>

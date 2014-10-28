@@ -4,14 +4,14 @@ include_once 'includes/functions.php';
  
 sec_session_start();
 
-
-
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title>EDA</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -50,7 +50,7 @@ sec_session_start();
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
 							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="protected_page.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Charts.php">Bivariates</a>
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Charts.php">Bivariates</a>
 							</div>
 							<?php include 'viz/chartButtons.php' ?>
 							<div style="clear: both;">
@@ -67,7 +67,12 @@ sec_session_start();
 					</div>
 				</div>
 			</section>
-	
+			<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
+				</ul>
+			</footer>
         <?php else : ?>
             <p>
                 <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.

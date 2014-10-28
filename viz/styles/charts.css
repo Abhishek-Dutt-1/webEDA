@@ -64,9 +64,40 @@
 #modelSelectDropdownUploadNew {
 	float: right;
 }
-/* Contrib Charts */
+/* Contrib Series Chart */
 #contribSeriesChart {
 	margin: 0 auto; /* center trend chart */
 	width: 100%;
-	height: 500px;
+	/* height: 700px; */
 }
+/* Average Contrib Chart */
+#avContributionChartContainer {
+	width: 50%;
+	float: left;
+	/*text-align: center; */
+}
+#senstivityChartContainer {
+	width: 50%;
+	float: left;
+}
+/* Saturation Curves */
+.popboxContainer {
+	float: right;
+	text-align: right;
+	height: 50px;
+}
+.saturationChart {
+	/* width: 80%; */
+}
+/* Simulation */
+.tableCellEdit {
+	width: 50px;
+	color: red;
+}
+.editableCell { background-color: white; }
+.editableTable .cellEditing { 
+/* padding: 0; */ 
+padding-top: 0;
+padding-bottom: 0;
+} 
+.editableTable .cellEditing input[type=text]{ width:100px; border:0; background-color:rgb(255,253,210); }

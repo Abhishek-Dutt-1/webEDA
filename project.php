@@ -8,8 +8,10 @@ sec_session_start();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Secure Login</title>
+        <title>EDA WEBTOOL - Project</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -35,6 +37,11 @@ sec_session_start();
 				document.getElementById('form1').submit();
 			}
 		</script>
+		<script type="text/javascript">
+			function confirm_delete() {
+				return confirm("Are you sure you wish to delete this Project?");
+			}
+		</script>
 		
     </head>
     <body>
@@ -43,7 +50,8 @@ sec_session_start();
             <!-- Header -->
 			<?php include 'includes/MainMenu.php'; ?>
 			
-			<section id="main" class="container">
+					
+			<section id="main" class="container"> 
 				
 				<div class="row">
 					<div class="12u">
@@ -58,6 +66,7 @@ sec_session_start();
 
 					</div>
 				</div>
+				
 				<section class="box">
 					<form action="includes/delete_project.php" method="post" name="form1" >
 						<h3>Select a Project</h3>
@@ -79,12 +88,19 @@ sec_session_start();
 								<?php } ?>
 						</table>
 						<input type="submit" class="button" onclick="submitForm('eda.php')" value="OK" name="Action">
-						<input type="submit" class="button special" onclick="submitForm('delete_project.php')" onsubmit="return confirm('Are you sure you want to delete this project?');" value="Delete" name="Action">
+						<input type="submit" class="button special" onclick="return confirm_delete();" onsubmit="return confirm('Are you sure you want to delete this project?');" value="Delete" name="Action">
 						<a href="index.html" class="button alt">Cancel</a>
 				
 					</form>
 				</section>
 			</section>
+			
+			<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
+				</ul>
+			</footer>
 			
         <?php else : ?>
             <p>

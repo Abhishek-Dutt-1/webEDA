@@ -1,3 +1,13 @@
+<?php
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
+ 
+sec_session_start();
+$_SESSION['tablecheck']="";
+$_SESSION['tablename']="";
+
+
+?>
 <!DOCTYPE HTML>
 <!--
 	Alpha by HTML5 UP
@@ -8,6 +18,8 @@
 	<head>
 		<title>EDA WEBTOOL by Madison Business Analytics</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -25,121 +37,126 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 	<body class="landing">
-
-		<!-- Header -->
-		<header id="header" class="alt">
-			<h1><a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics</h1>
+		<?php
+		  if(isset($_SESSION['username'])){
+		   header('Location: ../project.php');
+		  }
+		?> 
+			<!-- Header -->
+			<header id="header" class="alt">
+			<h1>
+				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
 			
+				<a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics
 				
-			</nav>
-		</header>
+			</h1>
+				</nav>
+			</header>
 
-		<!-- Banner -->
-			<section id="banner">
-				<h2>EDA WEBTOOL</h2>
-				<p>Another fine tool by Madison Business Analytics.</p>
-				<ul class="actions">
-					<li><a href="Login.php" class="button special">Login</a></li>
-					<li><a href="#" class="button">Learn More</a></li>
-				</ul>
-			</section>
+			<!-- Banner -->
+				<section id="banner">
+					<h2>EDA WEBTOOL</h2>
+					<p>Another fine tool by Madison Business Analytics.</p>
+					<ul class="actions">
+						<li><a href="Login.php" class="button special">Login</a></li>
+						<li><a href="#" class="button">Learn More</a></li>
+					</ul>
+				</section>
 
-		<!-- Main -->
-			<section id="main" class="container">
-		
-				<section class="box special">
-					<header class="major">
-						<h2>Introducing the ultimate WEBTOOL
-						<br />
-						for analyzing your business</h2>
-						<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-						adipiscing nunc adipiscing. Condimentum turpis massa.</p>
-					</header>
-					<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-				</section>
-						
-				<section class="box special features">
-					<div class="features-row">
-						<section>
-							<span class="icon major fa-bolt accent2"></span>
-							<h3>EDA</h3>
-							<p>Details and Features about EDA Charts.</p>
-						</section>
-						<section>
-							<span class="icon major fa-area-chart accent3"></span>
-							<h3>Ipsum dolor</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
+			<!-- Main -->
+				<section id="main" class="container">
+			
+					<section class="box special">
+						<header class="major">
+							<h2>Introducing the ultimate WEBTOOL
+							<br />
+							for analyzing your business</h2>
+							<p>The EDA approach is precisely that--an approach--not a set of techniques, but an attitude/philosophy about how a data analysis should be carried out.</p>
+						</header>
+						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					</section>
+							
+					<section class="box special features">
+						<div class="features-row">
+							<section>
+								<span class="icon major fa-bolt accent2"></span>
+								<h3>Security</h3>
+								<p>Powered by MD5 encryption methodology.</p>
+							</section>
+							<section>
+								<span class="icon major fa-area-chart accent3"></span>
+								<h3>Easy upload</h3>
+								<p>Uploading of data cannot get anymore easier than this. Simply select a <i>.csv</i> file and upload.</p>
+							</section>
+						</div>
+						<div class="features-row">
+							<section>
+								<span class="icon major fa-cloud accent4"></span>
+								<h3>Exploratory Data Analysis</h3>
+								<p>See what your data says by viewing the state of the art visual components.</p>
+							</section>
+							<section>
+								<span class="icon major fa-lock accent5"></span>
+								<h3>Models</h3>
+								<p>write details</p>
+							</section>
+						</div>
+					</section>
+			<!--			
+					<div class="row">
+						<div class="6u">
+
+							<section class="box special">
+								<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
+								<h3>Sed lorem adipiscing</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<ul class="actions">
+									<li><a href="#" class="button alt">Learn More</a></li>
+								</ul>
+							</section>
+							
+						</div>
+						<div class="6u">
+
+							<section class="box special">
+								<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
+								<h3>Accumsan integer</h3>
+								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<ul class="actions">
+									<li><a href="#" class="button alt">Learn More</a></li>
+								</ul>
+							</section>
+
+						</div>
 					</div>
-					<div class="features-row">
-						<section>
-							<span class="icon major fa-cloud accent4"></span>
-							<h3>Sed feugiat</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-						<section>
-							<span class="icon major fa-lock accent5"></span>
-							<h3>Enim phasellus</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-					</div>
+
 				</section>
+				
+			<!-- CTA 
+				<section id="cta">
 					
-				<div class="row">
-					<div class="6u">
-
-						<section class="box special">
-							<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-							<h3>Sed lorem adipiscing</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-							<ul class="actions">
-								<li><a href="#" class="button alt">Learn More</a></li>
-							</ul>
-						</section>
-						
-					</div>
-					<div class="6u">
-
-						<section class="box special">
-							<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-							<h3>Accumsan integer</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-							<ul class="actions">
-								<li><a href="#" class="button alt">Learn More</a></li>
-							</ul>
-						</section>
-
-					</div>
-				</div>
-
-			</section>
-			
-		<!-- CTA 
-			<section id="cta">
-				
-				<h2>Sign up for beta access</h2>
-				<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-				
-				<form>
-					<div class="row uniform half collapse-at-2">
-						<div class="8u">
-							<input type="email" name="email" id="email" placeholder="Email Address" />
+					<h2>Sign up for beta access</h2>
+					<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
+					
+					<form>
+						<div class="row uniform half collapse-at-2">
+							<div class="8u">
+								<input type="email" name="email" id="email" placeholder="Email Address" />
+							</div>
+							<div class="4u">
+								<input type="submit" value="Sign Up" class="fit" />
+							</div>
 						</div>
-						<div class="4u">
-							<input type="submit" value="Sign Up" class="fit" />
-						</div>
-					</div>
-				</form>
+					</form>
+					
+				</section> -->
 				
-			</section> -->
-			
-		<!-- Footer -->
+			<!-- Footer -->
 			<footer id="footer">
-				
 				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
 				</ul>
 			</footer>
-
+			
 	</body>
 </html>

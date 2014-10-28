@@ -7,6 +7,8 @@ include_once 'includes/functions.php';
     <head>
         <title>New User Registration</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -64,10 +66,10 @@ include_once 'includes/functions.php';
 			</div>
 			<form action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>" 
 					method="post" 
-					name="registration_form">
+					name="registration_form" style="color:black;">
 					<div class="row uniform half">
 						<div class="6u">
-							<input type="text" name="username" id="username" value="" placeholder="Username" />
+							<input type="text" name="username" id="username" value="" placeholder="User Name" />
 						</div> <br></br>
 						<div class="6u">
 							<input type="text" name="email" id="email" value="" placeholder="Email" />
@@ -97,8 +99,14 @@ include_once 'includes/functions.php';
 					</div>
 				</div>
 			</form>
-			<p>Return to the <a href="index.html">login page</a>.</p>
+			<p>Return to the <a href="login.php">login page</a>.</p>
 			</section>
 		</section>
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
+				</ul>
+			</footer>
     </body>
 </html>

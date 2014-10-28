@@ -1,5 +1,8 @@
 <header id="header">
-	<h1><a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics</h1>
+	<h1>
+		<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
+		<a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics
+	</h1>
 	
 	<nav id="nav">
 		<ul>
@@ -19,9 +22,13 @@
 				$role=$_SESSION['role'];
 				if($role==1) :
 				{ ?>
-				<li>
-					<a href="admin.php">Admin</a>
-				</li>
+			<li>
+				<a href="" class="icon fa-angle-down">Admin</a>
+				<ul>
+					<li><a href="admin.php">User-Project Mapping</a></li>
+					<li><a href="color-selection.php">Color Selection</a></li>
+				</ul>
+			</li>
 			<?php	} 
 				endif; ?>
 			<li><a href="includes/logout.php" class="button">Log Out</a></li>

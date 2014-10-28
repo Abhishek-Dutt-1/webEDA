@@ -15,7 +15,7 @@ sec_session_start();
 -->
 <html>
 	<head>
-		<title>Admin Panel</title>
+		<title>Brand Color Selection</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
@@ -68,8 +68,8 @@ sec_session_start();
 			<!-- Main -->
 			<section id="main" class="container">
 				<header>
-					<h2>Admin Panel</h2>
-					<p>Grant or Revoke access to users</p>
+					<h2>Color Selection</h2>
+					<p>Assign Colors to your Brand</p>
 				</header>
 				<div class="row">
 					<div class="12u">
@@ -77,34 +77,17 @@ sec_session_start();
 						<!-- Text -->
 							<section class="box">
 								<form method="post" action="includes/grant_revoke.php">
-									<h3>Please select the user and Project to grant/revoke access to the user</h3>
+									<h3>Select Project</h3>
 									<hr />
 									<div class="row uniform half">
 										<div class="12u">
 											<div class="select-wrapper">
 											
 												<select name="user" id="user" onchange="showUser(this.value)">
-													<option value="">- User -</option>
-													<?php
-														$q_GetUsers="SELECT m.id,m.username FROM  members m";				
-														$result = $mysqli->query($q_GetUsers);
-														foreach ( $result as $row) 
-																{
-																$username = stripslashes($row['username']);
-																$userid = stripslashes($row['id']);
-																?><option value=<?php echo $userid;?>><?php echo $username;?></option><?php
-																}
-													?>
-												</select>
-											</div>
-											<br>
-											
-											<div class="select-wrapper">
-												<select name="project" id="project">
 													<option value="">- Project -</option>
 													<?php
-														$q_GetProjects="SELECT p.id,p.name FROM  projects p";				
-														$result = $mysqli->query($q_GetProjects);
+														$q_GetUsers="SELECT p.id,p.name FROM  projects p";				
+														$result = $mysqli->query($q_GetUsers);
 														foreach ( $result as $row) 
 																{
 																$projectname = stripslashes($row['name']);
@@ -115,11 +98,21 @@ sec_session_start();
 												</select>
 											</div>
 											<br>
+											
+											<div class="row uniform">
+												<div class="6u">
+													<input type="text" name="name" id="name" value="" placeholder="Brand Name" />
+												</div class="6u">
+												<div>
+													Choose a Color : <input type="color" name="color" id="color" value="#004400" />
+												</div>
+											</div>
+											<br>
 											<div class="row uniform">
 												<div class="12u">
 													<ul class="actions">
-														<li><input type="submit" value="Grant Access" name="Action"/></li>
-														<li><input type="submit" value="Revoke Access" class="alt" name="Action" /></li>
+														<li><input type="submit" value="Assign Color" name="Action"/></li>
+														<li><input type="reset" value="Cancel" class="alt" name="Action" /></li>
 													</ul>
 												</div>
 											
