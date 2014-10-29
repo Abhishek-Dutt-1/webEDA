@@ -1,11 +1,11 @@
 <?php
 
 include_once '../../includes/db_connect.php';
-
+include_once '../getColorByVarName.php';
 /*
 *
 */
-function getData($edaId)
+function getData($edaId, $projectId)
 {
 	if(!$edaId) return;
 	global $mysqli;
@@ -33,10 +33,14 @@ function getData($edaId)
 	$data['time']['data'] = [];
 	$data['dependent']['name'] = $names['dependent'];
 	$data['dependent']['data'] = [];
+	
+	$data['dependent']['color'] = getColorByVarName($names['dependent'], $projectId);
+	
 	for( $i = 0; $i < count($names['independent']); $i++ )
 	{
 		$data['independent'][$i]['name'] = $names['independent'][$i];
 		$data['independent'][$i]['data'] = [];
+		$data['independent'][$i]['color'] = getColorByVarName($names['independent'][$i], $projectId);
 	}
 	
 	// Save variables data
@@ -229,6 +233,6 @@ if (!function_exists('stats_standard_deviation')) {
 /////////////////////////////////////////
 
 // Throw it out
-echo JSON_encode( calcTrendChart(getData($_GET['edaId'])) );
+echo JSON_encode( calcTrendChart( getData($_GET['edaId'], $_GET['projectId']) ) );
 
 ?>

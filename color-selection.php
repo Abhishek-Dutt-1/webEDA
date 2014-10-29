@@ -36,9 +36,10 @@ sec_session_start();
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<script>
-			function showUser(str) {
+			function showcolors(str) {
+				
 			  if (str=="") {
-				document.getElementById("txtHint").innerHTML="";
+				document.getElementById("getprojectscolors").innerHTML="";
 				return;
 			  } 
 			  if (window.XMLHttpRequest) {
@@ -49,12 +50,47 @@ sec_session_start();
 			  }
 			  xmlhttp.onreadystatechange=function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-				  document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+				  document.getElementById("getprojectscolors").innerHTML=xmlhttp.responseText;
+				  xmlhttp.responseText="";
 				}
 			  }
-			  xmlhttp.open("GET","includes/getuserprojects.php?q="+str,true);
+			  xmlhttp.open("GET","includes/getprojectscolors.php?q="+str,true);
 			  xmlhttp.send();
 			}
+			
+			function showbrand(str) {
+				
+			  if (str=="") {
+				document.getElementById("get_brand").innerHTML="";
+				return;
+			  } 
+			  if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp1=new XMLHttpRequest();
+			  } else { // code for IE6, IE5
+				xmlhttp1=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			  xmlhttp1.onreadystatechange=function() {
+				if (xmlhttp1.readyState==4 && xmlhttp1.status==200) {
+				  document.getElementById("get_brand").innerHTML=xmlhttp1.responseText;
+				  
+				}
+			  }
+			  xmlhttp1.open("GET","includes/get_brand.php?q="+str,true);
+			  
+			  xmlhttp1.send();
+			  
+			}
+			
+			function showUser(str) {
+				showcolors(str);
+				showbrand(str);
+				
+			}
+			//function getColorVal(color){
+				//document.getElementById("colorlabel").innerHTML= "Selected Color is" . color;
+			//	 alert(color);
+		//	}
 		</script>
 
 		
@@ -67,23 +103,19 @@ sec_session_start();
 			
 			<!-- Main -->
 			<section id="main" class="container">
-				<header>
-					<h2>Color Selection</h2>
-					<p>Assign Colors to your Brand</p>
-				</header>
+				
 				<div class="row">
 					<div class="12u">
-
 						<!-- Text -->
 							<section class="box">
-								<form method="post" action="includes/grant_revoke.php">
-									<h3>Select Project</h3>
+								<form method="post" action="includes/assign-color.php">
+									<h3>Select Project-Brand and Set the Color</h3>
 									<hr />
 									<div class="row uniform half">
-										<div class="12u">
+										<div class="8u">
 											<div class="select-wrapper">
 											
-												<select name="user" id="user" onchange="showUser(this.value)">
+												<select name="project" id="project" onchange="showUser(this.value)">
 													<option value="">- Project -</option>
 													<?php
 														$q_GetUsers="SELECT p.id,p.name FROM  projects p";				
@@ -100,11 +132,14 @@ sec_session_start();
 											<br>
 											
 											<div class="row uniform">
-												<div class="6u">
-													<input type="text" name="name" id="name" value="" placeholder="Brand Name" />
-												</div class="6u">
+												<div class="8u">
+													
+														<div id="get_brand"></div>
+													
+
+												</div class="8u">
 												<div>
-													Choose a Color : <input type="color" name="color" id="color" value="#004400" />
+													Choose a Color : <input type="color" name="setcolor" id="setcolor"  />
 												</div>
 											</div>
 											<br>
@@ -117,14 +152,13 @@ sec_session_start();
 												</div>
 											
 									</div>
+									
 									<br>
-									<div id="txtHint"></b></div>
+									<div id="getprojectscolors"></b></div>
 										</div>
-										
 									</div>
 								</form>
 							</section>
-							
 					</div>
 				</div>
 			</section>

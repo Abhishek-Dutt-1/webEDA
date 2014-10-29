@@ -207,11 +207,11 @@ $( document ).ready(function() {
 		console.log("Trend Chart ERROR!");
 		console.log(err); 
 	});
-
+/*
 	$.get( "viz/TrendEda/EDA.php", { edaId: edaId, projectId: projectId }, edaDataLoaded, "json" ).fail( function(err) {
 		console.log("EDA Charts ERROR!");
 		console.log(err);
 	});
-
+*/
 
 });

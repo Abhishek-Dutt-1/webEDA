@@ -9,8 +9,6 @@ sec_session_start();
     <head>
         <title>Model</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -20,27 +18,18 @@ sec_session_start();
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-		<script src="viz/Highcharts/js/highcharts.js"></script>	
-	
-		<script src="viz/Highcharts/js/modules/exporting.js"></script>		
+		<script src="viz/Highcharts/js/highcharts.js"></script>
+		<script type='text/javascript' charset='utf-8' src='viz/gristmill-jquery-popbox/popbox.js'></script>		
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
         <link rel="stylesheet" href="styles/main.css" />
-		<link rel="stylesheet" href="viz/styles/charts.css" />		
+		<link rel="stylesheet" href="viz/styles/charts.css" />
+		<link rel='stylesheet' href='viz/gristmill-jquery-popbox/popbox.css' type='text/css'>
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
-		<script>
-			function submitForm(action)
-			{
-				document.getElementById('form1').action = action;
-				document.getElementById('form1').submit();
-			}
-			
-			
-		</script>
     </head>
     <body>
 	
@@ -58,7 +47,7 @@ sec_session_start();
 
 					<div style="clear: both;">
 						<div id="chartContainer2">
-							<h3 style="float:left;width:45%;">Contribution</h3>
+							<h3 style="float:left;width:45%;">Actual vs Predicted</h3>
 							<div id="modelSelectDropdown">
 								<div class="select-wrapper">
 								<?php 
@@ -107,30 +96,26 @@ sec_session_start();
 							</div>
 						</div>
 						<div id="chartContainer3">
-							<div id="contribSeriesChart"></div>
+							<div style="clear: both;"></div>
+							<div id="simulationContainer">
+							
+								<div id="avpStats">
+									<div style="float: right;">
+										<div id="rsq"></div>
+										<div id="rsqlabel">Rsq</div>
+									</div>
+									<div style="float: right;">
+										<div id="adjrsq"></div>
+										<div id="adjrsqlabel">Adj Rsq</div>
+									</div>
+								</div>
+                                <div id="avpChart">
+								</div>
+							
 
-							<div style="clear: both;"></div>
-								
-							<div id="avContributionChartContainer">
-								<h3>Average Contribution</h3>
-								<div id="avContributionChart"></div>
 							</div>
-							
-							<div id="senstivityChartContainer">
-								<h3>Sensitivity</h3>
-								<div id="senstivityChart"></div>
-								<label for="investment">Investment Rs.</label><input type="text" id="investment" value=100>
-								<label for="periodAveraged">Period Averaged</label><input type="text" id="periodAveraged" value=3>
-								<div id="cprpInputContainer"></div>
-								<a href="#" class="button alt small" id="updateSensitivityChart">Update</a>
-							</div>
-						
-							<div style="clear: both;"></div>
-							
 						</div>
 					</div>
-					
-					
 					
 				</section>
 			</section>
@@ -149,6 +134,6 @@ sec_session_start();
 		<script type="text/javascript">var modelId = "<?php echo $selectedModel; ?>";</script>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>		
-		<script src="viz/Contrib/contrib_charts.js"></script>
+		<script src="viz/AvP/avp_charts.js"></script>
     </body>
 </html>

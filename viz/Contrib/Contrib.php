@@ -21,11 +21,12 @@ $_GET['modelId']
 */
 
 include_once '../../includes/db_connect.php';
+include_once '../getColorByVarName.php';
 
-function getFinalData($edaId, $modelId) {
+function getFinalData($edaId, $modelId, $projectId) {
 	 
 	$finalData['modelData'] = getModelData($modelId);
-	$finalData['tableData'] = getData($edaId);
+	$finalData['tableData'] = getData($edaId, $projectId);
 	
 	foreach( $finalData['modelData']['independent'] as $indep)
 	{
@@ -56,6 +57,7 @@ function getFinalData($edaId, $modelId) {
 				if($in['name'] == $indep['name'])
 				{
 					$finalData['modelData']['independent'][$k]['data'] = $indep['data'];
+					$finalData['modelData']['independent'][$k]['color'] = $indep['color'];
 				}
 			}
 		}
@@ -127,7 +129,7 @@ function getModelData($modelId)
 
 
 
-function getData($edaId)
+function getData($edaId, $projectId)
 {
 	if(!$edaId) return;
 	global $mysqli;
@@ -153,10 +155,14 @@ function getData($edaId)
 	$data['time']['data'] = [];
 	$data['dependent']['name'] = $names['dependent'];
 	$data['dependent']['data'] = [];
+	
+	$data['dependent']['color'] = getColorByVarName($names['dependent'], $projectId);
+	
 	for( $i = 0; $i < count($names['independent']); $i++ )
 	{
 		$data['independent'][$i]['name'] = $names['independent'][$i];
 		$data['independent'][$i]['data'] = [];
+		$data['independent'][$i]['color'] = getColorByVarName($names['independent'][$i], $projectId);
 	}
 	
 	// Save variables data
@@ -277,26 +283,48 @@ function calcAverageContribution( $data )
 	return $data;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// BEGIN Saturation Curves
+function calcPredictedSeries($data) {
+
+	$yPred = array();
+	for ($i = 0; $i < count($data['modelData']['dependent']['data']); $i++) {
+		$yPred[] = $data['modelData']['intercept']['contribSeries'][$i];
+		foreach ($data['modelData']['independent'] as $indep) {
+			$yPred[count($yPred) - 1] += $indep['contribSeries'][$i];
+		}
+	}
+	$data['modelData']['predicted']['data'] = $yPred;
+	$data['modelData']['predicted']['name'] = "Pred(" .$data['modelData']['dependent']['name'] .")";
+	return $data;
+}
 
 if($_GET['dataType'] == 'contribSeries') {
-	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'], $_GET['projectId'] );
 	$data = calcContributionSeries($data);
 	$data = calcLimitsForAxes($data);
 	$data = calcAverageContribution($data);
 	echo JSON_encode( $data );
 }
 if($_GET['dataType'] == 'saturationCurve') {
-	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'], $_GET['projectId'] );
 	$data = calcContributionSeries($data);
 	$data = calcLimitsForAxes($data);
 	$data = calcAverageContribution($data);
 	echo JSON_encode( $data );
 }
 if($_GET['dataType'] == 'simlutionData') {
-	$data = getFinalData( $_GET['edaId'], $_GET['modelId'] );
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'], $_GET['projectId'] );
 	$data = calcContributionSeries($data);
 	$data = calcLimitsForAxes($data);
 	$data = calcAverageContribution($data);
+	echo JSON_encode( $data );
+}
+if($_GET['dataType'] == 'AvP') {
+	$data = getFinalData( $_GET['edaId'], $_GET['modelId'], $_GET['projectId'] );
+	$data = calcContributionSeries($data);
+	$data = calcLimitsForAxes($data);
+	$data = calcAverageContribution($data);
+
+	$data = calcPredictedSeries($data);
+
 	echo JSON_encode( $data );
 }

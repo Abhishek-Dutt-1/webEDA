@@ -1,11 +1,11 @@
 <?php
 
 include_once '../../includes/db_connect.php';
-
+include_once '../getColorByVarName.php';
 /*
 *
 */
-function getData($edaId)
+function getData($edaId, $projectId)
 {
 	if(!$edaId) return;
 	global $mysqli;
@@ -31,10 +31,14 @@ function getData($edaId)
 	$data['time']['data'] = [];
 	$data['dependent']['name'] = $names['dependent'];
 	$data['dependent']['data'] = [];
+	
+	$data['dependent']['color'] = getColorByVarName($names['dependent'], $projectId);
+	
 	for( $i = 0; $i < count($names['independent']); $i++ )
 	{
 		$data['independent'][$i]['name'] = $names['independent'][$i];
 		$data['independent'][$i]['data'] = [];
+		$data['independent'][$i]['color'] = getColorByVarName($names['independent'][$i], $projectId);
 	}
 	
 	// Save variables data
@@ -125,6 +129,7 @@ function calcDiagnostics( $data, $numBins = 10 )
 		$binSize = ($max - $min) / $numBins;
 		
 		$binData['independent'][$i]['name'] = $data['independent'][$i]['name'];
+		$binData['independent'][$i]['color'] = $data['independent'][$i]['color'];
 		$binData['independent'][$i]['max'] = $max;
 		$binData['independent'][$i]['min'] = $min;
 		$binData['independent'][$i]['binSize'] = $binSize;
@@ -138,10 +143,12 @@ function calcDiagnostics( $data, $numBins = 10 )
 												}) );
 		$binData['independent'][$i]['Bin-Freq'][0] = $min.' = '.$binData['independent'][$i]['data'][0];
 		
-		// Rest all bin labels = last bin + binSize
 		for($j = 1; $j <= $numBins-1; $j++)
 		{
-			$binData['independent'][$i]['bins'][$j] = $binData['independent'][$i]['bins'][$j-1] + $binSize;
+			// Rest all bin labels = last bin + binSize
+			//$binData['independent'][$i]['bins'][$j] = $binData['independent'][$i]['bins'][$j-1] + $binSize;
+			// Rest all bin labels = RoundUpToNearest50( last bin + binSize )
+			$binData['independent'][$i]['bins'][$j] = ceil( ($binData['independent'][$i]['bins'][$j-1] + $binSize) / 50) * 50; 
 			// Current bin range
 			$low = $binData['independent'][$i]['bins'][$j-1];
 			$high = $binData['independent'][$i]['bins'][$j];
@@ -167,6 +174,6 @@ function calcDiagnostics( $data, $numBins = 10 )
 
 
 // Throw it out
-echo JSON_encode( calcDiagnostics(getData($_GET['edaId'])) );
+echo JSON_encode( calcDiagnostics(getData($_GET['edaId'], $_GET['projectId'])) );
 
 ?>

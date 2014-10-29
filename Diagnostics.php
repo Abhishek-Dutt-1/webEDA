@@ -23,7 +23,8 @@ sec_session_start();
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-		<script src="viz/Highcharts/js/highcharts.js"></script>			
+		<script src="viz/Highcharts/js/highcharts.js"></script>		
+		<script src="viz/Highcharts/js/modules/exporting.js"></script>			
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -71,6 +72,7 @@ sec_session_start();
             </p>
         <?php endif; ?>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
+		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/Diagnostics/Diagnostics_charts.js"></script>
     </body>
 </html>

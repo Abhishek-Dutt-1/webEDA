@@ -37,9 +37,13 @@ function meanDiffDrawChart(time, dep, indep) {
             zoomType: 'xy'
         },
         title: {
-            text: dep.name + " vs. " + indep.name
+            text: dep.name + " vs. " + indep.name,
+			align: 'left',
+			x: 70
         },
         xAxis: {
+			//lineWidth: 0,
+			//tickLength: 0,
             title: {
                 enabled: true,
                 text: dep.name
@@ -58,6 +62,7 @@ function meanDiffDrawChart(time, dep, indep) {
 			}]
         },
         yAxis: {
+			//lineWidth: 1,
             title: {
                 text: indep.name
             },
@@ -89,13 +94,14 @@ function meanDiffDrawChart(time, dep, indep) {
                             enabled: false
                         }
                     }
-                },
-                tooltip: {
-                    headerFormat: '<b>{series.name}</b><br>',
-                    //pointFormat: '{point.x} cm, {point.y} kg'
                 }
             }
         },
+		tooltip: {
+			headerFormat: '<b>{series.name}</b><br>',
+			enabled: false
+			//pointFormat: '{point.x} cm, {point.y} kg'
+		},
 		legend: {
             enabled: false
         },
@@ -103,13 +109,15 @@ function meanDiffDrawChart(time, dep, indep) {
 			
             //showInLegend: false,
 			name: indep.name,
-            color: 'rgba(223, 83, 83, .5)',
+            //color: 'rgba(223, 83, 83, .5)',
+			color: indep.color,
             data: dataArray,
 			regression: true ,
 			regressionSettings: {
 				showInLegend: false,
 				type: 'linear',
-				color:  'rgba(223, 83, 83, .9)'
+				//color:  'rgba(223, 83, 83, .9)'
+				color: indep.color
 			}
         }],
 		credits: false
@@ -122,7 +130,7 @@ function meanDiffDrawChart(time, dep, indep) {
 $( document ).ready(function() {
 
 	//var meanDiffChartData = <?php echo json_encode( getData() ); ?>;
-	$.get( "viz/MeanDiff/MeanDiff.php", { edaId: edaId }, meanDiffDataLoaded, "json" ).fail( function(err) { 
+	$.get( "viz/MeanDiff/MeanDiff.php", { edaId: edaId, projectId: projectId }, meanDiffDataLoaded, "json" ).fail( function(err) { 
 		console.log("Mean Diff ERROR");
 		console.log(err); 
 	});

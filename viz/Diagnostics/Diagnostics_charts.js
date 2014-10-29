@@ -2,6 +2,7 @@ function diagnosticsDataLoaded(data) {
 
 	//var time = data.time;
 	//var dep = data.dependent;
+	console.log(data);
 	var outerChartDiv = document.createElement('div');
 
 	// Create empty divs for each chart
@@ -27,7 +28,9 @@ function diagnosticsDrawChart(indep) {
             type: 'column'
         },
         title: {
-            text: indep.name
+            text: indep.name,
+			align: 'left',
+			x: 60
         },
         xAxis: {
             categories: indep.binsTxt,
@@ -48,7 +51,8 @@ function diagnosticsDrawChart(indep) {
                 '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
-            useHTML: true
+            useHTML: true,
+			enabled: false
         },
         plotOptions: {
             column: {
@@ -58,7 +62,8 @@ function diagnosticsDrawChart(indep) {
         },
         series: [{
             name: indep.name,
-            data: indep.data
+            data: indep.data,
+			color: indep.color
 
         }],
 		credits: false
@@ -68,7 +73,7 @@ function diagnosticsDrawChart(indep) {
 /////////////////// INIT
 $( document ).ready(function() {
 
-	$.get( "viz/Diagnostics/Diagnostics.php", { edaId: edaId }, diagnosticsDataLoaded, "json" ).fail( function(err) {
+	$.get( "viz/Diagnostics/Diagnostics.php", { edaId: edaId, projectId: projectId }, diagnosticsDataLoaded, "json" ).fail( function(err) {
 		console.log("ERROR");
 		console.log(err);
 	});

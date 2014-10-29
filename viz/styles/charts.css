@@ -12,7 +12,7 @@
 }
 #trendChartContainer {
 	margin: 0 auto; /* center trend chart */
-	width: 80%;
+	width: 90%;
 }
 #trendChart {
 	//width: 700px;
@@ -89,6 +89,7 @@
 .saturationChart {
 	/* width: 80%; */
 }
+
 /* Simulation */
 .tableCellEdit {
 	width: 50px;
@@ -101,3 +102,23 @@ padding-top: 0;
 padding-bottom: 0;
 } 
 .editableTable .cellEditing input[type=text]{ width:100px; border:0; background-color:rgb(255,253,210); }
+#editableTableHeader {
+	font-weight: bold;
+}
+#simulationInputContainer {
+
+}
+
+
+/* AvP */
+#avpChart {
+	height: 500px;
+}
+#rsq, #adjrsq {
+	font-size: 250%;
+	margin: 20px;
+	text-align: center;
+}
+#rsqlabel, #adjrsqlabel {
+	text-align: center;
+}

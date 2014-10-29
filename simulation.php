@@ -98,8 +98,8 @@ sec_session_start();
 						<div id="chartContainer3">
 							<div style="clear: both;"></div>
 							<div id="simulationContainer">
-							
-								<div class="popboxContainer">
+								<!--
+								<div class="popboxContainer" style="display: none;">
 									<div class='popbox'>
 										<a class='popboxOpen' href='#'>Options</a>
 										<div class='popboxCollapse'>
@@ -110,16 +110,16 @@ sec_session_start();
 												
 													<div id="simulationInputContainer">
 														<label for="numPeriodSimulated">Simulation Period</label>
-														<input type="text" id="numPeriodSimulated" value=10>
+														<input type="text" id="numPeriodSimulated" value=5>
 														
 														<div class="row uniform half collapse-at-2">
 															<div class="6u">
-																<input type="radio" id="priority-low" name="keepZero" value=false checked>
-																<label for="priority-low">Repeat Data</label>
+																<input type="radio" id="priority-low1" name="keepZero1" value=false checked>
+																<label for="priority-low1">Repeat Data</label>
 															</div>
 															<div class="6u">
-																<input type="radio" id="priority-normal" name="keepZero" value=true >
-																<label for="priority-normal">Keep All Data 0</label>
+																<input type="radio" id="priority-normal1" name="keepZero1" value=true >
+																<label for="priority-normal1">Keep All Data 0</label>
 															</div>
 														</div>
 														<blockquote>
@@ -127,19 +127,48 @@ sec_session_start();
 														If input data points are less than 30, we cannot simulate.
 														</blockquote>
 														
-														<a href="#" class="button alt small" id="updateSimulationChart">Update</a>
-														<!-- <a href="#" class="popboxClose button alt small">close</a>
-														-->
+														<a href="#" class="button alt small" id="updateSimulationChart1">Update</a>
+														<a href="#" class="popboxClose button alt small">close</a>
 													</div>
 												
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>	<!-- end popbox -->
+								</div>	
+								-->
+                                <div id="simulationChart">
+								</div>
+								
+								<div id="simulationInputContainer">
+									<div class="row uniform half collapse-at-2">
+										<div class="2u">
+											<label for="numPeriodSimulated">Simulation Period</label>
+										</div>
+										<div class="1u">
+											<input type="text" id="numPeriodSimulated" value=5>
+										</div>
+										<div class="2u">
+											<input type="radio" id="priority-low" name="keepZero" value=false checked>
+											<label for="priority-low">Repeat Data</label>
+										</div>
+										<div class="2u">
+											<input type="radio" id="priority-normal" name="keepZero" value=true >
+											<label for="priority-normal">Keep Data 0</label>
+										</div>
+										<div class="2u">
+											<a href="#" class="button alt small" id="updateSimulationChart">Update</a>
+										</div>
+									</div>
+								</div>
+
 								
 								<div id="simulationTable">
 								</div>
+								<blockquote>
+								Avoid simulation if model is based on monthly data. Use benchmarks instead.<br/>
+								If input data points are less than 30, we cannot simulate.
+								</blockquote>
 							</div>
 						</div>
 					</div>
@@ -160,6 +189,7 @@ sec_session_start();
 		
 		<script type="text/javascript">var modelId = "<?php echo $selectedModel; ?>";</script>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
+		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>		
 		<script src="viz/Simulation/simulation_charts.js"></script>
     </body>
 </html>

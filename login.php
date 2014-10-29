@@ -40,7 +40,7 @@ if (login_check($mysqli) == true) {
 	<header id="header">
 			<h1>
 				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
-				<a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics 			
+				<a href="index.html">M:Modeler</a> by Madison Business Analytics 			
 			</h1>
 				<nav id="nav">
 					<ul>

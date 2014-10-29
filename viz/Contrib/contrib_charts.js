@@ -7,7 +7,7 @@ $( document ).ready(function() {
 	console.log("edaId: " + edaId);
 	console.log("modelId: " + modelId);
 	
-	$.get( "viz/Contrib/Contrib.php", { dataType: 'contribSeries', edaId: edaId, modelId: modelId }, contribDataLoaded, "json" ).fail( function(err) { 
+	$.get( "viz/Contrib/Contrib.php", { dataType: 'contribSeries', edaId: edaId, modelId: modelId, projectId: projectId }, contribDataLoaded, "json" ).fail( function(err) { 
 		console.log("Contrib ERROR");
 		console.log(err); 
 	});
@@ -38,16 +38,30 @@ function contribSeriesChart( ) {
 	var seriesData = [];
 	var seriesDataNeg = [];
 	
-	seriesData.push( {name: data.modelData.dependent.name, data: data.modelData.dependent.data,	type: 'line', zIndex: 2});
+	seriesData.push( {name: data.modelData.dependent.name, data: data.modelData.dependent.data,	type: 'line', zIndex: 2, color: data.modelData.dependent.color});
 	data.modelData.independent.forEach( function(elem) {
 		if( elem.coef < 0) {
-			seriesDataNeg.push( { name: elem.name, data: elem.contribSeries, yAxis: 1 } );
+			seriesDataNeg.push( { name: elem.name, data: elem.contribSeries, yAxis: 1, color: elem.color } );
 		} else {
-			seriesData.push( { name: elem.name, data: elem.contribSeries } );
+			seriesData.push( { name: elem.name, data: elem.contribSeries, color: elem.color } );
 		}
 	});
-	seriesData.push( {name: data.modelData.intercept.name, data: data.modelData.intercept.contribSeries});
+	seriesData.push( {name: data.modelData.intercept.name, data: data.modelData.intercept.contribSeries, color: '#F3F3F3'});
 	seriesData = seriesData.concat(seriesDataNeg);
+	
+	Highcharts.setOptions({
+    chart: {
+        style: {
+            fontFamily: 'Source Sans Pro'
+        }
+    },
+	});
+	Highcharts.Point.prototype.tooltipFormatter = function (useHeader) {
+    var point = this, series = point.series;
+    return ['<br/><span style="color:' + series.color + '"><span>', (point.name || series.name), '</span></span>: ',
+        (!useHeader ? ('<b>x = ' + (point.name || point.x) + ',</b> ') : ''),
+        '<b>', (!useHeader ? 'y = ' : ''), Highcharts.numberFormat(point.y, 0), '</b>'].join('');
+	};
 	
     $('#contribSeriesChart').highcharts({
         chart: {
@@ -56,15 +70,29 @@ function contribSeriesChart( ) {
 			zoomType: 'x'
         },
         title: {
-            text: data.modelData.modelName
+            text: data.modelData.modelName,
+			align: 'left',
+			x: 70
         },
+		legend: {
+			//layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'top',
+			borderWidth: 0,
+			floating: true,
+			 itemStyle: {
+					color: '#b7b3b0',
+					fontFamily: 'Source Sans Pro'
+			},
+			x: -50
+		},
         xAxis: {
             categories: data.modelData.time.data,
             tickmarkPlacement: 'on',
             title: {
                 enabled: false
             },
-			labels: { rotation: -45, maxStaggerLines: 0, step: 3 }
+			labels: { rotation: -45, maxStaggerLines: 0, step: 1 }
         },
         yAxis: [{
 			gridLineColor: 'transparent',
@@ -87,7 +115,10 @@ function contribSeriesChart( ) {
         }],
         tooltip: {
             shared: true,
-			enabled: false
+			//enabled: false
+			/* formatter: function() {
+					return  Highcharts.numberFormat(this.y, 2);
+				}*/
         },
         plotOptions: {
             area: {
