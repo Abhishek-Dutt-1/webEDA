@@ -7,8 +7,10 @@ sec_session_start();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Model</title>
+        <title>M:Modeler - Model</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
@@ -41,7 +43,7 @@ sec_session_start();
 
 				<section class="box">
 					<div class="breadCrumb">
-						<a href="index.php">Home</a> &raquo; <a href="protected_page.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="MeanDiff.php">Mean Difference</a>
+						<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="avp.php">Analytics</a> &raquo; <a href="simulation.php">Simulation</a>
 					</div>
 					<?php include 'viz/modelButtons.php' ?>
 
@@ -91,7 +93,7 @@ sec_session_start();
 								</form>
 								</div>
 								<div id="modelSelectDropdownUploadNew">
-									<a href="create_model.php" class="button alt small">Upload</a>
+									<a href="create_model.php" class="button small">Upload</a>
 								</div>
 							</div>
 						</div>
@@ -146,7 +148,7 @@ sec_session_start();
 											<label for="numPeriodSimulated">Simulation Period</label>
 										</div>
 										<div class="1u">
-											<input type="text" id="numPeriodSimulated" value=5>
+											<input type="text" id="numPeriodSimulated" value=10>
 										</div>
 										<div class="2u">
 											<input type="radio" id="priority-low" name="keepZero" value=false checked>

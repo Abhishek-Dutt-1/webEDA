@@ -10,7 +10,7 @@ sec_session_start();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EDA</title>
+        <title>M:Modeler - EDA</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
@@ -51,7 +51,7 @@ sec_session_start();
 					<div class="12u">
 						<section class="box" id="chartContainer1">
 							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="protected_page.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Diagnostics.php">Diagnostics</a>
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Diagnostics.php">Diagnostics</a>
 							</div>
 							<?php include 'viz/chartButtons.php' ?>
 							<div style="clear: both;">

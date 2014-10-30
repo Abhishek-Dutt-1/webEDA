@@ -12,7 +12,7 @@ if (login_check($mysqli) == true) :
 		iF ($_POST["Action"] == "OK") :
 		{
 			$_SESSION['edaId'] = $EDAid;
-			header('Location: ../Charts.php');
+			header('Location: ../kpi.php');
 		}
 		elseif($_POST["Action"] == "Testing for Model") :
 		{

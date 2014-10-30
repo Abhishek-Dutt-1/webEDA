@@ -7,13 +7,13 @@ $( document ).ready(function() {
 	console.log("edaId: " + edaId);
 	console.log("modelId: " + modelId);
 	
-	$.get( "viz/Contrib/Contrib.php", { dataType: 'saturationCurve', edaId: edaId, modelId: modelId, projectId: projectId }, contribDataLoaded, "json" ).fail( function(err) { 
-		console.log("Saturation Curve ERROR");
+	$.get( "viz/Contrib/Contrib.php", { dataType: 'contribSeries', edaId: edaId, modelId: modelId, projectId: projectId }, contribDataLoaded, "json" ).fail( function(err) { 
+		console.log("Contrib ERROR");
 		console.log(err); 
 	});
 
 	// attach event listener to updateSensitivityChart href
-	$("#updateSaturationChart").on('click', updateSaturationChartsData);
+	$("#updateSensitivityChart").on('click', updateSensitivityCharts);
 	
 	$('.popbox').popbox({
 		'open'          : '.popboxOpen',
@@ -22,278 +22,19 @@ $( document ).ready(function() {
 		'arrow_border'  : '.popboxArrow-border',
 		'close'         : '.popboxClose'
 	});
-	
-	
 });
 
 function contribDataLoaded( data ) {
-
 	chartData = data;
-	// Create inputs
-	createSaturationInputs();
-	// Create empty divs for Saturation Charts;
-	createSaturationChartsDivs();
-	// Update saturation data in chartData obj
-	updateSaturationChartsData();
-
-	/*
 	//// Create Contrib series charts
-	contribSeriesChart();
+	//contribSeriesChart();
 	//// Create Average Contribution series column chart
-	averageContributionCharts();
+	//averageContributionCharts();
 	//// Create initial Average Sensitivity column chart
 	createCPRPinputs();
 	updateSensitivityCharts();
-	*/
 }
 
-// Create html Inputs for saturation
-function createSaturationInputs() {
-	
-	var inputDivPos = document.createElement('div');
-	var inputDivNeg = document.createElement('div');
-	var widgetDiv = document.createElement('div');
-	// Create inputs for start step end
-	// START
-	var label = document.createElement('label');
-	label.setAttribute("for", "START" );
-	label.innerHTML = "Start";
-	var input = document.createElement('input');
-	input.type = "text";
-	input.value = 0;
-	input.id = "START";
-	input.className  = "saturationInput";
-	
-	widgetDiv.appendChild(label);
-	widgetDiv.appendChild(input);
-	// STEP
-	label = document.createElement('label');
-	label.setAttribute("for", "INCREMENT" );
-	label.innerHTML = "Increment";
-	input = document.createElement('input');
-	input.type = "text";
-	input.value = 50;
-	input.id = "INCREMENT";
-	input.className  = "saturationInput";
-	
-	widgetDiv.appendChild(label);
-	widgetDiv.appendChild(input);
-	// END
-	label = document.createElement('label');
-	label.setAttribute("for", "END" );
-	label.innerHTML = "End";
-	input = document.createElement('input');
-	input.type = "text";
-	input.value = 1000;
-	input.id = "END";
-	input.className  = "saturationInput";
-	
-	widgetDiv.appendChild(label);
-	widgetDiv.appendChild(input);
-	
-	document.getElementById('saturationInputContainer').appendChild(widgetDiv);
-	
-	// Create empty divs for each chart
-	chartData.modelData.independent.forEach( function(indep) {
-
-		var label = document.createElement('label');
-		label.setAttribute("for", indep.name.replace( /[^\w\d]/g, "_") + "_BaseValue" );
-		label.innerHTML = indep.name + " Base Value";
-		
-		var input = document.createElement('input');
-		input.type = "text";
-		input.value = 0;
-		input.id = indep.name.replace( /[^\w\d]/g, "_") + "_BaseValue";
-		input.className  = "sensitivityInput";
-	
-		// Put +ve variables first to match the sensitivity charts			
-		if(indep.coef > 0) {
-			inputDivPos.appendChild(label);
-			inputDivPos.appendChild(input);
-		} else {
-			inputDivNeg.appendChild(label);
-			inputDivNeg.appendChild(input);
-		}
-	});
-	
-	document.getElementById('saturationInputContainer').appendChild(inputDivPos);
-	document.getElementById('saturationInputContainer').appendChild(inputDivNeg);
-}
-
-// Create empty divs for charts
-function createSaturationChartsDivs() {
-	
-	var outerChartDivPos = document.createElement('div');
-	var outerChartDivNeg = document.createElement('div');
-	// Create empty divs for each chart
-	chartData.modelData.independent.forEach( function(indep) {
-		
-		var chartDiv = document.createElement('div');
-		chartDiv.id = indep.name.replace( /[^\w\d]/g, "_") + "_SatChart";
-		chartDiv.className  = "saturationChart";
-		// Put +ve variables first to match the sensitivity charts			
-		if(indep.coef > 0) {
-			outerChartDivPos.appendChild(chartDiv);
-		} else {
-			outerChartDivNeg.appendChild(chartDiv);
-		}
-	});
-	
-	document.getElementById('saturationChartsContainer').appendChild(outerChartDivPos);
-	document.getElementById('saturationChartsContainer').appendChild(outerChartDivNeg);
-}
-
-// Get user input base value
-function getSaturationBaseValue(indepName) {
-	var baseValue = 0;
-	chartData.modelData.independent.forEach( function(indep) {
-		if(indep.name == indepName) {
-			baseValue = document.getElementById( indep.name.replace( /[^\w\d]/g, "_") + "_BaseValue" ).value;
-			if( !(!isNaN(parseFloat(baseValue)) && isFinite(baseValue)) ) {
-				document.getElementById( indep.name.replace( /[^\w\d]/g, "_") + "_BaseValue" ).value = 0;
-				console.log("Base Value IsNaN");
-			}
-			baseValue = document.getElementById( indep.name.replace( /[^\w\d]/g, "_") + "_BaseValue" ).value;
-		}
-	});
-	//console.log(baseValue);
-	return baseValue;
-}
-
-// Calculate actual saturation data for Saturation Curve
-function calcSaturationSeries(indepName) {
-	
-	var contribSum = [];
-	var i = 0;
-	var start = parseFloat( document.getElementById( "START" ).value );
-	var inc = parseFloat( document.getElementById( "INCREMENT" ).value );
-	var end = parseFloat( document.getElementById( "END" ).value );
-	var satData = { name: '', GRP: [], response: [], responseMax: 0, responseMin: 0, diff: [], diffMax: 0, diffMin:0};
-	satData.name = indepName;
-	
-	for(i = start; i <= end; i = i + inc) {
-		var co = [];
-		var power = [];
-		var contrib = [];
-
-		chartData.modelData.independent.forEach( function(indep, index, independent) {
-			if(indep.name == indepName) {
-				// For current variable whose saturation is to be charted
-				co.push( i + ( indep.coSeries[indep.coSeries.length - 1] * indep.co ) );
-				power.push( Math.pow( co[co.length - 1], indep.power ) );
-				contrib.push( power[power.length - 1] * indep.coef );	
-			}
-			else {
-				// For other variables base value is from user Input
-				co.push( getSaturationBaseValue(indep.name) + ( indep.coSeries[indep.coSeries.length - 1] * indep.co ) );
-				power.push( Math.pow( co[co.length - 1], indep.power ) );
-				contrib.push( power[power.length - 1] * indep.coef );
-			}
-		});
-		satData.GRP.push(i);
-		// yPredBase = Intercept + sum of all contributions
-		satData.response.push( chartData.modelData.intercept.coef + contrib.reduce(function(pv, cv) { return pv + cv; }, 0) );
-
-	}
-	// Also update Diff array
-	satData.diff.push( null );
-	for(i = 1; i < satData.GRP.length; i++) {
-		satData.diff.push( satData.response[i] - satData.response[i-1] );
-	}
-	
-	satData.responseMax = Math.max.apply(Math, satData.response);
-	satData.responseMin = Math.min.apply(Math, satData.response);
-	satData.diffMax = Math.max.apply(Math, satData.diff);
-	satData.diffMin = Math.min.apply(Math, satData.diff);
-
-	//console.log(satData);
-	return satData;
-	
-}
-
-// Create the actual charts
-function updateSaturationChartsData() {
-
-	//////////////////// calculate Base Value for Saturation Curve
-	chartData.modelData.independent.forEach( function(ind, index, independent) {
-		independent[index]['SaturaionCurve'] = calcSaturationSeries(ind.name);
-	});
-	console.log( chartData );
-	// Draw the actual caharts
-	drawSaturationCharts();
-}
-
-// Draw the actual charts
-function drawSaturationCharts() {
-
-	chartData.modelData.independent.forEach( function(indep) {
-		
-		// Dont do competition chart
-		if(indep.coef > 0) {
-			$('#'+indep.name.replace( /[^\w\d]/g, "_") + "_SatChart" ).highcharts({
-				title: {
-					text: indep.name,
-					align: 'left',
-					x: 70 //center
-				},
-				legend: {
-					enabled: true,
-					floating: true,
-					verticalAlign: 'top',
-					align:'right',
-					x: -70
-				},
-				xAxis: {
-					title: { text: indep.name },
-					categories: indep.SaturaionCurve.GRP
-				},
-				yAxis: [{
-							title: {
-								text: chartData.modelData.dependent.name
-							},
-							max: indep.SaturaionCurve.responseMax,
-							min: indep.SaturaionCurve.responseMin,
-						},
-						{
-							title: {
-								text: "Change"
-							},
-							opposite: true,
-							//max: indep.SaturaionCurve.diffMax,
-							//min: indep.SaturaionCurve.diffMin
-						}],
-				tooltip: {
-					//enabled: false
-					shared: true
-				},
-				series: [{
-					name: chartData.modelData.dependent.name,
-					data: indep.SaturaionCurve.response,
-					color: chartData.modelData.dependent.color
-				}, {
-					name: 'Change',
-					data: indep.SaturaionCurve.diff,
-					yAxis: 1
-				}],
-				credits: false
-			});
-		}
-	});
-}
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// Create Contrib series charts
 function contribSeriesChart( ) {
 
@@ -304,33 +45,61 @@ function contribSeriesChart( ) {
 	var seriesData = [];
 	var seriesDataNeg = [];
 	
-	seriesData.push( {name: data.modelData.dependent.name, data: data.modelData.dependent.data,	type: 'line', zIndex: 2});
+	seriesData.push( {name: data.modelData.dependent.name, data: data.modelData.dependent.data,	type: 'line', zIndex: 2, color: data.modelData.dependent.color});
 	data.modelData.independent.forEach( function(elem) {
 		if( elem.coef < 0) {
-			seriesDataNeg.push( { name: elem.name, data: elem.contribSeries, yAxis: 1 } );
+			seriesDataNeg.push( { name: elem.name, data: elem.contribSeries, yAxis: 1, color: elem.color } );
 		} else {
-			seriesData.push( { name: elem.name, data: elem.contribSeries } );
+			seriesData.push( { name: elem.name, data: elem.contribSeries, color: elem.color } );
 		}
 	});
-	seriesData.push( {name: data.modelData.intercept.name, data: data.modelData.intercept.contribSeries});
+	seriesData.push( {name: data.modelData.intercept.name, data: data.modelData.intercept.contribSeries, color: '#F3F3F3'});
 	seriesData = seriesData.concat(seriesDataNeg);
 	
-    $('#saturationChartsContainer').highcharts({
+	Highcharts.setOptions({
+    chart: {
+        style: {
+            fontFamily: 'Source Sans Pro'
+        }
+    },
+	});
+	Highcharts.Point.prototype.tooltipFormatter = function (useHeader) {
+    var point = this, series = point.series;
+    return ['<br/><span style="color:' + series.color + '"><span>', (point.name || series.name), '</span></span>: ',
+        (!useHeader ? ('<b>x = ' + (point.name || point.x) + ',</b> ') : ''),
+        '<b>', (!useHeader ? 'y = ' : ''), Highcharts.numberFormat(point.y, 0), '</b>'].join('');
+	};
+	
+    $('#contribSeriesChart').highcharts({
         chart: {
             type: 'area',
 			height: 500,
 			zoomType: 'x'
         },
         title: {
-            text: data.modelData.modelName
+            text: data.modelData.modelName,
+			align: 'left',
+			x: 70
         },
+		legend: {
+			//layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'top',
+			borderWidth: 0,
+			floating: true,
+			 itemStyle: {
+					color: '#b7b3b0',
+					fontFamily: 'Source Sans Pro'
+			},
+			x: -50
+		},
         xAxis: {
             categories: data.modelData.time.data,
             tickmarkPlacement: 'on',
             title: {
                 enabled: false
             },
-			labels: { rotation: -45, maxStaggerLines: 0, step: 3 }
+			labels: { rotation: -45, maxStaggerLines: 0, step: 1 }
         },
         yAxis: [{
 			gridLineColor: 'transparent',
@@ -353,7 +122,10 @@ function contribSeriesChart( ) {
         }],
         tooltip: {
             shared: true,
-			enabled: false
+			//enabled: false
+			/* formatter: function() {
+					return  Highcharts.numberFormat(this.y, 2);
+				}*/
         },
         plotOptions: {
             area: {

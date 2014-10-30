@@ -58,9 +58,10 @@ sec_session_start();
 							<?php include 'viz/chartButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
-									<h3>Trend Chart</h3>
+									<!-- <h3>Trend Chart</h3>
 									<div id="trendChartContainer">
 									</div>
+									-->
 									<h3>Bivariate Charts</h3>
 									<div id="edaChartContainer">
 									</div>

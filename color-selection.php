@@ -92,6 +92,12 @@ sec_session_start();
 			//	 alert(color);
 		//	}
 		</script>
+		
+		<script type="text/javascript">
+			function confirm_delete() {
+				return confirm("Are you sure you wish to delete the Brand Color?");
+			}
+		</script>
 
 		
 	</head>
@@ -146,12 +152,13 @@ sec_session_start();
 											<div class="row uniform">
 												<div class="12u">
 													<ul class="actions">
-														<li><input type="submit" value="Assign Color" name="Action"/></li>
+														<li><input type="submit" value="Assign Color" name="Action" class="button special"/></li>
 														<li><input type="reset" value="Cancel" class="alt" name="Action" /></li>
 													</ul>
 												</div>
 											
 									</div>
+									
 									
 									<br>
 									<div id="getprojectscolors"></b></div>

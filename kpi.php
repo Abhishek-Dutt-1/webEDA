@@ -53,7 +53,7 @@ sec_session_start();
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
 							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Charts.php">Bivariates</a>
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="kpi.php">KPI</a>
 							</div>
 							<?php include 'viz/kpiButtons.php' ?>
 							<div style="clear: both;">

@@ -43,15 +43,16 @@ $( document ).ready(function() {
 			} 
 		});
 		$(this).children().first().blur(function(){
-			//console.log( $(this).parent().removeClass("cellEditing") );
-			$(this).parent().text(OriginalContent);
+			//$(this).parent().text(OriginalContent);
+			//$(this).parent().removeClass("cellEditing");
+			//cellEditUpdate();
+			var newContent = $(this).val(); 
+			$(this).parent().text(newContent); 
 			$(this).parent().removeClass("cellEditing");
+			cellEditUpdate();
 		}); 
 	}); 
 
-
-
-	
 });
 
 // Initial Load
@@ -180,7 +181,7 @@ function calcDependentValues() {
                 simData.push( { name: col.innerHTML, data: [] } );
             } else {
             // Rest rows are data rows
-                simData[j].data.push( col.innerHTML );
+                simData[j].data.push( col.innerHTML || 0);
             }
         }
     } 
@@ -257,7 +258,10 @@ function createSimulationChart() {
     var xAxis = chartData.modelData.time.data.concat( simData[0].data );
     var actualDependent = chartData.modelData.dependent.data.concat( simData[1].data.map( function(e) { return null; } )  );
     var simulatedDependent = chartData.modelData.dependent.data.map( function(e) { return null; } ).concat( simData[1].data );
-
+	simulatedDependent[simulatedDependent.length - simData[1].data.length -1] = chartData.modelData.dependent.data[chartData.modelData.dependent.data.length - 1];
+	//console.log(  actualDependent );
+	//console.log( chartData.modelData.dependent.data.length );
+	
     $('#simulationChart').highcharts({
         title: {
             text: chartData.modelData.dependent.name,

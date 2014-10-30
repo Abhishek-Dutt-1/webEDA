@@ -9,14 +9,15 @@
 }
 #chartButtons {
 	margin-top: 5px;
+	margin-bottom: 10px;
 }
 #trendChartContainer {
 	margin: 0 auto; /* center trend chart */
 	width: 90%;
 }
 #trendChart {
-	//width: 700px;
-	height: 400px;
+	/*width: 700px;
+	height: 500px; */
 }
 .edaChart {
 	margin-top: 10px;
@@ -72,14 +73,11 @@
 }
 /* Average Contrib Chart */
 #avContributionChartContainer {
-	width: 50%;
-	float: left;
+	width: 100%;
+	/* float: left; */
 	/*text-align: center; */
 }
-#senstivityChartContainer {
-	width: 50%;
-	float: left;
-}
+
 /* Saturation Curves */
 .popboxContainer {
 	float: right;
@@ -121,4 +119,25 @@ padding-bottom: 0;
 }
 #rsqlabel, #adjrsqlabel {
 	text-align: center;
+}
+
+/* Sensitivity */
+#senstivityChartContainer {
+	width: 100%;
+}
+#senstivityChart {
+	width: 100%;
+	float: left;
+	padding: 0 20px;
+
+}
+#sensitivityControls {
+/*
+	float: left;
+	width: 50%;
+	padding: 0 20px;
+*/
+}
+#senitivityPopbox {
+	margin-top: 50px;
 }

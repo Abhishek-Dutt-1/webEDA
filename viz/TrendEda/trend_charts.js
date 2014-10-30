@@ -45,7 +45,7 @@ function trendDataLoaded(data) {
             data: data.dependent.UCL3,
 			dashStyle: 'ShortDash',
 			color: '#058DC7',
-			marker:  { enabled: false }
+			marker:  { enabled: false },
         }, {
             name: 'UCL2',
             data: data.dependent.UCL2,
@@ -137,26 +137,26 @@ function drawEDAChart(time, dep, indep) {
             labels: {
                 //format: '{value}°C',
                 style: {
-                    color: Highcharts.getOptions().colors[1]
+                    //color: Highcharts.getOptions().colors[1]
                 }
             },
             title: {
                 text: dep.name,
                 style: {
-                    color: Highcharts.getOptions().colors[1]
+                    //color: Highcharts.getOptions().colors[1]
                 }
             }
         }, { // Secondary yAxis
             title: {
                 text: indep.name,
                 style: {
-                    color: Highcharts.getOptions().colors[0]
+                    //color: Highcharts.getOptions().colors[1]
                 }
             },
             labels: {
                 //format: '{value} mm',
                 style: {
-                    color: Highcharts.getOptions().colors[0]
+                    //color: Highcharts.getOptions().colors[1]
                 }
             },
             opposite: true
@@ -202,12 +202,12 @@ $( document ).ready(function() {
 
 	console.log("edaId " + edaId);
 	console.log("projectId " + projectId);
-
+/*
 	$.get( "viz/TrendEda/Trend.php", { edaId: edaId, projectId: projectId }, trendDataLoaded, "json" ).fail( function(err) {
 		console.log("Trend Chart ERROR!");
 		console.log(err); 
 	});
-
+*/
 	$.get( "viz/TrendEda/EDA.php", { edaId: edaId, projectId: projectId }, edaDataLoaded, "json" ).fail( function(err) {
 		console.log("EDA Charts ERROR!");
 		console.log(err);

@@ -31,10 +31,10 @@ include_once 'includes/functions.php';
     </head>
     <body>
 		<header id="header">
-			<h1><a href="index.html">EDA WEBTOOL</a> by Madison Business Analytics</h1>
+			<h1><a href="index.php">M:Modeler</a> by Madison Business Analytics</h1>
 			<nav id="nav">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="index.php">Home</a></li>
 					<li><a href="#" class="button">Register</a></li>
 				</ul>
 			</nav>

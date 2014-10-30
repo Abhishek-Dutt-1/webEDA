@@ -6,7 +6,6 @@ sec_session_start();
 $_SESSION['tablecheck']="";
 $_SESSION['tablename']="";
 
-
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -16,7 +15,8 @@ $_SESSION['tablename']="";
 -->
 <html>
 	<head>
-		<title>EDA WEBTOOL by Madison Business Analytics</title>
+		<title>M:Modeler by Madison Business Analytics</title>
+				
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
@@ -37,17 +37,13 @@ $_SESSION['tablename']="";
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 	<body class="landing">
-		<?php
-		  if(isset($_SESSION['username'])){
-		   header('Location: ../project.php');
-		  }
-		?> 
+
 			<!-- Header -->
 			<header id="header" class="alt">
 			<h1>
 				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
 			
-				<a href="index.html">M:Modeler</a> by Madison Business Analytics
+				<a href="index.php">M:Modeler</a> by Madison Business Analytics
 				
 			</h1>
 				</nav>
@@ -59,7 +55,7 @@ $_SESSION['tablename']="";
 					<p>Another fine tool by Madison Business Analytics.</p>
 					<ul class="actions">
 						<li><a href="Login.php" class="button special">Login</a></li>
-						<li><a href="#" class="button">Learn More</a></li>
+						<li><a href="learn more.php" class="button">Learn More</a></li>
 					</ul>
 				</section>
 
@@ -157,6 +153,5 @@ $_SESSION['tablename']="";
 					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
 				</ul>
 			</footer>
-			
 	</body>
 </html>

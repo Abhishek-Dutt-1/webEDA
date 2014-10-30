@@ -37,15 +37,20 @@ if (login_check($mysqli) == true) {
     </head>
 	
     <body>
+		<?php 
+			if (login_check($mysqli) == true) {
+				header('Location: project.php');
+			}
+		?> 
 	<header id="header">
 			<h1>
 				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
-				<a href="index.html">M:Modeler</a> by Madison Business Analytics 			
+				<a href="index.php">M:Modeler</a> by Madison Business Analytics 			
 			</h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="#" class="button">Register</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="register.php" class="button">Register</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -82,6 +87,7 @@ if (login_check($mysqli) == true) {
 							</ul>
 							</div>
 						</div>
+					</div>
 				<br>					
 				<p>If you don't have a login, please <a href="register.php">register</a></p>
 					

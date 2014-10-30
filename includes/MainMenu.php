@@ -1,7 +1,7 @@
 <header id="header">
 	<h1>
 		<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
-		<a href="index.html">M:Modeler</a> by Madison Business Analytics
+		<a href="index.php">M:Modeler</a> by Madison Business Analytics
 	</h1>
 	
 	<nav id="nav">
@@ -9,7 +9,7 @@
 			<?php if (isset($_SESSION['username'])) :
 					echo "<li> Welcome! ".$_SESSION['username']."</li>";
 					endif;?>
-			<li><a href="index.html">Home</a></li>
+			<li><a href="index.php">Home</a></li>
 			<li>
 				<a href="" class="icon fa-angle-down">Go To</a>
 				<ul>

@@ -13,7 +13,7 @@ function trendDataLoaded(data) {
         title: {
             text: data.dependent.name,
 			align: 'left',
-            x: 50
+            x: 70
         },
         subtitle: {
             text: '',
@@ -26,8 +26,8 @@ function trendDataLoaded(data) {
         },
         yAxis: {
             title: {
-				text: ''
-                //text: data.dependent.name
+				//text: ''
+                text: data.dependent.name
             },
 			gridLineColor: 'transparent',
         },
