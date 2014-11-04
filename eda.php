@@ -57,6 +57,15 @@ $_SESSION['tablename']="";
 					<div class="12u">
 						<!-- Buttons -->
 							<section class="box">
+								<?php
+								if($_SESSION['projectid']==null || $_SESSION['projectid'] == "") :
+								{ ?>
+									<p>
+										<span class="error">Oops!! </span> Please <a href="Project.php">Select Project</a>.
+									</p>
+								<?php return;
+								}
+								endif; ?>
 								<ul class="actions">
 									<li><a href="create_eda.php" class="button special">Create new EDA dataset</a></li>
 								</ul>
@@ -70,6 +79,8 @@ $_SESSION['tablename']="";
 						<?php 
 								$userid=$_SESSION['user_id'];
 								$Projectid=$_SESSION['projectid'];
+								
+								
 								$q_GetProjects="SELECT e.id,e.datasetname FROM eda_dataset e WHERE e.projects_id = $Projectid";		
 								$result = $mysqli->query($q_GetProjects);
 								foreach ( $result as $row)
@@ -92,11 +103,7 @@ $_SESSION['tablename']="";
 				</section>
 			</section>
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
 			
         <?php else : ?>
             <p>

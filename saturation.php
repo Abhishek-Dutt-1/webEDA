@@ -139,11 +139,7 @@ sec_session_start();
 				</section>
 			</section>
 			<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
         <?php else : ?>
             <p>
                 <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.

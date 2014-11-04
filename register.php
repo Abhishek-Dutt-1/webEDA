@@ -49,41 +49,35 @@ include_once 'includes/functions.php';
 				echo $error_msg;
 			}
 			?>
-			<div align="left">
-			<ul>
-				<li>Usernames may contain only digits, upper and lower case letters and underscores</li>
-				<li>Emails must have a valid email format</li>
-				<li>Passwords must be at least 6 characters long</li>
-				<li>Passwords must contain
-					<ul>
-						<li>At least one upper case letter (A..Z)</li>
-						<li>At least one lower case letter (a..z)</li>
-						<li>At least one number (0..9)</li>
-					</ul>
-				</li>
-				<li>Your password and confirmation must match exactly</li>
-			</ul>
-			</div>
+			<center>
 			<form action="<?php echo esc_url($_SERVER['PHP_SELF']); ?>" 
 					method="post" 
-					name="registration_form" style="color:black;">
+					name="registration_form" style="color:black;" align="middle">
+					
 					<div class="row uniform half">
 						<div class="6u">
 							<input type="text" name="username" id="username" value="" placeholder="User Name" />
-						</div> <br></br>
+						</div> 
+						
+					</div>
+					
+					<div class="row uniform half">
 						<div class="6u">
 							<input type="text" name="email" id="email" value="" placeholder="Email" />
 						</div> 
 					</div>
-					<div class="row uniform half ollapse-at-2">
+					<div class="row uniform half">
 						<div class="6u">
 							<input type="password" name="password" id="password" value="" placeholder="Password" />
 						</div>
+					</div>
+					<div class="row uniform half">
 						<div class="6u">
 							<input type="password" name="confirmpwd" id="confirmpwd" value="" placeholder="Confirm password" />
-						</div> <br></br>
+						</div> 
 					</div>
-					
+				
+				
 				<div class="row uniform">
 					<div class="12u">
 						<ul class="actions">
@@ -99,14 +93,27 @@ include_once 'includes/functions.php';
 					</div>
 				</div>
 			</form>
+			</center>
 			<p>Return to the <a href="login.php">login page</a>.</p>
+			<div align="left">
+			<ul>
+				<li>Usernames may contain only digits, upper and lower case letters and underscores</li>
+				<li>Emails must have a valid email format</li>
+				<li>Passwords must be at least 6 characters long</li>
+				<li>Passwords must contain
+					<ul>
+						<li>At least one upper case letter (A..Z)</li>
+						<li>At least one lower case letter (a..z)</li>
+						<li>At least one number (0..9)</li>
+					</ul>
+				</li>
+				<li>Your password and confirmation must match exactly</li>
+			</ul>
+			</div>
+			
 			</section>
 		</section>
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
     </body>
 </html>

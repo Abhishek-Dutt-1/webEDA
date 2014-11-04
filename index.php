@@ -148,10 +148,6 @@ $_SESSION['tablename']="";
 				</section> -->
 				
 			<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
 	</body>
 </html>

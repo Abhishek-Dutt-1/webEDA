@@ -136,11 +136,7 @@ sec_session_start();
 				</div>
 			</section>
 			<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>		
+			<?php include 'includes/footer.php'; ?>		
 							
 			    <?php else : ?>
             <p>

@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/style-wide.css" />
 	</noscript>
-	<link rel="stylesheet" href="styles/main.css" />
+	
 	<script type="text/JavaScript" src="js/sha512.js"></script> 
 	<script type="text/JavaScript" src="js/forms.js"></script> 
 		
@@ -34,6 +34,7 @@
 	<script src="js/skel.min.js"></script>
 	<script src="js/skel-layers.min.js"></script>
 	<script src="js/init.js"></script>
+	
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css">
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
@@ -43,7 +44,7 @@
 		<header id="header">
 			<h1>
 				<img src="images/EDA WT.png" id="logo" height="32" width="32" style="top:7px;position:relative;right=5px" />
-				<a href="index.php">M:Modeler</a> by Madison Business Analytics
+				<a href="">M:Modeler</a> by Madison Business Analytics
 			</h1>
 			<nav id="nav">
 				<ul>
@@ -73,31 +74,52 @@
 							</div>
 							<div data-role="collapsible">
 								<h3>Project</h3>
-								<p>You can create or select an existing project.</p>
+								You can create or select an existing project.<br>
+								Projects are created to distinguish between different clients.
 							</div>
 							<div data-role="collapsible">
 								<h3>EDA</h3>
 								<p>You can create a new EDA or select an existing existing EDA.<br></p>
-								<p><b>Create EDA:</b><br>
+								<b>Create EDA:</b><br>
 								When you click on the Create EDA option, it'll take you to the page to upload EDA data and to name it. <br>
 								You need to enter the following details - 
-									<li>Enter a dataset Name (To distinguish between other datasets).</li>
-									<li>Browse and select the csv file which has EDA data.</li>
+									<li padding-left:5em>Enter a dataset Name (To distinguish between other datasets).</li>
+									<li padding-left:5em>Browse and select the csv file which has EDA data.</li>
 								
 								<img src="images/help/upload_Eda.PNG" alt="Upload EDA" style="width:350px;height:180px" >
-								</p>
+								
+							</div>
+							<div data-role="collapsible">
+								<h3>KPI Charts</h3>
+								<p>Trend Chart</p>
+								
 							</div>
 							<div data-role="collapsible">
 								<h3>EDA Charts</h3>
-								<p>Details of EDA Charts</p>
+								EDA Charts has the following Charts <br>
+								<ul>
+									<li>Bivariates:</li>
+									<li>Mean Difference:</li>
+									<li>Diagnostics:</li>
+								</ul>
 							</div>
 							<div data-role="collapsible">
-								<h3>Model</h3>
-								<p>Create or select Model</p>
+								<h3>Analytics(Model)</h3>
+								<p>Select or Upload a Model</p>
+								You can select from the list of models or you can click on upload model to feed new models to the tool.
+								<img src="images/help/select_model.PNG" alt="Select Model" style="width:500px;height:200px" ><br>
+								<b>Upload new model</b>
+								Provide the name of the model set and select a csv file to upload the data.<br>
+								<img src="images/help/upload_model.PNG" alt="Upload Model" style="width:400px;height:200px" ><br>
 							</div>
 							<div data-role="collapsible">
 								<h3>Model Charts</h3>
-								<p>Details about Model Charts</p>
+								Model Charts has the following charts<br>
+								<li>Actual vs Predicted</li>
+								<li>Contribution</li>
+								<li>Sensitivity</li>
+								<li>Saturation</li>
+								<li>Simulation</li>
 							</div>
 						</div>
 					</section>
@@ -106,11 +128,7 @@
 		</section>		
 			
 			<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
 			
 	
 

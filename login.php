@@ -100,10 +100,6 @@ if (login_check($mysqli) == true) {
         <p>You are currently logged <?php echo $logged ?>.</p> -->
 	
 	<!-- Footer -->
-			<footer id="footer">
-				<ul class="copyright">
-					<li>&copy; Madison Business Analytics. All rights reserved.</li><li>
-				</ul>
-			</footer>
+			<?php include 'includes/footer.php'; ?>
     </body>
 </html>

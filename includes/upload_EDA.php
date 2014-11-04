@@ -8,12 +8,13 @@ sec_session_start();
 $_SESSION['tablecheck']="";
 $_SESSION['tablename']="";
 
+
 if (login_check($mysqli) == true) :
 		$fname= $_POST["dataset"];
 		 //echo $fname;
 		if ($fname==null || $fname=="")
 		{
-		echo "<div align='center'> Please mention a Dataset Name";
+		echo "<div align=center> Please mention a Dataset Name";
 		?>
 			<br></br>
 			<a href="javascript:history.go(-1)">Go Back</a> </html>
@@ -68,28 +69,65 @@ if (login_check($mysqli) == true) :
 				/********************************************************************************/
 				// Get the first row to create the column headings
 
-				$fp = fopen($filename, 'r');
-				$frow = fgetcsv($fp);
+				// $fp = fopen($filename, r);
+				// $frow = fgetcsv($fp);
 				
-
+				// $ccount = 0;
+				// foreach($frow as $column) {
+					// $ccount++;
+					
+					// if(isset($columns)) $columns .= , ;					
+					// else $columns="";
+					// $column = trim($column);
+					// $columns .= "`". "$column"."`". " varchar(50)";
+				// }
+				// fclose($fp);
+				$fp = fopen($filename, 'r');
 				$ccount = 0;
-				foreach($frow as $column) {
+				while(! feof($fp))
+				  {
+					$frow = fgetcsv($fp);
+					$arr[] = $frow;
+					if($ccount>=4) :
+					{
+						foreach($frow as $column) {
+							if(isset($columns)) $columns .= ',' ;					
+							else $columns="";
+							$column = trim($column);
+							$columns .= "`". "$column"."`". " varchar(50)";
+						}
+						var_dump($_SESSION);
+						var_dump(transpose($arr));
+						
+						break;
+					}
+					endif;
 					$ccount++;
-					if(isset($columns)) $columns .= ', ';
-					else $columns="";
-					$column = trim($column);
-					$columns .= "`". "$column"."`". " varchar(50)";
+				  }
+				fclose($fp);
+				
+				//below this write an insert statement 
+				$ccount=0;
+				foreach (transpose($arr) as $value) {
+					if($ccount<>0) :
+					{
+						echo "Value: $value[0],$value[1],$value[2],$value[3],$value[4]<br />\n";
+						echo "insert into eda_column_mapping (projectid,edaid,`Column Name`, Brand, Ownership,Variable,`Variable Type`) values ($_SESSION['projectid'],$_SESSION['edaid'],$value[4],$value[0],$value[1],$value[2],$value[3])";
+					}
+					endif;
+					$ccount++;
 				}
 				
 				$create = "create table `$table` ($columns);";
 				echo $create;
+				return;
 				$mysqli->query($create);
 				
 				if($mysqli->error) :
 				{
 					var_dump($mysqli->error );
-					$_SESSION['tablecheck']="DataSet name already exits!";
-					$_SESSION['tablename']=$_POST["dataset"];
+					$_SESSION[tablecheck]="DataSet name already exits!";
+					$_SESSION[tablename]=$_POST["dataset"];
 					header('Location: ../create_eda.php');
 					//header("location:javascript://history.go(-1)");
 					return;
@@ -102,14 +140,14 @@ if (login_check($mysqli) == true) :
 				
 				$file = $_SERVER['CONTEXT_DOCUMENT_ROOT'].'webeda/upload/' . $new;
 				
-				$q_loaddata = "load data infile '$file' into table `$table` fields terminated by ',' ignore 1 lines";
+				$q_loaddata = "load data infile $file into table `$table` fields terminated by , ignore 1 lines";
 				echo $q_loaddata;
 				$mysqli->query($q_loaddata);
 				echo $file;
 				
 				var_dump( $mysqli->error );
 
-				$q_insert_eda= "insert into eda_dataset(datasetname,tablename, projects_id, created_date,modified_date) values ('$dataset','$table',$Projectid,now(),now())";
+				$q_insert_eda= "insert into eda_dataset(datasetname,tablename, projects_id, created_date,modified_date) values ($dataset,$table,$Projectid,now(),now())";
 				$mysqli->query($q_insert_eda);
 							
 				header('Location: ../eda.php');
