@@ -21,8 +21,6 @@ if (login_check($mysqli) == true) :
 		<?php
 		return false;
 		}
-
-
 		$allowedExts = array("csv");
 		$temp = explode(".", $_FILES["file"]["name"]);
 		$extension = end($temp);
@@ -30,129 +28,102 @@ if (login_check($mysqli) == true) :
 		if (in_array($extension, $allowedExts))
 		{
 		  if ($_FILES["file"]["error"] > 0) {
-			echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
-		  } else {
-			//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-			//echo "Type: " . $_FILES["file"]["type"] . "<br>";
-			//echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-			//echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";
+				echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
+		  } 
+		  else {
 			$filename  = basename($_FILES['file']['name']);
 			$extension = pathinfo($filename, PATHINFO_EXTENSION);
 			$new       = $fname.'.'.$extension;
+			move_uploaded_file($_FILES['file']['tmp_name'], "../upload/{$new}");
+			$filename="../upload/" . $new;
+			$file = fopen($filename,"r");
+			fclose($file);
+
+		/********************************************************************************/
+			// Parameters: filename.csv table_name
+			$table = pathinfo($filename);
+			$table = $table['filename'];
+			$Projectid=$_SESSION['projectid'];
+			$dataset=$table;
+			$table=$table."_".$Projectid;
 			
-			//Check whether file exists
-			//if (file_exists("../upload/" . $new)) {
-			//  echo "<br><br><br>".$new . " already exists. ";
-			//} else {
-			  //move_uploaded_file($_FILES["file"]["tmp_name"],
-			  //"upload/" . $_FILES["file"]["name"]);
-			  
-			  move_uploaded_file($_FILES['file']['tmp_name'], "../upload/{$new}");
-			  
-			  
-				$filename="../upload/" . $new;
-				$file = fopen($filename,"r");
-				fclose($file);
 
+			/********************************************************************************/
+			// Get the first row to create the column headings
 
-				/********************************************************************************/
-				// Parameters: filename.csv table_name
-
-
-				$table = pathinfo($filename);
-				$table = $table['filename'];
-				$Projectid=$_SESSION['projectid'];
-				$dataset=$table;
-				$table=$table."_".$Projectid;
-				//}
-
-				/********************************************************************************/
-				// Get the first row to create the column headings
-
-				// $fp = fopen($filename, r);
-				// $frow = fgetcsv($fp);
-				
-				// $ccount = 0;
-				// foreach($frow as $column) {
-					// $ccount++;
-					
-					// if(isset($columns)) $columns .= , ;					
-					// else $columns="";
-					// $column = trim($column);
-					// $columns .= "`". "$column"."`". " varchar(50)";
-				// }
-				// fclose($fp);
-				$fp = fopen($filename, 'r');
-				$ccount = 0;
-				while(! feof($fp))
-				  {
-					$frow = fgetcsv($fp);
-					$arr[] = $frow;
-					if($ccount>=4) :
-					{
-						foreach($frow as $column) {
-							if(isset($columns)) $columns .= ',' ;					
-							else $columns="";
-							$column = trim($column);
-							$columns .= "`". "$column"."`". " varchar(50)";
-						}
-						var_dump($_SESSION);
-						var_dump(transpose($arr));
-						
-						break;
-					}
-					endif;
-					$ccount++;
-				  }
-				fclose($fp);
-				
-				//below this write an insert statement 
-				$ccount=0;
-				foreach (transpose($arr) as $value) {
-					if($ccount<>0) :
-					{
-						echo "Value: $value[0],$value[1],$value[2],$value[3],$value[4]<br />\n";
-						echo "insert into eda_column_mapping (projectid,edaid,`Column Name`, Brand, Ownership,Variable,`Variable Type`) values ($_SESSION['projectid'],$_SESSION['edaid'],$value[4],$value[0],$value[1],$value[2],$value[3])";
-					}
-					endif;
-					$ccount++;
-				}
-				
-				$create = "create table `$table` ($columns);";
-				echo $create;
-				return;
-				$mysqli->query($create);
-				
-				if($mysqli->error) :
+			$fp = fopen($filename, 'r');
+			$ccount = 0;
+			while(! feof($fp))
+			  {
+				$frow = fgetcsv($fp);
+				$arr[] = $frow;
+				if($ccount>=4) :
 				{
-					var_dump($mysqli->error );
-					$_SESSION[tablecheck]="DataSet name already exits!";
-					$_SESSION[tablename]=$_POST["dataset"];
-					header('Location: ../create_eda.php');
-					//header("location:javascript://history.go(-1)");
-					return;
+					foreach($frow as $column) {
+						if(isset($columns)) $columns .= ',' ;					
+						else $columns="";
+						$column = trim($column);
+						$columns .= "`". "$column"."`". " varchar(50)";
+					}
+					//var_dump($_SESSION);
+					//var_dump(transpose($arr));
+					break;
 				}
 				endif;
-				
-				/********************************************************************************/
-				// Import the data into the newly created table.
-				var_dump($_FILES);
-				
-				$file = $_SERVER['CONTEXT_DOCUMENT_ROOT'].'webeda/upload/' . $new;
-				
-				$q_loaddata = "load data infile $file into table `$table` fields terminated by , ignore 1 lines";
-				echo $q_loaddata;
-				$mysqli->query($q_loaddata);
-				echo $file;
-				
-				var_dump( $mysqli->error );
-
-				$q_insert_eda= "insert into eda_dataset(datasetname,tablename, projects_id, created_date,modified_date) values ($dataset,$table,$Projectid,now(),now())";
-				$mysqli->query($q_insert_eda);
-							
-				header('Location: ../eda.php');
+				$ccount++;
+			  }
+			fclose($fp);
 			
-		  }
+			
+			$create = "create table `$table` ($columns);";
+			//echo $create;				
+			$mysqli->query($create);
+			
+			if($mysqli->error) :
+			{
+				var_dump($mysqli->error );
+				//$_SESSION[tablecheck]="DataSet name already exits!";
+				$_SESSION[tablecheck]=$mysqli->error;
+				$_SESSION[tablename]=$_POST["dataset"];
+				header('Location: ../create_eda.php');
+				return;
+			}
+			endif;
+			
+			/********************************************************************************/
+			// Import the data into the newly created table.
+			//var_dump($_FILES);
+			$file = $_SERVER['CONTEXT_DOCUMENT_ROOT'].'webeda/upload/' . $new;
+			$q_loaddata = "load data infile '$file' into table `$table` fields terminated by ',' ignore 5 lines";
+			echo $q_loaddata;
+			$mysqli->query($q_loaddata);
+			echo $file;
+			
+			//var_dump( $mysqli->error );
+
+			$q_insert_eda= "insert into eda_dataset(datasetname,tablename, projects_id, created_date,modified_date) values ('$dataset','$table',$Projectid,now(),now())";
+			$mysqli->query($q_insert_eda);
+			
+			//below this write an insert statement 
+			$ccount=0;
+			$get_edaid_query = "select id from eda_dataset where projects_id=$Projectid and datasetname = '$dataset'";
+			$edaid_arr = $mysqli->query($get_edaid_query);
+			foreach($edaid_arr as $edaid_temp)
+			{
+				$edaid = stripslashes($edaid_temp['id']);
+			}
+			foreach (transpose($arr) as $value) {
+				if($ccount<>0) :
+				{
+					$insert_query = "insert into eda_column_mapping (projectid,edaid,`Column Name`, Brand, Ownership,Variable,`Variable_Type`,created_date,modified_date) values ($_SESSION[projectid],$edaid,'$value[4]','$value[0]','$value[1]','$value[2]','$value[3]',now(),now())";
+					//echo $insert_query;
+					$mysqli->query($insert_query);
+				}
+				endif;
+				$ccount++;
+			}
+			header('Location: ../eda.php');
+			}
 		}
 		else {
 		  echo "<br><br><br> Invalid file : Please upload a csv file";

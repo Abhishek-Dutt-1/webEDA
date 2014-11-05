@@ -3,3 +3,6 @@ Airtel Data/
 database backup/
 Thumbs.db
 sample files/
+*.csv
+*.zip
+*.tar.gz

@@ -43,11 +43,14 @@ if (login_check($mysqli) == true) :
 					echo "NO RESULTS";	
 					}
 				
-			$delete_table = "drop table $tablename";
+			$delete_table = "drop table `$tablename`";
 			$mysqli->query($delete_table);
 
 			$delete_eda = "delete from eda_dataset where id = $EDAid";
 			$mysqli->query($delete_eda);
+			
+			$delete_eda_col_mapping = "delete from eda_column_mapping where edaid = $EDAid";
+			$mysqli->query($delete_eda_col_mapping);
 			
 			
 			header('Location: ../eda.php');

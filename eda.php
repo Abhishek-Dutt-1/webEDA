@@ -38,7 +38,6 @@ $_SESSION['tablename']="";
 				document.getElementById('form1').action = action;
 				document.getElementById('form1').submit();
 			}
-			
 		</script>
 		<script type="text/javascript">
 			function confirm_delete() {

@@ -26,6 +26,7 @@
 				<a href="" class="icon fa-angle-down">Admin</a>
 				<ul>
 					<li><a href="admin.php">User-Project Mapping</a></li>
+					<li><a href="eda_col_map.php">EDA Column Mapping</a></li>
 					<li><a href="color-selection.php">Color Selection</a></li>
 				</ul>
 			</li>

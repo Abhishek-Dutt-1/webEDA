@@ -141,3 +141,46 @@ padding-bottom: 0;
 #senitivityPopbox {
 	margin-top: 50px;
 }
+
+/* COMPARE */
+/* KPI */
+.selectionColumn {
+	float: left;
+}
+.selectionLabels {
+	margin: 20px;
+	text-align: center;
+	height: 55px;
+}
+.selectionSparklineCell {
+	margin: 20px;
+	text-align: center;
+	vertical-align: middle;
+	height: 55px;
+}
+.selectionHeader {
+	text-align: center;
+	/*background-color: lightgrey;*/
+	height: 55px;
+	margin: 20px;
+}
+.selectionAddMore {
+	height: 55px;
+	width: 120px;
+	border: 2px dotted lightgrey;
+	display: table;
+	border-radius: 10px;
+}
+a.selectionAddMoreLink:hover{
+	font-weight: bold;
+	color: grey;
+}
+a.selectionAddMoreLink {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+	border: 0px;
+	color: lightgrey;
+	vertical-align: middle;
+	display: table-cell;
+}

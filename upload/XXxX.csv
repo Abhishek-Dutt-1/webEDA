@@ -1,4 +1,8 @@
-Date,UU in 0000s,PV in 0000s,DD/ GRPs,BHARTI \AIRTEL LTD,VODAFONE ESSAR LTD,Outdoor 14 Days,Outdoor 30 Days,Radio,Radio Spends,Digital Spends,Digital Non Vernacular,Digital Vernacular,Airtel GRPs_Mass,Airtel GRPs_Reg,Airtel GRPs_Sports,Outdoor 45 Days
+Brand,Airtel,Airtel,Airtel,Airtel,Vodafone,Airtel,Airtel,Airtel,Vodafone,Idea,Airtel,Vodafone,Airtel,Idea,Airtel,Airtel
+Ownership,Own,Own,Own,Own,Competition,Own,Own,Own,Competition,Competition,Own,Competition,Own,Competition,Own,Own
+Variable,KPI,KPI,KPI,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver,Driver
+Variable type,Awareness,SOP,Int,TV,Digital,Outdoor,Outdoor,Radio,Radio,Digital,Digital,Digital,TV Mass GRP,TV,TV,Outdoor
+Date,UU in 0000s,PV in 0000s,DD GRPs,BHARTI AIRTEL LTD,VODAFONE ESSAR LTD,Outdoor 14 Days,Outdoor 30 Days,Radio,Radio Spends,Digital Spends,Digital Non Vernacular,Digital Vernacular,Airtel GRPs_Mass,Airtel GRPs_Reg,Airtel GRPs_Sports,Outdoor 45 Days
 19-Apr-13,4.6,15.5,0,1,83,0,0,0,0,0,0,0,0,1,0,0
 20-Apr-13,4.4,13.9,0,2,108,0,0,0,0,0,0,0,1,0,1,0
 21-Apr-13,13.6,55,0,85,176,0,0,0,0,0,0,0,1,0,85,0
