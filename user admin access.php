@@ -15,7 +15,7 @@ sec_session_start();
 -->
 <html>
 	<head>
-		<title>Admin Panel</title>
+		<title>User Role</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
@@ -36,9 +36,11 @@ sec_session_start();
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<script>
-			function showUser(str) {
+			
+			function showUserRole(str) {
+				
 			  if (str=="") {
-				document.getElementById("txtHint").innerHTML="";
+				document.getElementById("get_user_role").innerHTML="";
 				return;
 			  } 
 			  if (window.XMLHttpRequest) {
@@ -49,11 +51,21 @@ sec_session_start();
 			  }
 			  xmlhttp.onreadystatechange=function() {
 				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-				  document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+				  document.getElementById("get_user_role").innerHTML=xmlhttp.responseText;
+				  
 				}
 			  }
-			  xmlhttp.open("GET","includes/getuserprojects.php?q="+str,true);
+			  xmlhttp.open("GET","includes/get_user_role.php?q="+str,true);
+			  
 			  xmlhttp.send();
+			  console.log(str);
+			}
+			
+		</script>
+		
+		<script type="text/javascript">
+			function confirm_delete() {
+				return confirm("Are you sure you wish to delete this user?");
 			}
 		</script>
 
@@ -67,71 +79,55 @@ sec_session_start();
 			
 			<!-- Main -->
 			<section id="main" class="container">
-				<header>
-					<h2>Admin Panel</h2>
-					<p>Grant or Revoke access to users</p>
-				</header>
+				
 				<div class="row">
 					<div class="12u">
-
 						<!-- Text -->
 							<section class="box">
-								<form method="post" action="includes/grant_revoke.php">
-									<h3>Please select the user and Project to grant/revoke access to the user</h3>
+								<form method="post" action="includes/set user role.php">
+									<h3>Set the User Role</h3>
 									<hr />
 									<div class="row uniform half">
 										<div class="8u">
 											<div class="select-wrapper">
 											
-												<select name="user" id="user" onchange="showUser(this.value)">
-													<option value="">- User -</option>
+												<select name="user" id="user" onchange="showUserRole(this.value)">
+													<option value="">- Select the User -</option>
 													<?php
-														$q_GetUsers="SELECT m.id,m.username FROM  members m";				
+														$q_GetUsers="SELECT id,username,role FROM members WHERE username <> 'admin'";				
 														$result = $mysqli->query($q_GetUsers);
 														foreach ( $result as $row) 
 																{
-																$username = stripslashes($row['username']);
-																$userid = stripslashes($row['id']);
-																?><option value=<?php echo $userid;?>><?php echo $username;?></option><?php
+																$UserName = stripslashes($row['username']);
+																$UserId = stripslashes($row['id']);
+																?><option value=<?php echo $UserId;?>><?php echo $UserName;?></option><?php
 																}
 													?>
 												</select>
 											</div>
 											<br>
 											
-											<div class="select-wrapper">
-												<select name="project" id="project">
-													<option value="">- Project -</option>
-													<?php
-														$q_GetProjects="SELECT p.id,p.name FROM  projects p";				
-														$result = $mysqli->query($q_GetProjects);
-														foreach ( $result as $row) 
-																{
-																$projectname = stripslashes($row['name']);
-																$projectid = stripslashes($row['id']);
-																?><option value=<?php echo $projectid;?>><?php echo $projectname;?></option><?php
-																}
-													?>
-												</select>
+											<div class="row uniform">
+												<div class="8u">
+														<div id="get_user_role"></div>
+												</div>
 											</div>
 											<br>
 											<div class="row uniform">
 												<div class="12u">
 													<ul class="actions">
-														<li><input type="submit" value="Grant Access" class="special" name="Action"/></li>
-														<li><input type="submit" value="Revoke Access" class="alt" name="Action" /></li>
+														<li><input type="submit" value="Change Role" name="Action" class="button special"/></li>
+														<li><input type="submit" value="Delete User" onclick="return confirm_delete();" name="Action" /></li>
+														<li><input type="reset" value="Cancel" class="alt" name="Action" /></li>
 													</ul>
 												</div>
 											
-									</div>
-									<br>
-									<div id="txtHint"></b></div>
+											</div>
+									
 										</div>
-										
 									</div>
 								</form>
 							</section>
-							
 					</div>
 				</div>
 			</section>

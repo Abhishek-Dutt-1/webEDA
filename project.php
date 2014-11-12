@@ -4,6 +4,9 @@ include_once 'includes/functions.php';
  
 sec_session_start();
 $_SESSION['projectid']="";
+$_SESSION['edaId']="";
+$_SESSION['selectedEDA']="";
+$_SESSION['EDADatePeriod'] = "";
 
 ?>
 <!DOCTYPE html>
@@ -51,9 +54,9 @@ $_SESSION['projectid']="";
             <!-- Header -->
 			<?php include 'includes/MainMenu.php'; ?>
 			
-					
+			
+			
 			<section id="main" class="container"> 
-				
 				<div class="row">
 					<div class="12u">
 
@@ -68,13 +71,14 @@ $_SESSION['projectid']="";
 					</div>
 				</div>
 				
+				
 				<section class="box">
 					<form action="includes/delete_project.php" method="post" name="form1" >
 						<h3>Select a Project</h3>
 						<table class="alt">
 						<?php 
 								$userid=$_SESSION['user_id'];
-								$q_GetProjects="SELECT p.id,p.name FROM projects p, mapping_members_projects map, members m WHERE p.id = map.projects_id AND m.id = map.members_id AND m.id = '$userid'";				
+								$q_GetProjects="SELECT distinct p.id,p.name FROM projects p, mapping_members_projects map, members m WHERE p.id = map.projects_id AND m.id = map.members_id AND m.id = '$userid'";				
 								$result = $mysqli->query($q_GetProjects);
 								foreach ( $result as $row)
 										{
@@ -90,11 +94,12 @@ $_SESSION['projectid']="";
 						</table>
 						<input type="submit" class="button" onclick="submitForm('eda.php')" value="OK" name="Action">
 						<input type="submit" class="button special" onclick="return confirm_delete();" onsubmit="return confirm('Are you sure you want to delete this project?');" value="Delete" name="Action">
-						<a href="index.html" class="button alt">Cancel</a>
+						<a href="index.php" class="button alt">Cancel</a>
 				
 					</form>
 				</section>
 			</section>
+			
 			
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>

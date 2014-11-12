@@ -6,7 +6,7 @@ include_once 'functions.php';
  
 sec_session_start();
 if (login_check($mysqli) == true) :
-		var_dump($_POST);
+		//var_dump($_POST);
 		
 		$projectid = $_POST['project'];
 		$brandname = $_POST['name'];

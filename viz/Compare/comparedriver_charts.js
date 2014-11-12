@@ -12,33 +12,32 @@ function compareDataLoaded(data) {
 
 	// Get unique brand names
 	tableData.brands = getUniqueBrands();
-	// Get unique KPI names
+	// Get unique DRIVER names
 	tableData.brands.forEach( function(el, i, arr) {
-		arr[i].kpis = getUniqueKPIs();	// Even the missing ones
+		arr[i].drivers = getUniqueDRIVERs();	// Even the missing ones
 	});
-
-	// Get data for each kpi
-	getBrandKPIData();
+	// Get data for each driver
+	getBrandDRIVERData();
 	// Fill the info array within driver with empty so all are of equal length
-	//console.log( countMaxInfoArray() );
 	augmentInfoArray( countMaxInfoArray() );
-	
+
+
 	// Add time data
 	tableData.time = allData.time;
 	// Store Variable Types (in same order as above) separately for easy display as table labels in first columns
-	//tableData.varTypes = getUniqueKPIs();
-	tableData.varTypes = augmentVarTypesArray( getUniqueKPIs(), countMaxInfoArray() );
+	tableData.varTypes = augmentVarTypesArray( getUniqueDRIVERs(), countMaxInfoArray() );
 
 	// Initialize with all data
 	selectionData = JSON.parse(JSON.stringify(tableData));
 	//selectionData = tableData;
-	//console.log(tableData);
+	console.log(tableData);
 	
 	var str = '';
 	tableData.brands.forEach( function(el) {
 		str += '<a href="#" class="button special fit" onclick="selectionAddBrand(\'' + el.brand + '\'); return false;">' + el.brand + '</a>';
 	});
 	document.getElementById('selectTableVariablesList').innerHTML = str;
+	console.log(tableData.brands);
 	// Initial Load
 	updateSelectionTable();
 }
@@ -48,7 +47,7 @@ function drawSparkLineChart(data) {
 
 	$( '#'+ data.VarNameId).highcharts({
         chart: {
-			type: 'area',
+			//type: 'SparkLine',
             zoomType: 'x',
 			backgroundColor: null,
 			borderWidth: 0,
@@ -135,7 +134,7 @@ function drawSparkLineChart(data) {
 		},
         series: [{
             name: data.VarName,
-            //type: 'line',
+            type: 'column',
             data: data.data,
 			color: data.color,
 			zIndex: 1
@@ -143,10 +142,11 @@ function drawSparkLineChart(data) {
 		credits: false
     });
 }
-// Get all unique brands in the KPI data 
+
+// Get all unique brands in the DRIVER data 
 function getUniqueBrands() {
 	var brands = [];
-	allData.KPI.forEach( function(el) {
+	allData.DRIVER.forEach( function(el) {
 		brands.push(el.Brand);
 	});
 	// Remove duplicates
@@ -157,60 +157,61 @@ function getUniqueBrands() {
 	});	
 	return brandsObj;
 }
-// Get all unique KPI across all brands 
-function getUniqueKPIs() {
-	var kpis = [];
-	allData.KPI.forEach( function(el) {
-		kpis.push(el.Variable_Type);
+
+// Get all unique DRIVER across all brands 
+function getUniqueDRIVERs() {
+	var drivers = [];
+	allData.DRIVER.forEach( function(el) {
+		drivers.push(el.Variable_Type);
 	});
 	// Remove duplicates
-	kpis = kpis.filter(function (v, i, a) { return a.indexOf(v) == i });
-	var kpisObj = [];
-	kpis.forEach( function(el) {
-		kpisObj.push({kpi: el});
+	drivers = drivers.filter(function (v, i, a) { return a.indexOf(v) == i });
+	var driversObj = [];
+	drivers.forEach( function(el) {
+		driversObj.push({driver: el});
 	});	
-	return kpisObj;
+	return driversObj;
 }
-// Get all unique KPI only for selected brands
-function getSelectedUniqueKPIs() {
-	var kpis = [];
-	allData.KPI.forEach( function(el) {
+// Get all unique DRIVER only for selected brands
+function getSelectedUniqueDRIVERs() {
+	var drivers = [];
+	allData.DRIVER.forEach( function(el) {
 		selectionData.brands.forEach( function(e) {
 			if(e.brand == el.Brand) {
-				kpis.push(el.Variable_Type);
+				drivers.push(el.Variable_Type);
 			}
 		});
 	});
 	// Remove duplicates
-	kpis = kpis.filter(function (v, i, a) { return a.indexOf(v) == i });
-	var kpisObj = [];
-	kpis.forEach( function(el) {
-		kpisObj.push({kpi: el});
+	drivers = drivers.filter(function (v, i, a) { return a.indexOf(v) == i });
+	var driversObj = [];
+	drivers.forEach( function(el) {
+		driversObj.push({driver: el});
 	});	
-	return kpisObj;
+	return driversObj;
 }
-// Function get all KPI grouped by Brands
-function getBrandKPIData() {
+// Function get all DRIVER grouped by Brands
+function getBrandDRIVERData() {
 	var brands = [];
 	tableData.brands.forEach( function(elem, ind, arr) {
-		elem.kpis.forEach( function(el, i, a) {
-			arr[ind].kpis[i].info = allData.KPI.filter( function(e) { return (e.Brand == elem.brand && e.Variable_Type == el.kpi); } );
-			arr[ind].kpis[i].info.forEach( function(tmp, index, tmpArray) {
+		elem.drivers.forEach( function(el, i, a) {
+			arr[ind].drivers[i].info = allData.DRIVER.filter( function(e) { return (e.Brand == elem.brand && e.Variable_Type == el.driver); } );
+			arr[ind].drivers[i].info.forEach( function(tmp, index, tmpArray) {
 				tmpArray[index].VarNameId = tmp.VarName.replace( /[^\w\d]/g, "_") + "_" + ind + "_" + i + "_" + index;
 			});
 		});
 	});
 }
-// Function get all KPI grouped by Brands for selected brands only
-function getSelectedBrandKPIData() {
+// Function get all DRIVER grouped by Brands for selected brands only
+function getSelectedBrandDRIVERData() {
 	console.log(selectionData.brands);
 	selectionData.brands.forEach( function(elem, ind, arr) {
-		elem.kpis.forEach( function(el, i, a) {
-			arr[ind].kpis[i].info = allData.KPI.filter( function(e) { return (e.Brand == elem.brand && e.Variable_Type == el.kpi); } );
-			arr[ind].kpis[i].info.forEach( function(tmp, index, tmpArray) {
+		elem.drivers.forEach( function(el, i, a) {
+			arr[ind].drivers[i].info = allData.DRIVER.filter( function(e) { return (e.Brand == elem.brand && e.Variable_Type == el.driver); } );
+			arr[ind].drivers[i].info.forEach( function(tmp, index, tmpArray) {
 				//tmpArray[index].VarNameId = tmp.VarName.replace( /[^\w\d]/g, "_") + "_" + ind + "_" + i + "_" + index;
-				selectionData.brands[ind].kpis[i].info[index].VarNameId = "_" + ind + "_" + i + "_" + index; //tmp.VarName.replace( /[^\w\d]/g, "_") + "_" + ind + "_" + i + "_" + index;
-				console.log(selectionData.brands[ind].kpis[i].info[index].VarNameId);
+				selectionData.brands[ind].drivers[i].info[index].VarNameId = "_" + ind + "_" + i + "_" + index; //tmp.VarName.replace( /[^\w\d]/g, "_") + "_" + ind + "_" + i + "_" + index;
+				console.log(selectionData.brands[ind].drivers[i].info[index].VarNameId);
 			});
 		});
 	});
@@ -221,18 +222,18 @@ function getSelectedBrandKPIData() {
 // Only runs ones 
 function countMaxInfoArray() {
 	var maxCount = [];	// [ 0:{driver: var_type, maxCount: maxCount}, ... ]
-	var maxCount = getUniqueKPIs();
+	var maxCount = getUniqueDRIVERs();
 	var tmpMaxCount = [];
-	// Augment info array with emptys
+	// Augment info array with emptys 
 	tableData.brands.forEach( function(brand, i, arr) {
-		brand.kpis.forEach( function(kpi) {
+		brand.drivers.forEach( function(driver) {
 			//console.log( driver.driver + " :: " + driver.info.length );
 			for ( i = 0; i < maxCount.length; i++) {
-				if(maxCount[i].kpi == kpi.kpi) {
+				if(maxCount[i].driver == driver.driver) {
 					if (maxCount[i].maxCount) {
-						maxCount[i].maxCount = maxCount[i].maxCount > kpi.info.length ? maxCount[i].maxCount : kpi.info.length;
+						maxCount[i].maxCount = maxCount[i].maxCount > driver.info.length ? maxCount[i].maxCount : driver.info.length;
 					} else {
-						maxCount[i].maxCount = kpi.info.length;
+						maxCount[i].maxCount = driver.info.length;
 					}
 				}
 			}
@@ -244,18 +245,18 @@ function countMaxInfoArray() {
 // Fill the selection info array within driver with empty so all are of equal length
 function selectionCountMaxInfoArray() {
 	var maxCount = [];	// [ 0:{driver: var_type, maxCount: maxCount}, ... ]
-	var maxCount = getSelectedUniqueKPIs();
+	var maxCount = getSelectedUniqueDRIVERs();
 	var tmpMaxCount = [];
 	// Augment info array with emptys 
 	selectionData.brands.forEach( function(brand, i, arr) {
-		brand.kpis.forEach( function(kpi) {
-			console.log( kpi.kpi + " :: " + kpi.info.length );
+		brand.drivers.forEach( function(driver) {
+			console.log( driver.driver + " :: " + driver.info.length );
 			for ( i = 0; i < maxCount.length; i++) {
-				if(maxCount[i].kpi == kpi.kpi) {
+				if(maxCount[i].driver == driver.driver) {
 					if (maxCount[i].maxCount) {
-						maxCount[i].maxCount = maxCount[i].maxCount > kpi.info.length ? maxCount[i].maxCount : kpi.info.length;
+						maxCount[i].maxCount = maxCount[i].maxCount > driver.info.length ? maxCount[i].maxCount : driver.info.length;
 					} else {
-						maxCount[i].maxCount = kpi.info.length;
+						maxCount[i].maxCount = driver.info.length;
 					}
 				}
 			}
@@ -267,16 +268,15 @@ function selectionCountMaxInfoArray() {
 ///// Only runs ones
 function augmentInfoArray(maxCount) {
 	//console.log(tableData);
-	//console.log(maxCount);
 	tableData.brands.forEach( function(brand, index, arr) {
-		brand.kpis.forEach( function(kpi, ind, arr2) {
+		brand.drivers.forEach( function(driver, ind, arr2) {
 			for (i=0; i < maxCount.length; i++) {
-				if (maxCount[i].kpi == kpi.kpi) {
-					//console.log(tableData.brands[index].kpis[ind].info.length);
+				if (maxCount[i].driver == driver.driver) {
+					//console.log(tableData.brands[index].drivers[ind].info.length);
 					//console.log(maxCount[i]);
-					//console.log( kpi.kpi + " :: " + kpi.info.length );
-					while( tableData.brands[index].kpis[ind].info.length < maxCount[i].maxCount) {
-						tableData.brands[index].kpis[ind].info.push({Brand: false});
+					//console.log( driver.driver + " :: " + driver.info.length );
+					while( tableData.brands[index].drivers[ind].info.length < maxCount[i].maxCount) {
+						tableData.brands[index].drivers[ind].info.push({Brand: false});
 						//console.log("-----");
 					}					
 				}
@@ -289,14 +289,14 @@ function augmentInfoArray(maxCount) {
 function selectionAugmentInfoArray(maxCount) {
 	console.log(tableData);
 	selectionData.brands.forEach( function(brand, index, arr) {
-		brand.kpis.forEach( function(kpi, ind, arr2) {
+		brand.drivers.forEach( function(driver, ind, arr2) {
 			for (i=0; i < maxCount.length; i++) {
-				if (maxCount[i].kpi == kpi.kpi) {
-					console.log(tableData.brands[index].kpi[ind].info.length);
+				if (maxCount[i].driver == driver.driver) {
+					console.log(tableData.brands[index].drivers[ind].info.length);
 					console.log(maxCount[i]);
-					console.log( kpi.kpi + " :: " + kpi.info.length );
-					while( selectionData.brands[index].kpi[ind].info.length < maxCount[i].maxCount) {
-						selectionData.brands[index].kpi[ind].info.push({Brand: false});
+					console.log( driver.driver + " :: " + driver.info.length );
+					while( selectionData.brands[index].drivers[ind].info.length < maxCount[i].maxCount) {
+						selectionData.brands[index].drivers[ind].info.push({Brand: false});
 						console.log("-----");
 					}					
 				}
@@ -311,13 +311,12 @@ function augmentVarTypesArray(varTypesArray, maxCountArray) {
 	var varTypes = [];
 	maxCountArray.forEach( function(varType) {
 		for (i=0; i < varType.maxCount; i++) {
-			varTypes.push({kpi: varType.kpi});
+			varTypes.push({driver: varType.driver});
 		}
 	});
 	//console.log(varTypes);
 	return varTypes;
 }
-
 // UI remove a brand from table
 function selectionRemoveBrand( brandId ) {
 	/*
@@ -349,24 +348,24 @@ function selectionAddBrand(brandToAdd) {
 	
 	// Get unique brand names
 	selectionData.brands[addNewBrandToIndex] = {brand: brandToAdd};
-	// Get unique KPI names
+	// Get unique DRIVER names
 	selectionData.brands.forEach( function(el, i, arr) {
-		arr[i].kpis = getSelectedUniqueKPIs();	// Even the missing ones
+		arr[i].drivers = getSelectedUniqueDRIVERs();	// Even the missing ones
 	});
-	// Get data for each kpi
-	getSelectedBrandKPIData();
+	// Get data for each driver
+	getSelectedBrandDRIVERData();
 	console.log(selectionData);
+
+	// Fill the info array within driver with empty so all are of equal length
+	//console.log(selectionCountMaxInfoArray());
+	selectionAugmentInfoArray( selectionCountMaxInfoArray() );
 	
 	// Add time data
 	selectionData.time = allData.time;
 	// Store Variable Types (in same order as above) separately for easy display as table labels in first columns
-	selectionData.varTypes = getSelectedUniqueKPIs();
-	//console.log(brandToAdd);
-	//console.log( tableData );
-	//getSelectedBrandKPIData();
-	//console.log( tableData.brands.filter( function (el) { return el.brand == brandToAdd; }) );
-	//selectionData.brands[addNewBrandToIndex] = tableData.brands.filter( function (el) { return el.brand == brandToAdd; })[0];
-	//console.log(selectionData);
+	//selectionData.varTypes = getSelectedUniqueDRIVERs();
+	selectionData.varTypes = augmentVarTypesArray( getSelectedUniqueDRIVERs(), selectionCountMaxInfoArray() );
+	
 	updateSelectionTable();
 	
 	$('#selectTableVariable').bPopup().close();
@@ -402,84 +401,16 @@ function updateSelectionTable() {
 		
 	// Create individual charts
 	selectionData.brands.forEach( function(brand, ind) {
-		if(brand.kpis) {
-			brand.kpis.forEach( function(kpi, i) {
-				kpi.info.forEach( function(data, index) {
+		if(brand.drivers) {
+			brand.drivers.forEach( function(driver, i) {
+				driver.info.forEach( function(data, index) {
 					drawSparkLineChart(data);
 				});
 			});
 		}
 	});
 }
-///////////////////
-// Show a popup with a one chart with given varTypes of all brands
-// Assumption: Only one varType variable per brand
-function displayChartPopup(varType) {
-	console.log(varType);
-	console.log(selectionData);
-	var chartData = [];
-	selectionData.brands.forEach( function(brand) {
-		if(brand.brand) {	// since any unselected brand will have brand.brand false
-			brand.kpis.forEach( function(kpi) {
-				if( kpi.kpi == varType ) {
-					// Ideally there should be only one varType variable per brand, so [0] should no be a problem
-					chartData.push(kpi.info[0]);
-				}
-			});
-		}
-	});
-	updatePopupKPIChart(selectionData.time, chartData, varType);
-	console.log(chartData);
-	$('#chartPopup').bPopup({
-		speed: 100
-	});
-}
-// populate pop-up chart
-function updatePopupKPIChart(time, chartData, varType) {
-	
-	var chartSeries = [];
-	var brandString = '';
-	chartData.forEach( function(el) {
-		chartSeries.push({
-			name: el.VarName,
-            data: el.data,
-			color: el.color
-		});
-		brandString += el.Brand + " ";
-	});
-	
-    $('#combinedKPIChart').highcharts({
-		chart: {
-			zoomType: 'x',
-			height: 400,
-			width: 800
-		},
-        title: {
-            text: varType,
-        },
-        xAxis: {
-            categories: time.data,
-			labels: { rotation: -45, maxStaggerLines: 0, step: 2 }			
-        },
-        yAxis: {
-            title: {
-                text: varType
-            },
-        },
-        tooltip: {
-			shared: true
-        },
-        legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom',
-            borderWidth: 0
-        },
-        series: chartSeries,
-		credits: false
-    });
 
-}
 /////////////////// INIT
 $( document ).ready(function() {
 
@@ -487,7 +418,7 @@ $( document ).ready(function() {
 	console.log("projectId " + projectId);
 
 	$.get( "viz/Compare/Compare.php", { edaId: edaId, projectId: projectId }, compareDataLoaded, "json" ).fail( function(err) {
-		console.log("Compare KPI Charts ERROR!");
+		console.log("Compare DRIVER Charts ERROR!");
 		console.log(err);
 	});
 

@@ -1,4 +1,5 @@
 upload/
+upload/*.csv
 Airtel Data/
 database backup/
 Thumbs.db

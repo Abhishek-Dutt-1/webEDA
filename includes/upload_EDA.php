@@ -53,6 +53,8 @@ if (login_check($mysqli) == true) :
 
 			$fp = fopen($filename, 'r');
 			$ccount = 0;
+			//Mention all the characters that needs to be replaced, here
+			$patterns=array('/"/','/\'/');
 			while(! feof($fp))
 			  {
 				$frow = fgetcsv($fp);
@@ -62,7 +64,7 @@ if (login_check($mysqli) == true) :
 					foreach($frow as $column) {
 						if(isset($columns)) $columns .= ',' ;					
 						else $columns="";
-						$column = trim($column);
+						$column = preg_replace($patterns, '', trim($column));
 						$columns .= "`". "$column"."`". " varchar(50)";
 					}
 					//var_dump($_SESSION);
@@ -112,12 +114,16 @@ if (login_check($mysqli) == true) :
 			{
 				$edaid = stripslashes($edaid_temp['id']);
 			}
+			
+			
 			foreach (transpose($arr) as $value) {
 				if($ccount<>0) :
 				{
-					$insert_query = "insert into eda_column_mapping (projectid,edaid,`Column Name`, Brand, Ownership,Variable,`Variable_Type`,created_date,modified_date) values ($_SESSION[projectid],$edaid,'$value[4]','$value[0]','$value[1]','$value[2]','$value[3]',now(),now())";
+					$cleaned_col_name = preg_replace($patterns, '', trim($value[4]));
+					$insert_query = "insert into eda_column_mapping (projectid,edaid,`Column Name`, Brand, Ownership,Variable,`Variable_Type`,created_date,modified_date) values ($_SESSION[projectid],$edaid,'$cleaned_col_name','$value[0]','$value[1]','$value[2]','$value[3]',now(),now())";
 					//echo $insert_query;
 					$mysqli->query($insert_query);
+					
 				}
 				endif;
 				$ccount++;

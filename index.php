@@ -54,6 +54,10 @@ $_SESSION['tablename']="";
 					<h2>M:Modeler</h2>
 					<p>Another fine tool by Madison Business Analytics.</p>
 					<ul class="actions">
+						<li><img src="images/Airtel Logo.png" id="logo" height="50" width="150" /></li>
+						<li><img src="images/Madison Logo.png" id="logo" height="50" width="150" style="top:position:relative"/></li>
+					</ul>
+					<ul class="actions">
 						<li><a href="Login.php" class="button special">Login</a></li>
 						<li><a href="learn more.php" class="button">Learn More</a></li>
 					</ul>
@@ -61,7 +65,6 @@ $_SESSION['tablename']="";
 
 			<!-- Main -->
 				<section id="main" class="container">
-			
 					<section class="box special">
 						<header class="major">
 							<h2>Introducing the ultimate WEBTOOL
@@ -69,30 +72,31 @@ $_SESSION['tablename']="";
 							for analyzing your business</h2>
 							<p>The EDA approach is precisely that--an approach--not a set of techniques, but an attitude/philosophy about how a data analysis should be carried out.</p>
 						</header>
-						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					<!--	<span class="image featured"><img src="images/pic01.jpg" alt="" /></span> -->
 					</section>
-							
+					
 					<section class="box special features">
+					<h3>Features</h3>
 						<div class="features-row">
 							<section>
-								<span class="icon major fa-bolt accent2"></span>
+								<span class="icon major fa-lock accent5"></span>
 								<h3>Security</h3>
 								<p>Powered by MD5 encryption methodology.</p>
 							</section>
 							<section>
-								<span class="icon major fa-area-chart accent3"></span>
+								<span class="icon major fa-cloud accent4"></span>
 								<h3>Easy upload</h3>
 								<p>Uploading of data cannot get anymore easier than this. Simply select a <i>.csv</i> file and upload.</p>
 							</section>
 						</div>
 						<div class="features-row">
 							<section>
-								<span class="icon major fa-cloud accent4"></span>
+								<span class="icon major fa-area-chart accent3"></span>
 								<h3>Exploratory Data Analysis</h3>
 								<p>See what your data says by viewing the state of the art visual components.</p>
 							</section>
 							<section>
-								<span class="icon major fa-lock accent5"></span>
+								<span class="icon major fa-line-chart accent2"></span>
 								<h3>Models</h3>
 								<p>Analyse the models graphically</p>
 							</section>
@@ -148,6 +152,6 @@ $_SESSION['tablename']="";
 				</section> -->
 				
 			<!-- Footer -->
-			<?php include 'includes/footer.php'; ?>
+			<?php //include 'includes/footer.php'; ?>
 	</body>
 </html>

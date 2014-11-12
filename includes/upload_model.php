@@ -71,11 +71,14 @@ if (login_check($mysqli) == true) :
 				
 
 				$ccount = 0;
+				//Mention all the characters that needs to be replaced, here
+				$patterns=array('/"/','/\'/');
 				foreach($frow as $column) {
 					$ccount++;
 					if(isset($columns)) $columns .= ', ';
 					else $columns="";
-					$columns .= "`". "$column"."`". " varchar(50)";
+						$column = preg_replace($patterns, '', trim($column));
+						$columns .= "`". "$column"."`". " varchar(50)";
 				}
 
 				$create = "create table  `$table` ($columns);";
@@ -85,7 +88,7 @@ if (login_check($mysqli) == true) :
 				if($mysqli->error) :
 				{
 					var_dump($mysqli->error );
-					$_SESSION['tablecheck']="DataSet name already exits!";
+					$_SESSION['tablecheck']=$mysqli->error;
 					$_SESSION['tablename']=$_POST["dataset"];
 					header('Location: ../create_model.php');
 					return;

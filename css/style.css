@@ -10,7 +10,9 @@
 /* Basic */
 
 	body {
-		background: #f5f5f5;
+		/*background: #f5f5f5;
+		background: #DAA3A3;*/
+		background: #666;
 	}
 
 	body, input, select, textarea {
@@ -986,7 +988,8 @@
 	@keyframes reveal-header { 0% { top: -5em; } 100% { top: 0; } }
 
 	#header {
-		background: #444;
+		/*background: #444;*/
+		background: #C00101;
 		color: #bbb;
 		cursor: default;
 		height: 3.25em;
@@ -1315,9 +1318,15 @@
 /* Footer */
 
 	#footer {
-		background: #f0f0f0;
-		padding: 4em 0 6em 0;
-		text-align: center;
+		background: #FFF;
+		padding: 0 0 3em 0;
+		/*text-align: center;*/
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 30px;
+		
 	}
 
 		#footer .icons a {
@@ -1337,10 +1346,26 @@
 			color: #999;
 			font-size: 0.9em;
 			line-height: 1em;
-			margin: 2em 0 0 0;
+			margin: 0.5em 0 0 0;
 			padding: 0;
 			text-align: center;
 		}
+		
+		#footer .left  
+		{  
+		  float:left;  
+		  width: 100px;  
+		}  
+		#footer .central  
+		{  
+			margin-left: 100px;
+			margin-right: 100px;
+		}  
+		#footer .right  
+		{  
+		  float:right;  
+		  width: 100px;  
+		}  
 
 			#footer .copyright a {
 				color: inherit;

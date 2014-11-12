@@ -22,6 +22,9 @@ sec_session_start();
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="viz/Highcharts/js/highcharts.js"></script>
+		<script src="viz/Highcharts/js/highcharts-more.js"></script>
+		<script src="viz/Highcharts/js/modules/solid-gauge.js"></script>
+		
 
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -51,10 +54,16 @@ sec_session_start();
 							<?php include 'viz/compareButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
-									<h3>Compare KPI</h3>
+									<div style="margin: 100px 0 70px 0;">
+										<h3 style="width: 30%; float: left; position: relative; top: 20px;">Compare WoA</h3>										
+										<div id="thresholdInputsOuter">
+										</div>
+									</div>
 									<div id="compareOuterDiv">
-<div id="selectionTableContainer">
-</div>
+										<div style="clear: both;"></div>
+										<div id="selectionTableContainer">
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -78,11 +87,9 @@ sec_session_start();
 	<div class="selectionColumn selectionLabelsColumn">
 		<div class="selectionLabelsFirst"></div> <!-- upper left empty cell-->
 	{#varTypes}
-		<div class="selectionLabels">
-		<div class="selectionLabelsInner">
-			{kpi}
-		</div>
-		</div>
+		<div class="selectionLabels"><div class="selectionLabelsInner">
+			{driver}
+		</div></div>
 	{/varTypes}
 	</div>
 	{#brands}
@@ -91,42 +98,41 @@ sec_session_start();
 			<div class="selectionHeader"><div class="selectionHeaderInner">
 				{brand} <a href="#" onclick="selectionRemoveBrand('{$idx}'); return false;">x</a>
 			</div></div>
-			{#kpis}
-				<div class="selectionSparklineCell">
-				<div class="selectionSparklineCellInner">
+			{#drivers}
+				<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
 				{#info}
 					{?Brand}
 						<div id="{VarNameId}">
 						</div>
 						<div class="selectionVarName">{VarName}</div>
 						{:else}
-						<div>-</div>
+						<div class="selectionEmptyCell">-</div>
 					{/Brand}
 				{/info}
-				</div>
-				</div>
-			{/kpis}
+				</div></div>
+			{/drivers}
 			{:else}
 			<div class="selectionHeader">
 				<div class="selectionAddMore">
-					<a href="#" onclick="selectionShowAddPopup('{$idx}'); return false;" class="selectionAddMoreLink">Add Brand</a>
+					<a href="#" onclick="selectionShowAddPopup({$idx}); return false;" class="selectionAddMoreLink">Add Brand</a>
 				</div>
 			</div>
 			{/brand}
 		</div>
 	{/brands}
-		<div class="selectionColumn selectionLabelsColumn" style="border: 0px solid;">
-			<div class="selectionLabelsFirst" style="border: 0px solid;"></div> <!-- upper left empty cell-->
-			{#varTypes}
-				<div class="selectionLabels">
-				<div class="selectionLabelsInner" style="border: 0px solid;">
-					<a href="#" class="button special small" onclick="displayChartPopup('{kpi}'); return false;">Combine</a>					
-				</div>
-				</div>
-			{/varTypes}
+	</div>
+	</div>
+</script>
+<!-- template -->
+<script type="text/x-template" id="diagnosticsThresholdInputsTemplate">
+<div style="margin: 0 0px 20px 0; overflow: hidden;">
+	{#varTypes}
+		<div style="float: right; width: 90px; margin: 0 5px;">
+			<div style="font-size: 12px; text-align: center;">{varType}</div>		
+			<input type="text" id="{varTypeId}" style="height: 30px; font-size: 12px;" value="10" onchange="updateSelectionTable();">
 		</div>
-	</div>
-	</div>
+	{/varTypes}
+</div>
 </script>
 
 <div id="selectTableVariable">
@@ -136,17 +142,12 @@ sec_session_start();
 		</div>
 	</div>
 </div>
-<div id="chartPopup">
-	<div id="chartPopupInner">
-		<div id="combinedKPIChart">
-		</div>
-	</div>
-</div>
+
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>
 		<script src="viz/libs/bPopup/jquery.bpopup.min.js"></script>
-		<script src="viz/Compare/comparekpi_charts.js"></script>
+		<script src="viz/Compare/comparediagnostics_charts.js"></script>
 		
     </body>
 </html>

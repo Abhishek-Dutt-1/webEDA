@@ -5,7 +5,8 @@ include_once 'includes/functions.php';
 sec_session_start();
 $_SESSION['tablecheck']="";
 $_SESSION['tablename']="";
-
+$_SESSION['selectedEDA']="";
+$_SESSION['EDADatePeriod']="";
 
 ?>
 <!DOCTYPE html>
@@ -61,6 +62,7 @@ $_SESSION['tablename']="";
 								{ ?>
 									<p>
 										<span class="error">Oops!! </span> Please <a href="Project.php">Select Project</a>.
+										
 									</p>
 								<?php return;
 								}

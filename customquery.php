@@ -1,7 +1,7 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
- 
+
 sec_session_start();
 
 ?>
@@ -22,8 +22,6 @@ sec_session_start();
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="viz/Highcharts/js/highcharts.js"></script>
-		<script src="viz/Highcharts/js/modules/exporting.js"></script>	
-		
 		<script src="viz/highcharts-regression.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -43,28 +41,44 @@ sec_session_start();
 			<?php include 'includes/MainMenu.php'; ?>
 					
 			<section id="main" class="container">
-				<header  style="display: none;">
-					<h2>EDA Charts</h2>
-					<p>Select from the list of eda below.</p>
-				</header>
 				<div class="row">
 					<div class="12u">
-
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
 							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="Charts.php">Bivariates</a>
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
 							</div>
-							<?php include 'viz/chartButtons.php' ?>
+							<?php include 'viz/compareButtons.php' ?>
 							<div style="clear: both;">
-								<div id="chartContainer2">
-									<!-- <h3>Trend Chart</h3>
-									<div id="trendChartContainer">
-									</div>
-									-->
-									<h3>Bivariate Charts</h3>
-									<div id="edaChartContainer">
+								<div id="container2">
+									<h3>Query</h3>
+									<div id="queryOuterDiv">
+										<div class="row uniform half ollapse-at-2">
+											<div class="4u">
+												<div>
+													<h4>KPI</h4>
+													<select name="category" id="kpiSelectInput" multiple>
+													</select>
+												</div>
+											</div>
+											<div class="1u">
+												<b>vs.</b>
+											</div>
+											<div class="4u">
+												<div>
+													<h4>Driver</h4>
+													<select name="category" id="driverSelectInput" multiple>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div id="queryUpdateButton">
+											<a href="#" class="button alt small" onclick="updateChart()">Update</a>
+										</div>
 										
+										<div id="chartsOuterDiv">
+											
+										</div>
 									</div>
 								</div>
 							</div>
@@ -82,6 +96,9 @@ sec_session_start();
 
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
-		<script src="viz/TrendEda/trend_charts.js"></script>
+		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>
+		<script src="viz/libs/bPopup/jquery.bpopup.min.js"></script>
+		<script src="viz/Compare/customquery_charts.js"></script>
+		
     </body>
 </html>

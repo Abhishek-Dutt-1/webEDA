@@ -180,7 +180,6 @@ function drawEDAChart(time, dep, indep) {
         series: [{
             name: dep.name,
             type: 'line',
-            yAxis: 1,
             data: dep.data,
 			color: dep.color,
 			zIndex: 1
@@ -190,7 +189,7 @@ function drawEDAChart(time, dep, indep) {
 			//color:'red',
 			color: indep.color,
             data: indep.data,
-
+            yAxis: 1,
         }],
 		credits: false
     });

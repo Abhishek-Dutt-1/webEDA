@@ -3,7 +3,7 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
  
 sec_session_start();
-
+//var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,10 @@ sec_session_start();
 						<section class="box" id="chartContainer1">
 							<div class="breadCrumb">
 								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="kpi.php">KPI</a>
+								<br>Selected Dataset : <?php echo $_SESSION['selectedEDA'];?>
+								<br>Date Period <?php echo $_SESSION['EDADatePeriod']; ?>
 							</div>
+							
 							<?php include 'viz/kpiButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">

@@ -46,7 +46,7 @@ sec_session_start();
 					<?php if($_SESSION['tablecheck']<>"") :
 								{ ?>
 									<input type="text" name="dataset" id="dataset" value=<?php echo $_SESSION['tablename'];?> placeholder="Model Set Name" />
-									<label><font color="red">The Model Name already exists!!</font></label>
+									<label><font color="red"><?php echo $_SESSION['tablecheck'];?></font></label>
 						<?php 	} 
 								else :
 								{ ?>

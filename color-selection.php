@@ -139,14 +139,9 @@ sec_session_start();
 											
 											<div class="row uniform">
 												<div class="8u">
-													
-														<div id="get_brand"></div>
-													
-
-												</div class="8u">
-												<div>
-													Choose a Color : <input type="color" name="setcolor" id="setcolor"  />
-												</div>
+														<div class="row uniform 12u" id="get_brand"></div>
+												</div >
+												<div>Choose a Color : <input type="color" name="setcolor" id="setcolor"  /></div>
 											</div>
 											<br>
 											<div class="row uniform">

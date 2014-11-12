@@ -53,6 +53,8 @@ if (login_check($mysqli) == true) {
 						<li><a href="register.php" class="button">Register</a></li>
 					</ul>
 				</nav>
+				<hr style="display: block; height: 2px; border: 0; border-top: 3px solid #FCFFFF; margin: 2.9em 0; padding: 0;">
+				<hr style="display: block; height: 2px; border: 0; border-top: 8px solid #890000; margin: -2.9em 0; padding: 0;">
 			</header>
 			<section id="banner">
 				<header>

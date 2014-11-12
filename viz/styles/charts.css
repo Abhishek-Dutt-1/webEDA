@@ -144,31 +144,89 @@ padding-bottom: 0;
 
 /* COMPARE */
 /* KPI */
+#selectionOuter {
+	display: table;
+	margin: 0 auto;
+}
+#selectionInner {
+	width: 100%;
+    margin: 0 auto;
+}
 .selectionColumn {
 	float: left;
+	margin: 0 10px 0 10px;
+			border: 0px solid;
+}
+.selectionLabelsColumn {
+	width: 120px;
+		border: 0px solid;
+}
+.selectionLabelsFirst {
+	height: 55px;
+		border: 0px solid;
+
 }
 .selectionLabels {
-	margin: 20px;
 	text-align: center;
-	height: 55px;
+/* CHANGE HEIGHT HERE */
+	height: 95px;
+		border: 0px solid;
+		margin: 0px 0;
+		display: table;	
+		width: 100%;
+}
+.selectionLabelsInner {
+	vertical-align: middle;
+	display: table-cell;
 }
 .selectionSparklineCell {
-	margin: 20px;
 	text-align: center;
 	vertical-align: middle;
-	height: 55px;
+	height: 40px;
+	width: 100%;
+	/* margin: 25px 0; */
+		border: 0px solid;
+			display: table;	
+}
+.selectionSparklineCellInner {
+	vertical-align: middle;
+	display: table-cell;
+	height: 40px;
 }
 .selectionHeader {
 	text-align: center;
-	/*background-color: lightgrey;*/
 	height: 55px;
-	margin: 20px;
+	width: 100%;
+	display: table;
+		border: 0px solid;
+}
+.selectionHeaderInner {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+	color: #646464;
+	vertical-align: middle;
+	display: table-cell;
+	border: 1px solid lightgrey;
+	border-radius: 10px;
+	font-size: 18px;
+}
+.selectionEmptyCell{
+/* CHANGE HEIGHT HERE */
+	height: 95px;
+		border: 0px solid;
+}
+.selectionHeaderInner a {
+	border: 0px;
+	color: lightgrey;
+	font-size: 14px;
 }
 .selectionAddMore {
 	height: 55px;
-	width: 120px;
+/* CHANGE WIDTH HERE */
+	width: 180px;
+	display: table;	
 	border: 2px dotted lightgrey;
-	display: table;
 	border-radius: 10px;
 }
 a.selectionAddMoreLink:hover{
@@ -183,4 +241,94 @@ a.selectionAddMoreLink {
 	color: lightgrey;
 	vertical-align: middle;
 	display: table-cell;
+}
+.selectionVarName {
+	width: 170px;
+	height: 25px;
+	overflow: hidden;
+	font-size: 12px;
+}
+#selectTableVariable {
+	display: none;
+}
+#selectTableVariableInner {
+	background-color: white; 
+	border-radius: 10px;
+	width: 300px;
+	padding: 25px 25px 15px 25px;
+}
+#chartPopup {
+	display: none;
+}
+#chartPopupInner {
+	padding: 30px 60px 30px 30px;
+	background-color: white;
+	border-radius: 10px;
+	top: 50px;
+	position: relative;
+}
+/* QUERY PAGE */
+#kpiSelectInput {
+	width: 230px;
+	height: 200px;
+}
+#driverSelectInput {
+	width: 250px;
+	height: 200px;
+}
+select#driverSelectInput optgroup,select#kpiSelectInput optgroup  {
+/*	font-weight: bold; */
+	color: lightgrey;
+}
+#queryUpdateButton {
+	margin: 20px 0;
+}
+.optGroupVarType {
+/*	padding-left: 0px;
+*/
+}
+.optGroupVariable {
+/*	padding-left: 20px;
+*/
+	color: grey;
+}
+.queryChartHeader {
+	margin-top: 50px;
+	padding: 5px 20px;
+	background-color: lightgrey;
+	clear: both;
+	font-weight: bold;
+	color: white;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+.queryChartsRow {
+	overflow: hidden;
+}
+.queryBiVariateChart {
+	width: 50%;
+	float: left;
+}
+.queryMeanDiffChart {
+	width: 50%;
+	float: left;
+}
+/***************** CORRELATION PAGE ******************/
+#correlChartPopup {
+	display: none;
+}
+#correlChartPopupInner{
+	width: 1010px;
+	background-color: white;
+	text-align: center;
+}
+#correlBiVariateChartOuter {
+	float: left;
+	background-color: white;
+	border: 1px solid;
+}
+#correlMeanDiffChartOuter {
+	float: left;
+	background-color: white;	
+	border: 1px solid;	
 }
