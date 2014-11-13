@@ -22,7 +22,8 @@ sec_session_start();
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="viz/Highcharts/js/highcharts.js"></script>
-
+		<script src="viz/highcharts-regression.js"></script>
+		<script src="viz/Highcharts/js/modules/exporting.js"></script>			
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -45,9 +46,21 @@ sec_session_start();
 					<div class="12u">
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
-							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<div class="breadCrumb">
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+									</div>
+								</div>
+								<div class="6u">
+									<div align="right" style="font-size:smaller;">
+										<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+										<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+									</div>
+								</div>
 							</div>
+							<hr style="margin:0 0;">
+							
 							<?php include 'viz/compareButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
@@ -64,11 +77,9 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else :
+				include 'includes/error.php';
+		endif; ?>
 
 
 <!-- template -->
@@ -89,6 +100,7 @@ sec_session_start();
 		<div class="selectionColumn">
 			{?brand}
 			<div class="selectionHeader"><div class="selectionHeaderInner">
+				<image src="images/brand/{brand}.png" height="50" width="90" alt title style><br>
 				{brand} <a href="#" onclick="selectionRemoveBrand('{$idx}'); return false;">x</a>
 			</div></div>
 			{#kpis}
@@ -98,7 +110,7 @@ sec_session_start();
 					{?Brand}
 						<div id="{VarNameId}">
 						</div>
-						<div class="selectionVarName">{VarName}</div>
+						<div class="selectionVarName"><a href="#" onclick="showControlChart('{VarName}'); return false;">{VarName}</a></div>
 						{:else}
 						<div>-</div>
 					{/Brand}
@@ -139,6 +151,14 @@ sec_session_start();
 <div id="chartPopup">
 	<div id="chartPopupInner">
 		<div id="combinedKPIChart">
+			KPI Chart
+		</div>
+	</div>
+</div>
+<div id="controlChartPopup">
+	<div id="controlChartPopupInner">
+		<div id="controlChart">
+			Control Chart
 		</div>
 	</div>
 </div>

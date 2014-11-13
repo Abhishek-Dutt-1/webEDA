@@ -36,12 +36,25 @@ sec_session_start();
 			<?php include 'includes/MainMenu.php'; ?>
 			
 		<section id="main" class="container">
+		<?php 		
+				if(($_SESSION['projectid'] == "") || ($_SESSION['edaId']=="")):
+				{ ?>
+					<section class="box">
+					<p>
+						<span class="error">Oops!! </span> Please <a href="eda.php">Select EDA</a>.	
+					</p>
+					</section>
+		<?php	
+				return;
+				}
+				endif; ?>
 		<section class="box">
 			<h3>Upload Models:</h3>
 			<form action="includes/upload_model.php" method="post" enctype="multipart/form-data">
 			
 			<div class="row uniform half ollapse-at-2">
 				<div class="6u">
+					
 					
 					<?php if($_SESSION['tablecheck']<>"") :
 								{ ?>
@@ -68,11 +81,9 @@ sec_session_start();
 		</section>
 		</section>
 		
-		<?php else : ?>
-					<p>
-						<span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-					</p>
-        <?php endif; ?>
+		<?php else : 
+					include 'includes/error.php';
+			endif; ?>
 		<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
 </body>

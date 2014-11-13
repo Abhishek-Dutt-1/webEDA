@@ -51,8 +51,22 @@ sec_session_start();
 			<section id="main" class="container">
 
 				<section class="box">
+					<div class="row collapse-at-2">
+						<div class="6u">
+							<div class="breadCrumb">
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="avp.php">Analytics</a> &raquo; <a href="models.php">Contribution</a>
+							</div>
+						</div>
+						<div class="6u">
+							<div align="right" style="font-size:smaller;">
+								<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+								<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+							</div>
+						</div>
+					</div>
+					<hr style="margin:0 0;">
 					<div class="breadCrumb">
-						<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="avp.php">Analytics</a> &raquo; <a href="models.php">Contribution</a>
+						
 					</div>
 					<?php include 'viz/modelButtons.php' ?>
 
@@ -137,11 +151,9 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+					include 'includes/error.php';
+		endif; ?>
 		
 		<script type="text/javascript">var modelId = "<?php echo $selectedModel; ?>";</script>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>

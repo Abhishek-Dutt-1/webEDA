@@ -1,6 +1,6 @@
 .breadCrumb{
 	font-size: 0.8em;
-	top: -20px;
+/*	top: -20px; */
 	position: relative;
 	color: lightgrey;
 }
@@ -15,9 +15,22 @@
 	margin: 0 auto; /* center trend chart */
 	width: 90%;
 }
+#kpiTrendChartContainer {
+	margin: 0 auto; /* center trend chart */
+	width: 90%;
+}
 #trendChart {
 	/*width: 700px;
 	height: 500px; */
+}
+.kpiOptGroupVarType {
+/*	padding-left: 0px;
+*/
+}
+.kpiOptGroupVariable {
+/*	padding-left: 20px;
+	color: grey;
+*/
 }
 .edaChart {
 	margin-top: 10px;
@@ -199,6 +212,7 @@ padding-bottom: 0;
 	width: 100%;
 	display: table;
 		border: 0px solid;
+	padding: 0 0 20px 0;
 }
 .selectionHeaderInner {
     height: 100%;
@@ -207,9 +221,10 @@ padding-bottom: 0;
 	color: #646464;
 	vertical-align: middle;
 	display: table-cell;
-	border: 1px solid lightgrey;
+	border: 0px solid lightgrey;
 	border-radius: 10px;
-	font-size: 18px;
+	font-size: 15px;
+	font-weight: bold;
 }
 .selectionEmptyCell{
 /* CHANGE HEIGHT HERE */
@@ -220,6 +235,7 @@ padding-bottom: 0;
 	border: 0px;
 	color: lightgrey;
 	font-size: 14px;
+	font-weight: normal;
 }
 .selectionAddMore {
 	height: 55px;
@@ -267,6 +283,24 @@ a.selectionAddMoreLink {
 	top: 50px;
 	position: relative;
 }
+#controlChartPopup {
+	display: none;
+	background-color: white;
+	border-radius: 10px;
+}
+#controlChartPopupInner {
+	padding: 20px;
+}
+/*** WoA ***/
+#diagnosticsChartPopup {
+	display: none;
+	background-color: white;
+	border-radius: 10px;
+}
+#diagnosticsChartPopupInner {
+	padding: 20px;
+}
+
 /* QUERY PAGE */
 #kpiSelectInput {
 	width: 230px;
@@ -313,6 +347,21 @@ select#driverSelectInput optgroup,select#kpiSelectInput optgroup  {
 	width: 50%;
 	float: left;
 }
+#kpiSelectPopup, #driverSelectPopup {
+	display: none;
+	width: 800px;
+	margin-top: 80px;
+	background-color: white;
+	font-size: 0.9em;
+	text-align: justify;
+	border-radius: 10px;
+}
+#kpiSelectPopupInner, #driverSelectPopupInner {
+	padding: 50px;
+}
+
+
+
 /***************** CORRELATION PAGE ******************/
 #correlChartPopup {
 	display: none;

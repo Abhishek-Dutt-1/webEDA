@@ -49,9 +49,21 @@ sec_session_start();
 				<div class="row">
 					<div class="12u">
 						<section class="box" id="chartContainer1">
-							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="MeanDiff.php">Mean Difference</a>
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<div class="breadCrumb">
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="MeanDiff.php">Mean Difference</a>
+									</div>
+								</div>
+								<div class="6u">
+									<div align="right" style="font-size:smaller;">
+										<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+										<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+									</div>
+								</div>
 							</div>
+							<hr style="margin:0 0;">
+							
 							<?php include 'viz/chartButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
@@ -65,11 +77,9 @@ sec_session_start();
 				</div>
 			</section>
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+					include 'includes/error.php';
+		endif; ?>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>		
 		<script src="viz/MeanDiff/MeanDiff_charts.js"></script>

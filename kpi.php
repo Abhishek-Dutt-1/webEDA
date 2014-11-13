@@ -52,17 +52,34 @@ sec_session_start();
 
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
-							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="kpi.php">KPI</a>
-								<br>Selected Dataset : <?php echo $_SESSION['selectedEDA'];?>
-								<br>Date Period <?php echo $_SESSION['EDADatePeriod']; ?>
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<div class="breadCrumb">
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="kpi.php">KPI</a>
+									</div>
+								</div>
+								<div class="6u">
+									<div align="right" style="font-size:smaller;">
+										<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+										<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+									</div>
+								</div>
 							</div>
+							<hr style="margin:0 0;">
 							
 							<?php include 'viz/kpiButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
-									<h3>Trend Chart</h3>
-									<div id="trendChartContainer">
+									<div style="margin-bottom: 40px; overflow: hidden;">
+										<h3 style="float: left; width: 30%;">Trend Chart</h3>
+										<div style="width: 50%; float: right;">
+											<div class="select-wrapper">
+												<select name="category" id="trendChartSelect" onchange="updateKPIChart(this.value); return false;">
+												</select>
+											</div>
+										</div>
+									</div>
+									<div id="kpiTrendChartContainer">
 									</div>
 								</div>
 							</div>
@@ -72,11 +89,9 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+				include 'includes/error.php';
+			endif; ?>
 
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>

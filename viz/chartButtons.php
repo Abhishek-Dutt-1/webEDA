@@ -12,3 +12,22 @@
 		<a href="Diagnostics.php" class="button alt small">Diagnostics</a>
 	</div>
 </div>
+
+<!--
+<nav id="nav" style="float: right;">
+		<ul>
+			<li><a href="comparekpi.php">Compare</a></li>
+			<li><a href="kpi.php">KPI</a></li>
+			<li><a href="Charts.php"  class="icon fa-angle-down">EDA</a></li>
+				<ul>
+					<li><a href="Charts.php">Bivariates</a></li>
+					<li><a href="MeanDiff.php">Mean-Diff</a></li>
+					<li><a href="Diagnostics.php">Diagnostics</a></li>
+					
+				</ul>
+			<li><a href="avp.php">Analytics</a></li>
+			
+		</ul>
+</nav>
+
+-->

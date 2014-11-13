@@ -47,6 +47,9 @@ $_SESSION['EDADatePeriod'] = "";
 			}
 		</script>
 		
+	
+
+		
     </head>
     <body>
 	
@@ -55,8 +58,8 @@ $_SESSION['EDADatePeriod'] = "";
 			<?php include 'includes/MainMenu.php'; ?>
 			
 			
-			
-			<section id="main" class="container"> 
+		
+			<section id="main" class="container" > 
 				<div class="row">
 					<div class="12u">
 
@@ -99,14 +102,13 @@ $_SESSION['EDADatePeriod'] = "";
 					</form>
 				</section>
 			</section>
+		
 			
 			
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+				 include 'includes/error.php';
+		endif; ?>
     </body>
 </html>

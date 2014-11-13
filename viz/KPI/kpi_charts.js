@@ -1,5 +1,9 @@
+var allData = [];
+var allDataOriginal = {};
+var CHART_HEIGHT = 500;
+var CHART_WIDTH = 700;
 // Create Trend Charts
-function trendDataLoaded(data) {
+function updateTrendChart(data) {
 	console.log(data);
 	
 	Highcharts.Point.prototype.tooltipFormatter = function (useHeader) {
@@ -9,11 +13,16 @@ function trendDataLoaded(data) {
         '<b>', (!useHeader ? 'y = ' : ''), Highcharts.numberFormat(point.y, 0), '</b>'].join('');
 	};
 	//console.log(data);
-    $('#trendChartContainer').highcharts({
+    $('#kpiTrendChartContainer').highcharts({
+		chart: {
+			type: 'line',
+			height: CHART_HEIGHT,
+			//width: CHART_WIDTH
+		},
         title: {
-            text: data.dependent.name,
+            text: data.KPI.VarName,
 			align: 'left',
-            x: 70
+            x: 70,
         },
         subtitle: {
             text: '',
@@ -21,13 +30,13 @@ function trendDataLoaded(data) {
         },
        xAxis: {
             categories: data.time.data,
-			labels: { rotation: -45, maxStaggerLines: 0, step: 3 }
+			labels: { rotation: -45, maxStaggerLines: 0, step: 1 }
 
         },
         yAxis: {
             title: {
 				//text: ''
-                text: data.dependent.name
+                text: data.KPI.VarName
             },
 			gridLineColor: 'transparent',
         },
@@ -35,166 +44,103 @@ function trendDataLoaded(data) {
             shared: true
         },
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
             borderWidth: 0
         },
         series: [{
             name: 'UCL3',
-            data: data.dependent.UCL3,
+            data: data.KPI.UCL3,
 			dashStyle: 'ShortDash',
 			color: '#058DC7',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
             name: 'UCL2',
-            data: data.dependent.UCL2,
+            data: data.KPI.UCL2,
 			dashStyle: 'ShortDot',
 			color: '#50B432',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
             name: 'UCL1',
-            data: data.dependent.UCL1,
+            data: data.KPI.UCL1,
 			dashStyle: 'ShortDashDot',
 			color: '#ED561B',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
             name: 'Average',
-            data: data.dependent.Average,
+            data: data.KPI.Average,
 			dashStyle: 'Dot',
 			color: '#DDDF00',
+			color: 'lightgrey',
+			enableMouseTracking: false,
+			lineWidth: 5,
 			marker:  { enabled: false }
         }, {
             name: 'LCL1',
-            data: data.dependent.LCL1,
+            data: data.KPI.LCL1,
 			dashStyle: 'Dash',
 			color: '#24CBE5',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
             name: 'LCL2',
-            data: data.dependent.LCL2,
+            data: data.KPI.LCL2,
 			dashStyle: 'LongDash',
 			color: '#64E572',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
             name: 'LCL3',
-            data: data.dependent.LCL3,
+            data: data.KPI.LCL3,
 			dashStyle: 'ShortDashDotDot',
 			color: '#FF9655',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
 			marker:  { enabled: false }
         }, {
-            name: data.dependent.name,
-            data: data.dependent.data,
+            name: data.KPI.VarName,
+            data: data.KPI.data,
 			dashStyle:'Solid',
-			color: data.dependent.color,
+			color: data.KPI.color,
 			marker:  { enabled: false },
+			regressionSettings: {
+				showInLegend: false,
+				type: 'linear',
+				//color:  'rgba(223, 83, 83, .9)'
+				color: data.KPI.color
+			}
         }],
 		credits: false
     });
 }
+/////////// Data loaded
+// will fill up allData
+// but also preserve original data
+function trendDataLoaded(data) {
+	allDataOriginal = data;
+	reorganizeData(data);
+	//console.log(allData);
+	// Show the first one 
+	document.getElementById("trendChartSelect").onchange()
 
-// Create EDA Charts
-function edaDataLoaded(data) {
-
-	var time = data.time;
-	var dep = data.dependent;
-	var outerChartDiv = document.createElement('div');
-
-	// Create empty divs for each chart
-	data.independent.forEach( function(indep) {
-		var chartDiv = document.createElement('div');
-		chartDiv.id = indep.name.replace( /[^\w\d]/g, "_");
-		chartDiv.className  = "edaChart";
-		outerChartDiv.appendChild(chartDiv);
-	});
-
-	document.getElementById('edaChartContainer').appendChild(outerChartDiv);			
-	
-	// Create individual charts
-	data.independent.forEach( function(indep) {
-		
-		drawEDAChart(time, dep, indep);
-	});
 }
-
-// Create individual EDA Charts
-function drawEDAChart(time, dep, indep) {
-
-	$( '#'+indep.name.replace( /[^\w\d]/g, "_") ).highcharts({
-        chart: {
-            zoomType: 'x'
-        },
-        title: {
-            text: dep.name + " vs. " + indep.name,
-			align: 'left',
-			x: 50
-        },
-        xAxis: [{
-            categories: time.data,
-			labels: { rotation: -45, maxStaggerLines: 0, step: 3 }
-        }],
-        yAxis: [{ // Primary yAxis
-            labels: {
-                //format: '{value}°C',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            title: {
-                text: dep.name,
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            }
-        }, { // Secondary yAxis
-            title: {
-                text: indep.name,
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            labels: {
-                //format: '{value} mm',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            opposite: true
-        }],
-        tooltip: {
-            shared: true,
-        },
-        legend: {
-			layout: 'horizontal',
-            align: 'bottom',
-			x: 40,
-			/*
-            layout: 'vertical',
-            align: 'left',
-            x: 120,
-            verticalAlign: 'top',
-            y: 100,
-            floating: true,*/
-            //backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        },
-        series: [{
-            name: dep.name,
-            type: 'line',
-            yAxis: 1,
-            data: dep.data,
-			color: dep.color,
-			zIndex: 1
-        }, {
-            name: indep.name,
-            type: 'column',
-			//color:'red',
-			color: indep.color,
-            data: indep.data,
-
-        }],
-		credits: false
-    });
-
+// select's onChange
+function updateKPIChart(el) {
+	console.log(el);
+	var selEl = [];
+	selEl = allDataOriginal.KPI.filter( function(kpi) { return kpi.VarName == el; });
+	console.log(selEl);
+	var chartData = { KPI: selEl[0], time: allDataOriginal.time}
+	updateTrendChart(chartData);
 }
 
 /////////////////// INIT
@@ -203,15 +149,152 @@ $( document ).ready(function() {
 	console.log("edaId " + edaId);
 	console.log("projectId " + projectId);
 
-	$.get( "viz/TrendEda/Trend.php", { edaId: edaId, projectId: projectId }, trendDataLoaded, "json" ).fail( function(err) {
+	$.get( "viz/KPI/KPI.php", { edaId: edaId, projectId: projectId }, trendDataLoaded, "json" ).fail( function(err) {
 		console.log("Trend Chart ERROR!");
 		console.log(err); 
 	});
-/*
-	$.get( "viz/TrendEda/EDA.php", { edaId: edaId, projectId: projectId }, edaDataLoaded, "json" ).fail( function(err) {
-		console.log("EDA Charts ERROR!");
-		console.log(err);
-	});
-*/
 
 });
+
+///////////////////////// REORGANIZE DATA
+function reorganizeData(data) {
+	console.log(data);
+	var brands = [];
+	var kpis = [];
+	brands = getAllUniqueBrands(data);
+	kpis = getAllUniqueKPIs(data);
+	/*
+	allData = {brands: []};
+	brands.forEach( function(brand) {
+		allData.brands.push({
+					brand: brand,
+					KPI: data.KPI.filter( function(e) { return e.Brand == brand; } ),
+					DRIVER: data.DRIVER.filter( function(e) { return e.Brand == brand; } )
+		});
+	});
+	*/
+	allData = {brands: []};
+	var brandExists = false;
+	var kpiExists = false;
+	var i, j;
+	brands.forEach( function(brand) {
+		kpis.forEach( function(kpi) {
+			data.KPI.forEach( function(dataKpi) {
+				if(dataKpi.Brand == brand && dataKpi.Variable_Type == kpi) {
+					// Find and update
+					for (i = 0; i < allData.brands.length; i++) {
+						for (j = 0; j < allData.brands[i].KPI.length; j++) {
+							if (allData.brands[i].brand == brand) {
+								brandExists = true;
+								if (allData.brands[i].KPI[j].Variable_Type == kpi) {
+									allData.brands[i].KPI[j].Variable.push( dataKpi );
+									kpiExists = true;
+								}
+							}
+						};
+					};
+					if (!brandExists) {
+						allData.brands.push({brand: brand, KPI: [], DRIVER: []});
+					}
+					if (!kpiExists) {
+						allData.brands.forEach( function(brandTmp, i, arr) {
+							if(brandTmp.brand == brand) {
+								allData.brands[i].KPI.push( {Variable_Type: kpi, Variable: [dataKpi]});
+							}
+						});
+					}
+					brandExists = false;
+					kpiExists = false;
+				}
+			});
+			/*
+			data.DRIVER.forEach( function(dataKpi) {
+				if(dataKpi.Brand == brand && dataKpi.Variable_Type == kpi) {
+					// Find and update
+					for (i = 0; i < allData.brands.length; i++) {
+						for (j = 0; j < allData.brands[i].DRIVER.length; j++) {
+							if (allData.brands[i].brand == brand) {
+								brandExists = true;
+								if (allData.brands[i].DRIVER[j].Variable_Type == kpi) {
+									allData.brands[i].DRIVER[j].Variable.push( dataKpi );
+									kpiExists = true;
+								}
+							}
+						};
+					};
+					if (!brandExists) {
+						//allData.brands.push({brand: brand, KPI: [], DRIVER: []});
+					}
+					if (!kpiExists) {
+						allData.brands.forEach( function(brandTmp, i, arr) {
+							if(brandTmp.brand == brand) {
+								allData.brands[i].DRIVER.push( {Variable_Type: kpi, Variable: [dataKpi]});
+							}
+						});
+					}
+					brandExists = false;
+					kpiExists = false;
+				}
+			});
+			*/
+		});
+	});
+	
+	console.log(allData);
+	// Add time to allData
+	allData.time = data.time;
+
+	// Fill up KPI select box
+	var tmpStr = "";
+	allData.brands.forEach( function (brand) {
+		//tmpStr += '<optgroup class="optGroupBrand" label="'+brand.brand+' :">';
+		brand.KPI.forEach( function(kpi) {
+			//tmpStr += '<optgroup class="kpiOptGroupVarType" label="' + brand.brand + ' - ' +kpi.Variable_Type + ' :">';		
+			kpi.Variable.forEach( function(varName) {
+				tmpStr += '<option class="kpiOptGroupVariable" value="'+varName.VarName+'">' + brand.brand + ' :: ' + kpi.Variable_Type + ' :: ' + varName.VarName +'</option>';
+			});
+		});
+		//tmpStr += '</optgroup>';
+		//tmpStr += '</optgroup>';
+	});
+	document.getElementById('trendChartSelect').innerHTML = tmpStr;
+}
+
+/** Helper Funtions **/
+function getAllUniqueBrands(data) {	
+	
+	var brands = [];
+	data.KPI.forEach( function(el) {
+		brands.push( el.Brand );
+	});
+	/*
+	data.DRIVER.forEach( function(el) {
+		brands.push( el.Brand );
+	});
+	data.OTHERS.forEach( function(el) {
+		brands.push( el.Brand );
+	});
+	*/
+	// Remove duplicates
+	brands = brands.filter(function (v, i, a) { return a.indexOf(v) == i });
+	return brands;
+}
+
+function getAllUniqueKPIs(data) {	
+	
+	var brands = [];
+	data.KPI.forEach( function(el) {
+		brands.push( el.Variable_Type );
+	});
+	/*
+	data.DRIVER.forEach( function(el) {
+		brands.push( el.Variable_Type );
+	});
+	data.OTHERS.forEach( function(el) {
+		brands.push( el.Variable_Type );
+	});
+	*/
+	// Remove duplicates
+	brands = brands.filter(function (v, i, a) { return a.indexOf(v) == i });
+	return brands;
+}

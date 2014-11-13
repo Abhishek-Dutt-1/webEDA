@@ -87,8 +87,10 @@ function compareDataLoaded(data) {
 	console.log(allData);
 	// Add time to allData
 	allData.time = data.time;
-
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Fill up KPI select box
+	/*
 	var tmpStr = "";
 	allData.brands.forEach( function (brand) {
 		//tmpStr += '<optgroup class="optGroupBrand" label="'+brand.brand+' :">';
@@ -101,8 +103,7 @@ function compareDataLoaded(data) {
 		tmpStr += '</optgroup>';
 		//tmpStr += '</optgroup>';
 	});
-	document.getElementById('kpiSelectInput').innerHTML = tmpStr;
-
+	//document.getElementById('kpiSelectInput').innerHTML = tmpStr;
 	// Fill up DRIVER select box
 	var tmpStr = "";
 	allData.brands.forEach( function (brand) {
@@ -116,7 +117,119 @@ function compareDataLoaded(data) {
 		tmpStr += '</optgroup>';
 		//tmpStr += '</optgroup>';
 	});
-	document.getElementById('driverSelectInput').innerHTML = tmpStr;
+	*/
+	//document.getElementById('driverSelectInput').innerHTML = tmpStr;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Fill up KPI select box POPUP
+	/*
+	var tmpStr = "";
+	allData.brands.forEach( function (brand) {
+		tmpStr += '<h3 class="optGroupBrandPopup" label="'+brand.brand+' :">' + brand.brand +'</h3>';
+		brand.KPI.forEach( function(kpi) {
+			//tmpStr += '<div class="optGroupVarTypePopup" label="' + brand.brand + ' - ' +kpi.Variable_Type + ' :">' + brand.brand + " - " + kpi.Variable_Type;		
+			kpi.Variable.forEach( function(varName) {
+				tmpStr += '<input type="checkbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ varName.VarName +'</label>';
+			});
+			//tmpStr += '</div>';
+		});
+		//tmpStr += '</div>';
+	});
+	document.getElementById('kpiSelectContainer').innerHTML = tmpStr;
+	// Fill up DRIVER select box
+	var tmpStr = "";
+	allData.brands.forEach( function (brand) {
+		tmpStr += '<h3 class="optGroupBrandPopup" label="'+brand.brand+' :">' + brand.brand + '</h3>';
+		brand.DRIVER.forEach( function(driver) {
+			//tmpStr += '<optgroup class="optGroupVarTypePopup" label="' + brand.brand + ' - ' + driver.Variable_Type + ' :">';		
+			driver.Variable.forEach( function(varName) {
+				tmpStr += '<input type="checkbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ varName.VarName +'</label>';
+			});
+			//tmpStr += '</optgroup>';			
+		});
+		//tmpStr += '</optgroup>';
+	});
+	document.getElementById('driverSelectContainer').innerHTML = tmpStr;
+	*/
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Fill up KPI select box slideToggle
+	var slideToggleKPI = [];
+	var variables = [];
+	var tmpKpi = [];
+	var tmpStr = "";
+	var tmpStr1 = "";
+	allData.brands.forEach( function (brand) {
+		tmpKpi = [];
+		tmpStr1 += '<div class=""><a class="button alt fit kpiSelectBrands small" data-target-id="'+brand.brand+'_KPI" onclick="showKPIPanel(this); return false;">' + brand.brand + '</a></div>';
+		tmpStr += '<div class="optGroupBrandPopup" style="clear: both;" id="'+brand.brand+'_KPI" label="'+brand.brand+'">';
+		brand.KPI.forEach( function(kpi) {
+			//tmpStr += '<div class="optGroupVarTypePopup" label="' + brand.brand + ' - ' + kpi.Variable_Type + ' :">' + brand.brand + " - " + kpi.Variable_Type;
+			variables = [];
+			kpi.Variable.forEach( function(varName) {
+				tmpStr += '<div style="width: 33%; float: left; font-size: 14px; overflow: hidden; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ kpi.Variable_Type +'</label></div>';
+				variables.push( varName );
+			});
+			tmpKpi.push({Variable_Type: kpi.Variable_Type, varNames: variables});
+		});
+		tmpStr += '</div>';
+		slideToggleKPI.push({brand: brand.brand, kpis: tmpKpi});
+	});
+	console.log(slideToggleKPI);
+	document.getElementById('slideToggleKPIPanel1').innerHTML = tmpStr1;
+	document.getElementById('slideToggleKPIPanel2').innerHTML = tmpStr;
+
+	// Fill up DRIVER select box
+	var slideToggleDriver = [];
+	var variables = [];
+	var tmpDriver = [];
+	var tmpVarType = [];
+	var tmpStr = "";
+	var tmpStr1 = "";
+	var tmpStr2 = "";
+	allData.brands.forEach( function (brand) {
+		tmpDriver = [];
+		tmpStr1 += '<div class=""><a class="button alt fit driverSelectBrands small" data-target-id="'+brand.brand+'_VAR_TYPE" onclick="showDriverPanel(this); return false;">' + brand.brand + '</a></div>';
+		
+		tmpStr2 += '<div style="clear: both;" id="'+brand.brand+'_VAR_TYPE">';		
+			
+		brand.DRIVER.forEach( function(driver) {
+			
+			tmpStr2 += '<div><a class="button alt fit small driverSelectVarTypes" data-button-id="'+brand.brand+'_BUTTON_VAR_TYPE" data-target-id="'+brand.brand+'_'+driver.Variable_Type+'_DRIVER" onclick="showDriverVarTypePanel(this); return false;">' + driver.Variable_Type + '</a></div>';
+
+			variables = [];
+			tmpStr += '<div class="driverSelectBrandVarTypeVarNameDiv" style="clear: both;" id="'+brand.brand+'_'+driver.Variable_Type+'_DRIVER" label="'+brand.brand+'">';	
+			
+			driver.Variable.forEach( function(varName) {
+				tmpStr += '<div style="width: 50%; float: left; font-size: 14px; overflow: hidden1; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ varName.VarName +'</label></div>';
+				variables.push( varName );
+			});
+			
+			tmpDriver.push({Variable_Type: driver.Variable_Type, varNames: variables});
+			
+			tmpStr += '</div>';
+		});
+		
+		tmpStr2 += '</div>';
+		
+		
+		slideToggleDriver.push({brand: brand.brand, drivers: tmpDriver});
+	});
+	console.log(slideToggleDriver);
+	document.getElementById('slideToggleDriverPanel1').innerHTML = tmpStr1;
+	
+	document.getElementById('slideToggleDriverPanel2').innerHTML = tmpStr2;
+	document.getElementById('slideToggleDriverPanel3').innerHTML = tmpStr;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$( "#queryDriverSelectionPanel" ).hide( "fast", function() {
+	});
+	$( "#queryKPISelectionPanel" ).hide( "fast", function() {
+	});
+	showKPIPanel(document.getElementsByClassName('kpiSelectBrands')[0]);
+	showDriverPanel(document.getElementsByClassName('driverSelectBrands')[0]);
+	showDriverVarTypePanel(document.getElementsByClassName('driverSelectVarTypes')[0])
 }
 
 // Update button pressed
@@ -124,8 +237,13 @@ function updateChart() {
 
 	var selectedKpi = [];
 	var selectedDriver = [];
-	selectedKpi = getSelectedOptions('kpiSelectInput');
-	selectedDriver = getSelectedOptions('driverSelectInput');
+	//selectedKpi = getSelectedOptions('kpiSelectInput');
+	//selectedDriver = getSelectedOptions('driverSelectInput');
+	//selectedKpi = getSelectedOptionsPopup('kpiSelectContainer');
+	//selectedDriver = getSelectedOptionsPopup('driverSelectContainer');
+	selectedKpi = getSelectedOptionsPopup('queryKPISelectionPanel');
+	selectedDriver = getSelectedOptionsPopup('queryDriverSelectionPanel');	
+	console.log( selectedKpi );
 	var time = allData.time;
 	$('#chartsOuterDiv').empty();
 	allData.brands.forEach( function(brand) {
@@ -211,8 +329,8 @@ function getAllUniqueKPIs(data) {
 	brands = brands.filter(function (v, i, a) { return a.indexOf(v) == i });
 	return brands;
 }
-
 // returns selected options in select multiple
+/*
 function getSelectedOptions(selectId) {
 
 	var sel = document.getElementById(selectId);
@@ -228,6 +346,24 @@ function getSelectedOptions(selectId) {
 	console.log(opts);
     // return array containing references to selected option elements
     return opts;
+}
+*/
+// returns selected options in select multiple
+function getSelectedOptionsPopup(selectId) {
+
+	var selected = [];
+	// check all children 
+	/*
+	$('#'+ selectId +' input:checkbox.userInputCheckbox').each(function() {
+		console.log("xx");
+		selected.push($(this).attr('id'));
+	});
+	*/
+  
+	$('#'+ selectId +' input:checked').each(function() {
+		selected.push($(this).attr('id'));
+	});
+	return selected;
 }
 // Add charts
 function addCharts(kpi, driver, time) {
@@ -428,7 +564,6 @@ function addMeanDiffChart(dep, indep, time, divId) {
     });
 
 };
-
 // Convert series to mean - diff
 function convertToMeanDiff( variable ) {
 
@@ -443,4 +578,69 @@ function convertToMeanDiff( variable ) {
 		variable.data[i] = variable.data[i] - avg;
 	}
 	return variable;
+}
+
+// Show KPI select popup
+function showKPISelectPopup() {
+	 $('#kpiSelectPopup').bPopup({
+		transition: 'slideIn',
+	    transitionClose: 'slideBack',
+		speed: 200
+
+	 });
+}
+// Show DRIVER select popup
+function showDriverSelectPopup() {
+	 $('#driverSelectPopup').bPopup({
+		transition: 'slideIn',
+	    transitionClose: 'slideBack',
+		speed: 200
+
+	 });
+}
+// Expand KPI select div
+function toggleKPISelectExpand() {
+	$( "#queryDriverSelectionPanel" ).hide( "fast", function() {
+	});
+	$( "#queryKPISelectionPanel" ).slideToggle( "fast", function() {
+	});
+}
+function showKPIPanel(el) {
+	var tmpBrandList = document.getElementsByClassName('kpiSelectBrands');
+	// Close all except the current one
+	for(var i=0; i<tmpBrandList.length; i++)
+	{
+		$( "#" + tmpBrandList[i].getAttribute('data-target-id') ).hide( "fast", function() {});
+		$(tmpBrandList[i]).removeClass('special');
+	}
+	$( "#" + el.getAttribute('data-target-id') ).slideDown( "fast", function() {});
+	$( el ).addClass('special');
+}
+// Expand DRIVER select div
+function toggleDriverSelectExpand() {
+	$( "#queryKPISelectionPanel" ).hide( "fast", function() {
+	});
+	$( "#queryDriverSelectionPanel" ).slideToggle( "fast", function() {
+	});
+}
+function showDriverPanel(el) {
+	var tmpBrandList = document.getElementsByClassName('driverSelectBrands');
+	// Close all except the current one
+	for(var i=0; i<tmpBrandList.length; i++)
+	{
+		$( "#" + tmpBrandList[i].getAttribute('data-target-id') ).hide( "fast", function() {});
+		$(tmpBrandList[i]).removeClass('special');
+	}
+	$( "#" + el.getAttribute('data-target-id') ).slideDown( "fast", function() {});
+	console.log( $( "#" + el.getAttribute('data-target-id') + " a.driverSelectVarTypes")[0] );
+	showDriverVarTypePanel( $( "#" + el.getAttribute('data-target-id') + " a.driverSelectVarTypes")[0] );
+	$( el ).addClass('special');
+}
+function showDriverVarTypePanel(el) {
+	$("a.driverSelectVarTypes[data-button-id='"+ el.getAttribute('data-button-id')  +"']").each( function(idx, item) {
+		$(this).removeClass('special');
+	});
+	$('.driverSelectBrandVarTypeVarNameDiv').each( function() { $(this).hide("fast"); });
+	$( "#" + el.getAttribute('data-target-id') ).slideDown( "fast", function() {});
+	$( el ).addClass('special');
 }

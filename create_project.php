@@ -61,10 +61,8 @@ sec_session_start();
 		</section>
 		</section>
 		<?php include 'includes/footer.php'; ?>
-		<?php else : ?>
-					<p>
-						<span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-					</p>
-        <?php endif; ?>
+		<?php else : 
+				include 'includes/error.php';
+		endif; ?>
 </body>
 </html>

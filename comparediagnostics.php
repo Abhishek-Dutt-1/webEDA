@@ -48,9 +48,21 @@ sec_session_start();
 					<div class="12u">
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
-							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<div class="breadCrumb">
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparediagnostics.php">Compare Diagnostics</a>
+									</div>
+								</div>
+								<div class="6u">
+									<div align="right" style="font-size:smaller;">
+										<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+										<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+									</div>
+								</div>
 							</div>
+							<hr style="margin:0 0;">
+							
 							<?php include 'viz/compareButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
@@ -73,11 +85,9 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+						include 'includes/error.php';
+			endif; ?>
 
 
 <!-- template -->
@@ -104,7 +114,7 @@ sec_session_start();
 					{?Brand}
 						<div id="{VarNameId}">
 						</div>
-						<div class="selectionVarName">{VarName}</div>
+						<div class="selectionVarName"><a href="#" onclick="showDiagnosticsChart('{VarName}'); return false;">{VarName}</a></div>
 						{:else}
 						<div class="selectionEmptyCell">-</div>
 					{/Brand}
@@ -142,7 +152,13 @@ sec_session_start();
 		</div>
 	</div>
 </div>
-
+<div id="diagnosticsChartPopup">
+	<div id="diagnosticsChartPopupInner">
+		<div id="diagnosticsChart">
+			Diagnostics Chart
+		</div>
+	</div>
+</div>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>

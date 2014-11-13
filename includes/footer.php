@@ -1,15 +1,15 @@
-<footer id="footer">
+<footer id="footer" style="z-index: -5;">
 	<div>
 		<div class ="left">
 			<img src="images/Airtel Logo.png" id="logo" height="35" width="140" />
 		</div>
-		<div class="middle">
+<!--		<div class="middle">
 				<ul class="copyright" style="top:8px;position:relative">
 					<li>&copy; <a href="http://wwww.madisonbusinessanalytics.com">Madison Business Analytics</a>. All rights reserved.</li><li>
 				</ul>
-		</div>
+		</div> -->
 		<div class="right">
-				<img src="images/Madison Logo.png" id="logo" height="35" width="110" style="top:-15px;position:relative;left:-20px"/>
+				<img src="images/Madison Logo.png" id="logo" height="45" width="130" style="top:-15px;position:relative;left:-35px"/>
 		</div>
 	</div>
 </footer>

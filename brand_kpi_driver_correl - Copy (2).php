@@ -98,14 +98,13 @@ sec_session_start();
 			};
 		</script>
 		
-		
 	</head>
 	<body>
 	  <?php if (login_check($mysqli) == true) : ?>
             <!-- Header -->
 			
 		<?php include 'includes/MainMenu.php'; ?>
-		
+		<section id="banner1">	
 			<!-- Main -->
 			<section id="main" class="container">
 				<!-- Check whether the EDA is selected. if not then send back to select the eda-->
@@ -206,7 +205,7 @@ sec_session_start();
 					</div>
 				</div>
 			</section>
-								
+		</section>							
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>		
 							

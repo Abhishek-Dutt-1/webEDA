@@ -89,11 +89,14 @@ function drawSparkLineChart(data) {
 					text: null
 				},
 				tickPositions: [0],
+				max: 100,
+				min: 0
 				//title: {
 					//text: data.VarName,
 				//}
         },
          tooltip: {
+		 /*
                 backgroundColor: null,
                 borderWidth: 0,
                 shadow: false,
@@ -103,7 +106,9 @@ function drawSparkLineChart(data) {
                 padding: 0,
                 positioner: function (w, h, point) {
                     return { x: point.plotX - w / 2, y: point.plotY - h};
-                }
+                },
+				enabled: false
+			*/
 		},
         legend: {
                 enabled: false
@@ -140,6 +145,7 @@ function drawSparkLineChart(data) {
 			color: data.color,
 			zIndex: 1
         }],
+		exporting: false,
 		credits: false
     });
 }
@@ -372,7 +378,6 @@ function selectionAddBrand(brandToAdd) {
 	$('#selectTableVariable').bPopup().close();
 }
 
-
 // Update Selection Table
 function updateSelectionTable() {
 
@@ -492,3 +497,165 @@ $( document ).ready(function() {
 	});
 
 });
+
+//////////////Control Chart Functions//////////////////////////////////////////////////////////
+function showControlChart(varName) {
+	console.log(varName);
+	console.log(allData);
+	var chartData = allData.KPI.filter( function(kpi) { return kpi.VarName == varName; });
+	chartData.KPI = chartData[0];
+	chartData.time = allData.time;
+	
+	var countElements = chartData.KPI.data.length;
+	var depAv = chartData.KPI.data.reduce(function(pv, cv) { return pv + cv; }, 0)/countElements;
+	var stdDev = standardDeviation( chartData.KPI.data, true);
+
+	chartData.KPI.Average = Array.apply(null, new Array(countElements)).map(Number.prototype.valueOf,depAv);
+	var numControlLimits = 3
+	for(var i = 1; i <= numControlLimits; i++) {
+		chartData.KPI['UCL'+i] = Array.apply(null, new Array(countElements)).map(Number.prototype.valueOf, depAv + (stdDev*i) ); //array_fill(0, countElements, depAv + (stdDev*i) );
+		chartData.KPI['LCL'+i] = Array.apply(null, new Array(countElements)).map(Number.prototype.valueOf, depAv - (stdDev*i) ); //array_fill(0, countElements, depAv - (stdDev*i) );
+	}
+	updateTrendChart(chartData);
+	console.log(chartData);
+	$('#controlChartPopup').bPopup({
+		speed: 100
+	});
+}
+function standardDeviation(values) {
+  var avg = average(values);
+  var squareDiffs = values.map(function(value){
+    var diff = value - avg;
+    var sqrDiff = diff * diff;
+    return sqrDiff;
+  });
+  var avgSquareDiff = average(squareDiffs);
+  var stdDev = Math.sqrt(avgSquareDiff);
+  return stdDev;
+}
+function average(data) {
+  var sum = data.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+  var avg = sum / data.length;
+  return avg;
+}
+function updateTrendChart(data) {
+	console.log(data);
+	
+	Highcharts.Point.prototype.tooltipFormatter = function (useHeader) {
+    var point = this, series = point.series;
+    return ['<br/><span style="color:' + series.color + '"><span>', (point.name || series.name), '</span></span>: ',
+        (!useHeader ? ('<b>x = ' + (point.name || point.x) + ',</b> ') : ''),
+        '<b>', (!useHeader ? 'y = ' : ''), Highcharts.numberFormat(point.y, 0), '</b>'].join('');
+	};
+	//console.log(data);
+    $('#controlChart').highcharts({
+		chart: {
+			type: 'line',
+			//height: CHART_HEIGHT,
+			//width: CHART_WIDTH
+		},
+        title: {
+            text: data.KPI.VarName,
+			align: 'left',
+            x: 70,
+        },
+        subtitle: {
+            text: '',
+            //x: -20
+        },
+       xAxis: {
+            categories: data.time.data,
+			labels: { rotation: -45, maxStaggerLines: 0, step: 2 }
+
+        },
+        yAxis: {
+            title: {
+				//text: ''
+                text: data.KPI.VarName
+            },
+			gridLineColor: 'transparent',
+        },
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'UCL3',
+            data: data.KPI.UCL3,
+			dashStyle: 'ShortDash',
+			color: '#058DC7',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: 'UCL2',
+            data: data.KPI.UCL2,
+			dashStyle: 'ShortDot',
+			color: '#50B432',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: 'UCL1',
+            data: data.KPI.UCL1,
+			dashStyle: 'ShortDashDot',
+			color: '#ED561B',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: 'Average',
+            data: data.KPI.Average,
+			dashStyle: 'Dot',
+			color: '#DDDF00',
+			color: 'lightgrey',
+			enableMouseTracking: false,
+			lineWidth: 5,
+			marker:  { enabled: false }
+        }, {
+            name: 'LCL1',
+            data: data.KPI.LCL1,
+			dashStyle: 'Dash',
+			color: '#24CBE5',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: 'LCL2',
+            data: data.KPI.LCL2,
+			dashStyle: 'LongDash',
+			color: '#64E572',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: 'LCL3',
+            data: data.KPI.LCL3,
+			dashStyle: 'ShortDashDotDot',
+			color: '#FF9655',
+			color: 'lightgrey',
+			enableMouseTracking: false,			
+			marker:  { enabled: false }
+        }, {
+            name: data.KPI.VarName,
+            data: data.KPI.data,
+			dashStyle:'Solid',
+			color: data.KPI.color,
+			marker:  { enabled: false },
+			regressionSettings: {
+				showInLegend: false,
+				type: 'linear',
+				//color:  'rgba(223, 83, 83, .9)'
+				color: data.KPI.color
+			}
+        }],
+		credits: false
+    });
+}

@@ -11,8 +11,13 @@
 
 	body {
 		/*background: #f5f5f5;
-		background: #DAA3A3;*/
-		background: #666;
+		background: #DAA3A3;
+		
+		background: #666;*/
+		background: #E4E4E4;
+		/*background-color: #666;*/
+		
+		
 	}
 
 	body, input, select, textarea {
@@ -1285,6 +1290,15 @@
 				background: #fff;
 				color: #666 !important;
 			}
+			
+	#banner1 {
+		background-attachment: scroll, fixed;
+		/*background-color: #666;*/
+		background-image: url("images/overlay.png"), url("../images/banner.jpg");
+		background-position: top left, center center;
+		background-repeat: repeat,	no-repeat;
+		background-size: auto, cover;
+	}
 
 /* Main */
 
@@ -1318,7 +1332,8 @@
 /* Footer */
 
 	#footer {
-		background: #FFF;
+		/*background: #FFF;*/
+		background: transparent;
 		padding: 0 0 3em 0;
 		/*text-align: center;*/
 		position: fixed;

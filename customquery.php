@@ -51,8 +51,31 @@ sec_session_start();
 							<?php include 'viz/compareButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
-									<h3>Query</h3>
+									<h3 style="float: left; width: 30%;">Custom Query</h3>
+									<div style="float: right;">
+										<a href="#" class="button alt small" onclick="toggleKPISelectExpand(); return false;">1 : Select KPI</a>
+										<a href="#" class="button alt small" onclick="toggleDriverSelectExpand(); return false;">2 : Select Driver</a>
+										<a href="#" class="button small" onclick="updateChart(); return false;">3 : Chart</a>
+									</div>
+									<div id="queryKPISelectionPanel" style="border: 0px solid lightgrey; overflow: hidden1; clear:both; line-height: 1em;">
+										<div id="slideToggleKPIPanel1" style="float: left; width: 25%; padding: 20px;"></div>
+										<div id="slideToggleKPIPanel2" style="float: left; width: 70%; padding: 20px;"></div>
+										<div id="slideToggleKPIPanel3" style="float: left; width: 25%; padding: 20px;"></div>
+									</div>
+									<div id="queryDriverSelectionPanel" style="border: 0px solid lightgrey; overflow: hidden1; clear:both; line-height: 1em;">
+										<div id="slideToggleDriverPanel1" style="float: left; width: 20%; padding: 20px;"></div>
+										<div id="slideToggleDriverPanel2" style="float: left; width: 20%; padding: 20px;"></div>
+										<div id="slideToggleDriverPanel3" style="float: left; width: 60%; padding: 20px;"></div>
+									</div>
+									<!-- //Popup
+									<div style="float: right;">
+										<a href="#" class="button alt small" onclick="showKPISelectPopup(); return false;">Select KPI</a>
+										<a href="#" class="button alt small" onclick="showDriverSelectPopup(); return false;">Select Driver</a>
+										<a href="#" class="button small" onclick="updateChart()">Chart</a>
+									</div>
+									-->
 									<div id="queryOuterDiv">
+										<!-- // Multi select
 										<div class="row uniform half ollapse-at-2">
 											<div class="4u">
 												<div>
@@ -75,9 +98,8 @@ sec_session_start();
 										<div id="queryUpdateButton">
 											<a href="#" class="button alt small" onclick="updateChart()">Update</a>
 										</div>
-										
+										-->
 										<div id="chartsOuterDiv">
-											
 										</div>
 									</div>
 								</div>
@@ -88,12 +110,25 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+        <?php else : 
+					include 'includes/error.php';
+		endif; ?>
 
+<div id="kpiSelectPopup">
+	<div id="kpiSelectPopupInner">
+		<div id="kpiSelectContainer">
+			KPI SELECT HERE
+		</div>
+	</div>
+</div>
+<div id="driverSelectPopup">
+	<div id="driverSelectPopupInner">
+		<div id="driverSelectContainer">
+			DRIVER SELECT HERE
+		</div>
+	</div>
+</div>	
+		
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>

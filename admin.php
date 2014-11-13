@@ -68,8 +68,8 @@ sec_session_start();
 			<!-- Main -->
 			<section id="main" class="container">
 				<header>
-					<h2>Admin Panel</h2>
-					<p>Grant or Revoke access to users</p>
+					<h2 style="color:white">Admin Panel</h2>
+					<p style="color:#D7D3D3">Grant or Revoke access to users</p>
 				</header>
 				<div class="row">
 					<div class="12u">
@@ -136,12 +136,10 @@ sec_session_start();
 				</div>
 			</section>
 			<!-- Footer -->
-			<?php include 'includes/footer.php'; ?>		
+			<?php include 'includes/footer.php'; 
 							
-			    <?php else : ?>
-            <p>
-                <span class="error">You are not authorized to access this page.</span> Please <a href="Login.php">login</a>.
-            </p>
-        <?php endif; ?>
+					else : 
+					 include 'includes/error.php';
+				endif; ?>
     </body>
 </html>

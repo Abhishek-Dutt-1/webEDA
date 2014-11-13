@@ -442,3 +442,101 @@ $( document ).ready(function() {
 	});
 
 });
+
+//////////////Diagnostics Chart Functions//////////////////////////////////////////////////////////
+function showDiagnosticsChart(varName) {
+
+	var numBins = 10
+	var chartData = {DRIVER:[]};
+	chartData.DRIVER = allData.DRIVER.filter( function(kpi) { return kpi.VarName == varName; });
+	chartData.time = allData.time;
+
+	var max = Math.max.apply(null, chartData.DRIVER[0].data);
+	var min = Math.min.apply(null, chartData.DRIVER[0].data);
+	var binSize = (max - min) / numBins;
+	console.log("BIN SIZE " + binSize);
+	chartData.DRIVER[0].bins = [];
+	chartData.DRIVER[0].binsTxt = [];
+	chartData.DRIVER[0].binsData = [];
+	
+	chartData.DRIVER[0].bins.push(min);
+	chartData.DRIVER[0].binsTxt.push(min.toString());
+	chartData.DRIVER[0].binsData.push( chartData.DRIVER[0].data.filter( function(el) {return el == min;} ).length );
+	var low;
+	var hight;
+	for (var j = 1; j <= numBins-1; j++) {
+		// Rest all bin labels = last bin + binSize
+		//chartData.DRIVER[0].bins.push( chartData.DRIVER[0].bins[ j - 1 ] + binSize );
+		// Rest all bin labels = RoundUpToNearest50( last bin + binSize )
+		chartData.DRIVER[0].bins[j] = Math.ceil( (chartData.DRIVER[0].bins[j-1] + binSize) / 50) * 50; 
+		// Current bin range
+		low = chartData.DRIVER[0].bins[ j-1 ];
+		high = chartData.DRIVER[0].bins[ j ];
+		console.log(low);
+		console.log(high);
+		// Make bins text user friendly
+		chartData.DRIVER[0].binsTxt.push( '('+Math.round(low)+'-'+Math.round(high)+']' );
+		// Count frequencies side by side
+		chartData.DRIVER[0].binsData.push( chartData.DRIVER[0].data.filter( function(val) {return val > low && val <= high;} ).length );
+	}
+	// Last bucket = More+
+	chartData.DRIVER[0].bins[j] = "More";
+	chartData.DRIVER[0].binsTxt[j] = "More";
+	chartData.DRIVER[0].data[j] = chartData.DRIVER[0].data.filter( function(val) {return val > high;} ).length ;
+	
+	diagnosticsDrawChart(chartData.DRIVER[0], chartData.time);
+	console.log(chartData.DRIVER);
+	$('#diagnosticsChartPopup').bPopup({
+		speed: 100
+	});
+}
+
+function diagnosticsDrawChart(data, time) {
+
+    $( '#diagnosticsChart' ).highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: data.VarName,
+			align: 'left',
+			x: 60
+        },
+        xAxis: {
+            categories: data.binsTxt,
+			labels: { rotation: -45, maxStaggerLines: 0 }
+        },
+        yAxis: {
+            //min: 0,
+            title: {
+                text: 'Freq'
+            }
+        },		
+		legend: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true,
+			enabled: false
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: data.VarName,
+            data: data.binsData,
+			color: data.color
+
+        }],
+		credits: false
+    });
+
+}

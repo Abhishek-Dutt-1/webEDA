@@ -43,9 +43,21 @@ sec_session_start();
 			<section id="main" class="container">
 
 				<section class="box" style="height: 900px;">
-					<div class="breadCrumb">
-						<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="avp.php">Analytics</a> &raquo; <a href="avp.php">Actual vs Predicted</a>
+					<div class="row collapse-at-2">
+						<div class="6u">
+							<div class="breadCrumb">
+								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="avp.php">Analytics</a> &raquo; <a href="avp.php">Actual vs Predicted</a>
+							</div>
+						</div>
+						<div class="6u">
+							<div align="right" style="font-size:smaller;">
+								<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+								<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+							</div>
+						</div>
 					</div>
+					<hr style="margin:0 0;">
+
 					<?php include 'viz/modelButtons.php' ?>
 
 					<div style="clear: both;">
