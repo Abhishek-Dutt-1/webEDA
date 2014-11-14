@@ -54,7 +54,7 @@ function drawSparkLineChart(data) {
 			borderWidth: 0,
 			type: 'area',
 			margin: [2, 0, 2, 0],
-			width: CHART_WIDTH,
+			//width: CHART_WIDTH,
 			height: CHART_HEIGHT,
 			style: {
 				overflow: 'visible'

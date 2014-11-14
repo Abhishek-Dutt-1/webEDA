@@ -58,7 +58,7 @@ sec_session_start();
 					</div>
 					<hr style="margin:0 0;">
 
-					<?php include 'viz/modelButtons.php' ?>
+					<?php include 'viz/analyticsButtons.php' ?>
 
 					<div style="clear: both;">
 						<div id="chartContainer2">

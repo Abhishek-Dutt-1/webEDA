@@ -22,15 +22,17 @@ sec_session_start();
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 		<script src="viz/Highcharts/js/highcharts.js"></script>
-		<script src="viz/highcharts-regression.js"></script>
-		<script src="viz/Highcharts/js/modules/exporting.js"></script>			
+		<script src="viz/Highcharts/js/highcharts-more.js"></script>
+		<script src="viz/Highcharts/js/modules/solid-gauge.js"></script>
+		
+
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
 
-		<link rel="stylesheet" href="viz/styles/charts.css" />
+		<link rel="stylesheet" href="viz/styles/charts_Diagnostics.css" />
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
     </head>
@@ -49,7 +51,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparediagnostics.php">Compare Diagnostics</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -61,13 +63,19 @@ sec_session_start();
 							</div>
 							<hr style="margin:0 0;">
 							
-							<?php include 'viz/kpiButtons.php' ?>
+							<?php include 'viz/mediaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
-									<h3>KPI</h3>
+									<div style="margin: 100px 0 70px 0;">
+										<h3 style="width: 30%; float: left; position: relative; top: 20px;">Media Weights</h3>										
+										<div id="thresholdInputsOuter">
+										</div>
+									</div>
 									<div id="compareOuterDiv">
-<div id="selectionTableContainer">
-</div>
+										<div style="clear: both;"></div>
+										<div id="selectionTableContainer">
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -77,9 +85,9 @@ sec_session_start();
 			</section>
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>
-        <?php else :
-				include 'includes/error.php';
-		endif; ?>
+        <?php else : 
+						include 'includes/error.php';
+			endif; ?>
 
 
 <!-- template -->
@@ -89,58 +97,57 @@ sec_session_start();
 	<div class="selectionColumn selectionLabelsColumn">
 		<div class="selectionLabelsFirst"></div> <!-- upper left empty cell-->
 	{#varTypes}
-		<div class="selectionLabels">
-		<div class="selectionLabelsInner">
-			{kpi}
-		</div>
-		</div>
+		<div class="selectionLabels"><div class="selectionLabelsInner">
+			{driver}
+		</div></div>
 	{/varTypes}
 	</div>
 	{#brands}
 		<div class="selectionColumn">
 			{?brand}
 			<div class="selectionHeader"><div class="selectionHeaderInner">
-				<div class="brandLogo">
-					<image src="images/brand/{brand}.png" height="50">
-				</div>
+				<image src="images/brand/{brand}.png" height="50"><br>
 				{brand} <a href="#" onclick="selectionRemoveBrand('{$idx}'); return false;">x</a>
 			</div></div>
-			{#kpis}
-				<div class="selectionSparklineCell">
-				<div class="selectionSparklineCellInner">
+			{#drivers}
+				
 				{#info}
+					<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
 					{?Brand}
-						<div id="{VarNameId}">
-						</div>
-						<div class="selectionVarName"><a href="#" onclick="showControlChart('{VarName}'); return false;">{VarName}</a></div>
+						<div style="height: 89px; overflow: hidden;">
+							<div id="{VarNameId}">
+							</div>
+						</div>							
+						<div class="selectionVarName"><a href="#" onclick="showDiagnosticsChart('{VarName}'); return false;">{VarName}</a></div>
 						{:else}
-						<div>-</div>
+						<div class="selectionEmptyCell">-</div>
 					{/Brand}
+					</div></div>
 				{/info}
-				</div>
-				</div>
-			{/kpis}
+				
+			{/drivers}
 			{:else}
 			<div class="selectionHeader">
 				<div class="selectionAddMore">
-					<a href="#" onclick="selectionShowAddPopup('{$idx}'); return false;" class="selectionAddMoreLink">Add Brand</a>
+					<a href="#" onclick="selectionShowAddPopup({$idx}); return false;" class="selectionAddMoreLink">Add Brand</a>
 				</div>
 			</div>
 			{/brand}
 		</div>
 	{/brands}
-		<div class="selectionColumn selectionLabelsColumn" style="border: 0px solid;">
-			<div class="selectionLabelsFirstCombinedChart"></div> <!-- upper left empty cell-->
-			{#varTypes}
-				<div class="selectionLabels">
-				<div class="selectionLabelsCombinedChart" style="border: 0px solid;">
-					<a href="#" class="button alt small" onclick="displayChartPopup('{kpi}'); return false;">Combine</a>					
-				</div>
-				</div>
-			{/varTypes}
+	</div>
+	</div>
+</script>
+<!-- template -->
+<script type="text/x-template" id="diagnosticsThresholdInputsTemplate">
+<div style="margin: 0 0px 20px 0; overflow: hidden;">
+	{#varTypes}
+		<div style="float: right; width: 90px; margin: 0 5px;">
+			<div style="font-size: 12px; text-align: center;">{varType}</div>		
+			<input type="text" id="{varTypeId}" style="height: 30px; font-size: 12px;" value="10" onchange="updateSelectionTable();">
 		</div>
-	</div>
-	</div>
+	{/varTypes}
+</div>
 </script>
 
 <div id="selectTableVariable">
@@ -150,17 +157,10 @@ sec_session_start();
 		</div>
 	</div>
 </div>
-<div id="chartPopup">
-	<div id="chartPopupInner">
-		<div id="combinedKPIChart">
-			KPI Chart
-		</div>
-	</div>
-</div>
-<div id="controlChartPopup">
-	<div id="controlChartPopupInner">
-		<div id="controlChart">
-			Control Chart
+<div id="diagnosticsChartPopup">
+	<div id="diagnosticsChartPopupInner">
+		<div id="diagnosticsChart">
+			Diagnostics Chart
 		</div>
 	</div>
 </div>
@@ -168,7 +168,7 @@ sec_session_start();
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>
 		<script src="viz/libs/bPopup/jquery.bpopup.min.js"></script>
-		<script src="viz/Compare/comparekpi_charts.js"></script>
+		<script src="viz/MediaWeights/mediaweights_charts.js"></script>
 		
     </body>
 </html>

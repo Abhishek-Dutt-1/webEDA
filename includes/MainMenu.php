@@ -8,7 +8,7 @@
 	<nav id="nav">
 		<ul>
 			<?php if (isset($_SESSION['username'])) :
-					echo "<li> Welcome! ".$_SESSION['username']."</li>";
+					echo "<li> Welcome! ".ucfirst(strtolower($_SESSION['username']))."</li>";
 					endif;?>
 			<li><a href="index.php">Home</a></li>
 			<li>

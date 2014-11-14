@@ -38,7 +38,7 @@ sec_session_start();
 <script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>	
 <script src="viz/libs/bPopup/jquery.bpopup.min.js"></script>	
 <script src="viz/Correl/correl_charts.js"></script>		
-		<link rel="stylesheet" href="viz/styles/charts.css" />		
+		<link rel="stylesheet" href="viz/styles/charts.css" />
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -78,7 +78,6 @@ sec_session_start();
 				  xmlhttp.onreadystatechange=function() {
 					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					  document.getElementById("getcorrelvalues").innerHTML=xmlhttp.responseText;
-					  
 					}
 				  }
 				  xmlhttp.open("GET","includes/getcorrelvalues.php?brand="+brand+"&variable_type="+var_type_value,true);
@@ -159,7 +158,7 @@ sec_session_start();
 								</div>
 							</div>
 							<hr style="margin:0 0;">
-							<?php include 'viz/compareButtons.php' ?>
+							<?php include 'viz/correlationsButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
 									<h3>KPI - Driver Correlation</h3>
@@ -200,6 +199,7 @@ sec_session_start();
 								</div>
 							</div>
 							<br>
+
 							<div id="getcorrelvalues">
 							</b></div>
 						</section>

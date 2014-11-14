@@ -45,10 +45,22 @@ sec_session_start();
 					<div class="12u">
 						<!-- Buttons -->
 						<section class="box" id="chartContainer1">
-							<div class="breadCrumb">
-								<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+							<div class="row collapse-at-2">
+								<div class="6u">
+									<div class="breadCrumb">
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+									</div>
+								</div>
+								<div class="6u">
+									<div align="right" style="font-size:smaller;">
+										<b>Selected Dataset : </b><?php echo $_SESSION['selectedEDA'];?>
+										<br><b>Date Period : </b><?php echo $_SESSION['EDADatePeriod']; ?>
+									</div>
+								</div>
 							</div>
-							<?php include 'viz/compareButtons.php' ?>
+							<hr style="margin:0 0;">
+							
+							<?php include 'viz/queryButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
 									<h3 style="float: left; width: 30%;">Custom Query</h3>
@@ -57,6 +69,8 @@ sec_session_start();
 										<a href="#" class="button alt small" onclick="toggleDriverSelectExpand(); return false;">2 : Select Driver</a>
 										<a href="#" class="button small" onclick="updateChart(); return false;">3 : Chart</a>
 									</div>
+									<div style="clear: both;"></div>
+									<div id="trackSelection" style="color: #777; float: right;">KPI : <b>0</b> | Driver : <b>0</b></div>
 									<div id="queryKPISelectionPanel" style="border: 0px solid lightgrey; overflow: hidden1; clear:both; line-height: 1em;">
 										<div id="slideToggleKPIPanel1" style="float: left; width: 25%; padding: 20px;"></div>
 										<div id="slideToggleKPIPanel2" style="float: left; width: 70%; padding: 20px;"></div>

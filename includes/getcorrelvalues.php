@@ -70,9 +70,10 @@
 	// }
 	$BuiltTable =	'<div class="row uniform half">';
 	$BuiltTable .= '<div class="6u" style="width:100%; overflow: auto; min-height:150px; max-height:500px;">';
+	//$BuiltTable .= '<div style="">';
 	$BuiltTable .= '<table class="alt" >';
-	$BuiltTable .= '<tr>';
-	$BuiltTable .= '<td></td>';	
+	$BuiltTable .= '<thead><tr>';
+	$BuiltTable .= '<th></th>';	
 	
 	$temp="";
 	$count=0;
@@ -117,14 +118,14 @@
 	
 	$BuiltTable .= '</tr>';
 	$BuiltTable .= '<tr>';
-	$BuiltTable .= '<td align="middle"  >KPI <br>vs <br>Driver Correlation</td>';
+	$BuiltTable .= '<th align="middle"  >KPI <br>vs <br>Driver Correlation</th>';
 	
 	foreach ($Driver as $driver_value)
 	{
 		 $BuiltTable .= '<th>' . $driver_value .' </th>';
 		 
 	} 
-	$BuiltTable .= '</tr>';
+	$BuiltTable .= '</tr></thead>';
 	
 	
 	foreach ($KPI as $kpi_value)

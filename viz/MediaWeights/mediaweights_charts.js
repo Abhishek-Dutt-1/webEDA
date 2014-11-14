@@ -47,6 +47,10 @@ function compareDataLoaded(data) {
 // Create the actual chart
 function drawGaugeChart(data, dataValue, maxValue) {
 
+//console.log(data);
+//console.log(dataValue);
+//console.log(maxValue);
+
 	$( '#'+ data.VarNameId).highcharts({
 
         chart: {
@@ -57,17 +61,16 @@ function drawGaugeChart(data, dataValue, maxValue) {
         },
         title: null,
         pane: {
-            center: ['50%', '50%'],
-            //startAngle: -90,
-            //endAngle: 90,
-            background: {
-                backgroundColor: '#fff',
-                innerRadius: '40%',
-                outerRadius: '100%',
-                shape: 'arc',
-               borderColor: 'transparent'
-            },
-			
+				center: ['50%', '50%'],
+				//startAngle: -90,
+				//endAngle: 90,
+				background: {
+					backgroundColor: '#fff',
+					innerRadius: '40%',
+					outerRadius: '100%',
+					shape: 'arc',
+				   borderColor: 'transparent'
+				},
         },
         tooltip: {
             enabled: false
@@ -75,7 +78,7 @@ function drawGaugeChart(data, dataValue, maxValue) {
         // the value axis
         yAxis: {
             min: 0,
-            max: maxValue,
+            max: dataValue.totalSum,
             stops: [
                 [0.1, '#e74c3c'], // red
                 [0.5, '#f1c40f'], // yellow
@@ -106,7 +109,7 @@ function drawGaugeChart(data, dataValue, maxValue) {
             }
         },
         series: [{
-            data: [dataValue]
+            data: [dataValue.mediaWeight]
         }]
     });
 }
@@ -385,7 +388,11 @@ function getThresholdValueByVarType(varType) {
 function getPointsAboveThresholdValue(data, threshold) {
 	//console.log(data);
 	//console.log(threshold);
-	return data.data.filter( function(el) { return el > threshold; } ).length; 
+	return { 
+				mediaWeight: Math.round( data.data.reduce( function(pv, cv) { if(cv >= threshold) { return pv + cv;} else { return pv; } }, 0 ) ),
+				totalSum: Math.round( data.data.reduce( function(pv, cv) { return pv + cv;} , 0 ) )  
+			};
+	//return data.data.filter( function(el) { return el > threshold; } ).length; 
 	//console.log( data.data.filter( function(el) { return el > threshold; } ) );
 }
 // Update Selection Table
@@ -455,7 +462,7 @@ function showDiagnosticsChart(varName) {
 	var max = Math.max.apply(null, chartData.DRIVER[0].data);
 	var min = Math.min.apply(null, chartData.DRIVER[0].data);
 	var binSize = (max - min) / numBins;
-	console.log("BIN SIZE " + binSize);
+	//console.log("BIN SIZE " + binSize);
 	chartData.DRIVER[0].bins = [];
 	chartData.DRIVER[0].binsTxt = [];
 	chartData.DRIVER[0].binsData = [];
@@ -473,8 +480,8 @@ function showDiagnosticsChart(varName) {
 		// Current bin range
 		low = chartData.DRIVER[0].bins[ j-1 ];
 		high = chartData.DRIVER[0].bins[ j ];
-		console.log(low);
-		console.log(high);
+		//console.log(low);
+		//console.log(high);
 		// Make bins text user friendly
 		chartData.DRIVER[0].binsTxt.push( '('+Math.round(low)+'-'+Math.round(high)+']' );
 		// Count frequencies side by side
@@ -486,7 +493,7 @@ function showDiagnosticsChart(varName) {
 	chartData.DRIVER[0].data[j] = chartData.DRIVER[0].data.filter( function(val) {return val > high;} ).length ;
 	
 	diagnosticsDrawChart(chartData.DRIVER[0], chartData.time);
-	console.log(chartData.DRIVER);
+	//console.log(chartData.DRIVER);
 	$('#diagnosticsChartPopup').bPopup({
 		speed: 100
 	});

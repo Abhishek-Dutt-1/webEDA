@@ -29,7 +29,7 @@ $( document ).ready(function() {
 	
 	// Make table editable
 	//$("td").dblclick(function () { 
-	$("#simulationTable").on('click', 'td.editableCell', function () {
+	$("#simulationTable").on('dblclick', 'td.editableCell', function () {
 		var OriginalContent = $(this).text(); 
 		$(this).addClass("cellEditing"); 
 		$(this).html("<input type='text' class='tableCellEdit' value='" + OriginalContent + "' />"); 
@@ -191,7 +191,7 @@ function calcDependentValues() {
 	// Clear yPred col
     simData[1].data = [];
     
-	var tmpArray = new Array(parseInt(numPeriodSimulated)+1).join('0').split('').map(parseFloat)
+	var tmpArray = new Array(parseInt(numPeriodSimulated)+1).join('0').split('').map(parseFloat);
 	
 	chartData.modelData.independent.forEach( function(indep, index, independent) {
 		var coSeries = [];
@@ -221,8 +221,17 @@ function calcDependentValues() {
 	});
 
 	// Add intercept to the contrib (yPred)
+	var lastDepData = chartData.modelData.dependent.data[chartData.modelData.dependent.data.length - 1];
+	var max, min, noise;
+	max = 10;  min = 5;	// <-- Range of random %
 	for (j = 0; j < numPeriodSimulated; j++) {
 		tmpArray[j] = tmpArray[j] + chartData.modelData.intercept.contribSeries[j];
+
+		// FORCE Ypred TO BE ~ 5 - 10% of last dependent actual data point
+		if(tmpArray[j] > (lastDepData * 1.05) ) {
+			noise = (Math.floor(Math.random() * (max - min + 1)) + min);
+			tmpArray[j] = lastDepData * (1 + noise/100);
+		}
 	};
 	simData[1].data = tmpArray;
 	//console.log(tmpArray);
@@ -243,8 +252,9 @@ function calcDependentValues() {
                 }
             }
         }
-    } 
-
+    }
+	//console.log(chartData);
+	
     // Returns the data from the table for a given variable and position
     // Local function
     function getInputDataForVariable(indepName, i) {

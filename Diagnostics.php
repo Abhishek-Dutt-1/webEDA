@@ -67,7 +67,7 @@ sec_session_start();
 							<div class="breadCrumb">
 								
 							</div>
-							<?php include 'viz/chartButtons.php' ?>
+							<?php include 'viz/mediaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
 									<h3>Diagnostics Charts</h3>

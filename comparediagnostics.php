@@ -32,7 +32,7 @@ sec_session_start();
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
 
-		<link rel="stylesheet" href="viz/styles/charts.css" />
+		<link rel="stylesheet" href="viz/styles/charts_Diagnostics.css" />
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
     </head>
@@ -63,11 +63,11 @@ sec_session_start();
 							</div>
 							<hr style="margin:0 0;">
 							
-							<?php include 'viz/compareButtons.php' ?>
+							<?php include 'viz/mediaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
 									<div style="margin: 100px 0 70px 0;">
-										<h3 style="width: 30%; float: left; position: relative; top: 20px;">Compare WoA</h3>										
+										<h3 style="width: 30%; float: left; position: relative; top: 20px;">WoA/MoA</h3>										
 										<div id="thresholdInputsOuter">
 										</div>
 									</div>
@@ -106,20 +106,25 @@ sec_session_start();
 		<div class="selectionColumn">
 			{?brand}
 			<div class="selectionHeader"><div class="selectionHeaderInner">
+				<image src="images/brand/{brand}.png" height="50"><br>
 				{brand} <a href="#" onclick="selectionRemoveBrand('{$idx}'); return false;">x</a>
 			</div></div>
 			{#drivers}
-				<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
+				
 				{#info}
+					<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
 					{?Brand}
-						<div id="{VarNameId}">
+						<div style="height: 89px; overflow: hidden;"	>
+							<div id="{VarNameId}">
+							</div>
 						</div>
 						<div class="selectionVarName"><a href="#" onclick="showDiagnosticsChart('{VarName}'); return false;">{VarName}</a></div>
 						{:else}
 						<div class="selectionEmptyCell">-</div>
 					{/Brand}
+					</div></div>
 				{/info}
-				</div></div>
+				
 			{/drivers}
 			{:else}
 			<div class="selectionHeader">

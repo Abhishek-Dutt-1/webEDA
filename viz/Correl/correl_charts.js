@@ -106,6 +106,7 @@ function createBiVariateChart(data) {
     });
 
 }
+
 // Create individual EDA Charts
 function meanDiffDrawChart(time, dep, indep) {
 

@@ -5,7 +5,7 @@ var selectionData = {};
 var addNewBrandToIndex;
 var MAX_TABLE_COLUMNS = 3;
 var CHART_WIDTH = 180;
-var CHART_HEIGHT = 70;
+var CHART_HEIGHT = 90;
 function compareDataLoaded(data) {
 	console.log(data);
 	allData = data;
@@ -51,14 +51,14 @@ function drawSparkLineChart(data) {
             zoomType: 'x',
 			backgroundColor: null,
 			borderWidth: 0,
-			type: 'area',
-			margin: [2, 0, 2, 0],
-			width: CHART_WIDTH,
+			//type: 'area',
+			//margin: [2, 0, 2, 0],
+			//width: CHART_WIDTH,
 			height: CHART_HEIGHT,
 			style: {
 				overflow: 'visible'
 			},
-			skipClone: true
+			//skipClone: true
         },
         title: {
             text: '', //data.VarName + " vs. " + allData.time.VarName,
@@ -423,3 +423,55 @@ $( document ).ready(function() {
 	});
 
 });
+/////////////Show Popup Driver Chart/////////////////////////////////////////
+
+function showDriverChart(varName) {
+	//console.log(varName);
+	//console.log(allData);
+	var chartData = allData.DRIVER.filter( function(kpi) { return kpi.VarName == varName; });
+	chartData.time = allData.time;
+	//console.log(chartData);
+	updateDriverChart(chartData[0], chartData.time);
+
+	$('#driverChartPopup').bPopup({
+		speed: 100
+	});
+	
+}
+
+// Create the actual chart
+function updateDriverChart(data, time) {
+
+	$( '#driverChart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: data.VarName,
+			align: 'left',
+            x: 70,			
+        },
+        xAxis: {
+            categories: time.data,
+			labels: { rotation: -45, maxStaggerLines: 0, step: 1 }
+        },
+        yAxis: {
+			title: {
+				//text: ''
+                text: data.VarName
+            },
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: data.VarName,
+            data: data.data,
+			color: data.color
+			}],
+		credits: false
+    });
+}

@@ -68,7 +68,7 @@ sec_session_start();
 							</div>
 							<hr style="margin:0 0;">
 							
-							<?php include 'viz/chartButtons.php' ?>
+							<?php include 'viz/edaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
 									

@@ -1,4 +1,5 @@
 var allData = {};
+var trackSelection = {kpi: [], driver: []};
 //////
 function compareDataLoaded(data) {
 	console.log(data);
@@ -169,7 +170,7 @@ function compareDataLoaded(data) {
 			//tmpStr += '<div class="optGroupVarTypePopup" label="' + brand.brand + ' - ' + kpi.Variable_Type + ' :">' + brand.brand + " - " + kpi.Variable_Type;
 			variables = [];
 			kpi.Variable.forEach( function(varName) {
-				tmpStr += '<div style="width: 33%; float: left; font-size: 14px; overflow: hidden; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ kpi.Variable_Type +'</label></div>';
+				tmpStr += '<div style="width: 33%; float: left; font-size: 14px; overflow: hidden; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'" onclick="trackSelectedKPI(\'kpi\', \''+kpi.Variable_Type+'\', \''+varName.VarName+'\');"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ kpi.Variable_Type +'</label></div>';
 				variables.push( varName );
 			});
 			tmpKpi.push({Variable_Type: kpi.Variable_Type, varNames: variables});
@@ -203,7 +204,7 @@ function compareDataLoaded(data) {
 			tmpStr += '<div class="driverSelectBrandVarTypeVarNameDiv" style="clear: both;" id="'+brand.brand+'_'+driver.Variable_Type+'_DRIVER" label="'+brand.brand+'">';	
 			
 			driver.Variable.forEach( function(varName) {
-				tmpStr += '<div style="width: 50%; float: left; font-size: 14px; overflow: hidden1; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ varName.VarName +'</label></div>';
+				tmpStr += '<div style="width: 50%; float: left; font-size: 14px; overflow: hidden1; height: 40px;"><input type="checkbox" class="userInputCheckbox" id="'+ varName.VarName +'" onclick="trackSelectedKPI(\'driver\', \''+varName.VarName+'\');"><label for="'+ varName.VarName +'" class="optGroupVariablePopup" >'+ varName.VarName +'</label></div>';
 				variables.push( varName );
 			});
 			
@@ -223,10 +224,8 @@ function compareDataLoaded(data) {
 	document.getElementById('slideToggleDriverPanel2').innerHTML = tmpStr2;
 	document.getElementById('slideToggleDriverPanel3').innerHTML = tmpStr;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$( "#queryDriverSelectionPanel" ).hide( "fast", function() {
-	});
-	$( "#queryKPISelectionPanel" ).hide( "fast", function() {
-	});
+	$( "#queryDriverSelectionPanel" ).hide( "fast", function() {});
+	$( "#queryKPISelectionPanel" ).hide( "fast", function() {});
 	showKPIPanel(document.getElementsByClassName('kpiSelectBrands')[0]);
 	showDriverPanel(document.getElementsByClassName('driverSelectBrands')[0]);
 	showDriverVarTypePanel(document.getElementsByClassName('driverSelectVarTypes')[0])
@@ -234,6 +233,9 @@ function compareDataLoaded(data) {
 
 // Update button pressed
 function updateChart() {
+
+$( "#queryDriverSelectionPanel" ).hide( "fast", function() {});
+$( "#queryKPISelectionPanel" ).hide( "fast", function() {});
 
 	var selectedKpi = [];
 	var selectedDriver = [];
@@ -643,4 +645,29 @@ function showDriverVarTypePanel(el) {
 	$('.driverSelectBrandVarTypeVarNameDiv').each( function() { $(this).hide("fast"); });
 	$( "#" + el.getAttribute('data-target-id') ).slideDown( "fast", function() {});
 	$( el ).addClass('special');
+}
+///////// Keep track of selections
+function trackSelectedKPI(kpiOrDriver, varType, varName) {
+
+	var index = -1;
+	if(kpiOrDriver == 'kpi') {
+	
+		index = trackSelection.kpi.indexOf(varName);
+		if( index > -1 ) {
+			trackSelection.kpi.splice(index, 1);
+		} else {
+			trackSelection.kpi.push(varName);
+		}
+	
+	} else {
+	
+		index = trackSelection.driver.indexOf(varType);
+		if( index > -1 ) {
+			trackSelection.driver.splice(index, 1);
+		} else {
+			trackSelection.driver.push(varType);
+		}
+		
+	}
+	$('#trackSelection').html( 'KPI : <b>'+ trackSelection.kpi.length + '</b> | ' + 'Driver : <b>' + trackSelection.driver.length + '</b>');
 }

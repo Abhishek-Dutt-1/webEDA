@@ -68,7 +68,7 @@ sec_session_start();
 					<div class="breadCrumb">
 						
 					</div>
-					<?php include 'viz/modelButtons.php' ?>
+					<?php include 'viz/analyticsButtons.php' ?>
 
 					<div style="clear: both;">
 						<div id="chartContainer2">

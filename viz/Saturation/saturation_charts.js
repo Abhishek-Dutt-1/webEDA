@@ -72,7 +72,7 @@ function createSaturationInputs() {
 	label.innerHTML = "Increment";
 	input = document.createElement('input');
 	input.type = "text";
-	input.value = 50;
+	input.value = 100;
 	input.id = "INCREMENT";
 	input.className  = "saturationInput";
 	
@@ -84,7 +84,7 @@ function createSaturationInputs() {
 	label.innerHTML = "End";
 	input = document.createElement('input');
 	input.type = "text";
-	input.value = 1000;
+	input.value = 2000;
 	input.id = "END";
 	input.className  = "saturationInput";
 	
@@ -218,7 +218,7 @@ function updateSaturationChartsData() {
 	chartData.modelData.independent.forEach( function(ind, index, independent) {
 		independent[index]['SaturaionCurve'] = calcSaturationSeries(ind.name);
 	});
-	console.log( chartData );
+	//console.log( chartData );
 	// Draw the actual caharts
 	drawSaturationCharts();
 }

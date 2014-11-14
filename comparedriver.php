@@ -29,7 +29,7 @@ sec_session_start();
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
 
-		<link rel="stylesheet" href="viz/styles/charts.css" />
+		<link rel="stylesheet" href="viz/styles/charts_compareDriver.css" />
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
     </head>
@@ -60,10 +60,10 @@ sec_session_start();
 							</div>
 							<hr style="margin:0 0;">
 							
-							<?php include 'viz/compareButtons.php' ?>
+							<?php include 'viz/mediaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
-									<h3>Compare KPI</h3>
+									<h3>Media Schedule</h3>
 									<div id="compareOuterDiv">
 <div id="selectionTableContainer">
 </div>
@@ -97,20 +97,23 @@ sec_session_start();
 		<div class="selectionColumn">
 			{?brand}
 			<div class="selectionHeader"><div class="selectionHeaderInner">
+				<image src="images/brand/{brand}.png" height="50"><br>
 				{brand} <a href="#" onclick="selectionRemoveBrand('{$idx}'); return false;">x</a>
 			</div></div>
 			{#drivers}
-				<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
+				
 				{#info}
+					<div class="selectionSparklineCell"><div class="selectionSparklineCellInner">
 					{?Brand}
 						<div id="{VarNameId}">
 						</div>
-						<div class="selectionVarName">{VarName}</div>
+						<div class="selectionVarName"><a href="#" onclick="showDriverChart('{VarName}'); return false;">{VarName}</a></div>
 						{:else}
 						<div class="selectionEmptyCell">-</div>
 					{/Brand}
+					</div></div>
 				{/info}
-				</div></div>
+				
 			{/drivers}
 			{:else}
 			<div class="selectionHeader">
@@ -132,7 +135,13 @@ sec_session_start();
 		</div>
 	</div>
 </div>
-
+<div id="driverChartPopup">
+	<div id="driverChartPopupInner">
+		<div id="driverChart">
+			Driver Chart
+		</div>
+	</div>
+</div>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
 		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
 		<script src="viz/libs/linkedin-dustjs/dist/dust-full.min.js"></script>
