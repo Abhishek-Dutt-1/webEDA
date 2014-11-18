@@ -49,7 +49,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">KPI</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -65,6 +65,7 @@ sec_session_start();
 							<div style="clear: both;">
 								<div id="container2">
 									<h3>KPI</h3>
+									<?php include 'includes/loadingSpinner.php' ?>
 									<div id="compareOuterDiv">
 <div id="selectionTableContainer">
 </div>

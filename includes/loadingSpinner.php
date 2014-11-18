@@ -1,0 +1,1 @@
+<div id="loadingSpinner"><i class="fa fa-spinner fa-spin"></i>  Please Wait... Loading...</div>	

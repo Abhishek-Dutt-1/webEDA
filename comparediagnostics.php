@@ -51,7 +51,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparediagnostics.php">Compare Diagnostics</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparediagnostics.php">WoA</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -66,12 +66,13 @@ sec_session_start();
 							<?php include 'viz/mediaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
-									<div style="margin: 100px 0 70px 0;">
-										<h3 style="width: 30%; float: left; position: relative; top: 20px;">WoA/MoA</h3>										
+									<div style="margin: 100px 0 20px 0;">
+										<h3 style="width: 30%; float: left; position: relative; top: 20px;">WoA/MoA</h3>
 										<div id="thresholdInputsOuter">
 										</div>
 									</div>
 									<div id="compareOuterDiv">
+										<div style="float: right; font-size: 1em; margin: 0 10px 10px 0;"><b>Data Points : <span id="numOfDataPoints"></span></b></div>
 										<div style="clear: both;"></div>
 										<div id="selectionTableContainer">
 										</div>
@@ -79,6 +80,7 @@ sec_session_start();
 									</div>
 								</div>
 							</div>
+							<?php include 'includes/loadingSpinner.php' ?>
 						</section>
 					</div>
 				</div>

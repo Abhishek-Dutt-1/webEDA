@@ -48,7 +48,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparedriver.php">Compare Driver</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparedriver.php">Media Schedule</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -69,6 +69,7 @@ sec_session_start();
 </div>
 									</div>
 								</div>
+								<?php include 'includes/loadingSpinner.php' ?>
 							</div>
 						</section>
 					</div>

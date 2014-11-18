@@ -225,7 +225,7 @@ function compareDataLoaded(data) {
 	document.getElementById('slideToggleDriverPanel3').innerHTML = tmpStr;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$( "#queryDriverSelectionPanel" ).hide( "fast", function() {});
-	$( "#queryKPISelectionPanel" ).hide( "fast", function() {});
+	//$( "#queryKPISelectionPanel" ).hide( "fast", function() {});
 	showKPIPanel(document.getElementsByClassName('kpiSelectBrands')[0]);
 	showDriverPanel(document.getElementsByClassName('driverSelectBrands')[0]);
 	showDriverVarTypePanel(document.getElementsByClassName('driverSelectVarTypes')[0])
@@ -669,5 +669,5 @@ function trackSelectedKPI(kpiOrDriver, varType, varName) {
 		}
 		
 	}
-	$('#trackSelection').html( 'KPI : <b>'+ trackSelection.kpi.length + '</b> | ' + 'Driver : <b>' + trackSelection.driver.length + '</b>');
+	$('#trackSelection').html( 'Selected KPI : <b>'+ trackSelection.kpi.length + '</b> | ' + 'Driver : <b>' + trackSelection.driver.length + '</b>');
 }

@@ -3,7 +3,7 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
  
 sec_session_start();
-
+$edaid = $_SESSION['edaId'];
 ?>
 <html>
 	<head>
@@ -25,7 +25,7 @@ sec_session_start();
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
-        <link rel="stylesheet" href="styles/main.css" />
+        
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
     </head>
@@ -70,7 +70,27 @@ sec_session_start();
 				
 			</div>
 			<div class="row uniform half ollapse-at-2">
-				
+			<div class="6u">
+				<div class="select-wrapper">
+											
+					<select name="kpi" id="kpi">
+						<option value="">- Select KPI for the model set -</option>
+						<?php
+							$q_KPI="SELECT DISTINCT `Column Name` as KPI FROM  eda_column_mapping WHERE edaid = $edaid AND Variable='KPI' AND Ownership ='Own'";				
+							$result = $mysqli->query($q_KPI);
+							
+							foreach ( $result as $row) 
+									{
+									$kpi = stripslashes($row['KPI']);
+									?><option value="<?php echo $kpi;?>"><?php echo $kpi;?></option><?php
+									}
+								
+						?>
+					</select>
+				</div>
+				</div>
+			</div>
+			<div class="row uniform half ollapse-at-2">
 					<label for="file">Select the csv file to upload:</label>
 					<input type="file" name="file" id="file" accept=".csv" ><br>
 			</div>

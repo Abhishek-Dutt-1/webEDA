@@ -41,7 +41,9 @@ function compareDataLoaded(data) {
 	// Initial Load
 	createThresholdInputs(selectionData);
 	updateSelectionTable();
-
+	console.log(selectionData);
+	document.getElementById('numOfDataPoints').innerHTML = selectionData.time.data.length;
+	document.getElementById("loadingSpinner").innerHTML="";
 }
 
 // Create the actual chart

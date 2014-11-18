@@ -38,7 +38,7 @@ sec_session_start();
 <script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>	
 <script src="viz/libs/bPopup/jquery.bpopup.min.js"></script>	
 <script src="viz/Correl/correl_charts.js"></script>		
-		<link rel="stylesheet" href="viz/styles/charts.css" />		
+		<link rel="stylesheet" href="viz/styles/charts.css" />
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -48,7 +48,8 @@ sec_session_start();
 		<script>
 			function showCorrel() {
 			
-				  document.getElementById("getcorrelvalues").innerHTML='<i class="fa fa-spinner fa-spin"></i>  Please Wait... Loading...';	
+					document.getElementById("getcorrelvalues").innerHTML="";
+				  document.getElementById("loadingSpinner").innerHTML= '<i class="fa fa-spinner fa-spin"></i>  Please Wait... Loading...';	
 				  
 				  var brand_temp = document.getElementById("brand");
 				  var brand = brand_temp.options[brand_temp.selectedIndex].text;
@@ -78,6 +79,7 @@ sec_session_start();
 				  xmlhttp.onreadystatechange=function() {
 					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					  document.getElementById("getcorrelvalues").innerHTML=xmlhttp.responseText;
+					  document.getElementById("loadingSpinner").innerHTML="";
 					  
 					}
 				  }
@@ -98,13 +100,14 @@ sec_session_start();
 			};
 		</script>
 		
+		
 	</head>
 	<body>
 	  <?php if (login_check($mysqli) == true) : ?>
             <!-- Header -->
 			
 		<?php include 'includes/MainMenu.php'; ?>
-		<section id="banner1">	
+		
 			<!-- Main -->
 			<section id="main" class="container">
 				<!-- Check whether the EDA is selected. if not then send back to select the eda-->
@@ -147,7 +150,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="kpi.php">KPI</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="eda.php">EDA</a> &raquo; <a href="brand_kpi_driver_correl.php">Correlations</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -158,7 +161,7 @@ sec_session_start();
 								</div>
 							</div>
 							<hr style="margin:0 0;">
-							<?php include 'viz/compareButtons.php' ?>
+							<?php include 'viz/correlationsButtons.php' ?>
 							<div style="clear: both;">
 								<div id="container2">
 									<h3>KPI - Driver Correlation</h3>
@@ -199,13 +202,15 @@ sec_session_start();
 								</div>
 							</div>
 							<br>
+
 							<div id="getcorrelvalues">
 							</b></div>
+							<?php include 'includes/loadingSpinner.php' ?>
 						</section>
 					</div>
 				</div>
 			</section>
-		</section>							
+								
 			<!-- Footer -->
 			<?php include 'includes/footer.php'; ?>		
 							

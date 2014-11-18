@@ -8,8 +8,13 @@
 					<li>&copy; <a href="http://wwww.madisonbusinessanalytics.com">Madison Business Analytics</a>. All rights reserved.</li><li>
 				</ul>
 		</div> -->
+		<div class="middle">
+			<ul class="copyright">
+				<li>&copy; Madison Business Analytics. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</div>
 		<div class="right">
-				<img src="images/Madison Logo.png" id="logo" height="45" width="130" style="top:-15px;position:relative;left:-35px"/>
+				<img src="images/Madison Logo.png" id="logo" height="45" width="130" style="top:-25px;position:relative;left:-35px"/>
 		</div>
 	</div>
 </footer>

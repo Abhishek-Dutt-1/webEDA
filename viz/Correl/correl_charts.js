@@ -8,6 +8,7 @@ function displayGraphs(kpi, driver) {
 	console.log(kpi);
 	console.log(driver);
 
+
 	$('#correlChartPopup').bPopup({
 		speed: 100
 	});
@@ -107,7 +108,7 @@ function createBiVariateChart(data) {
 
 }
 
-// Create individual EDA Charts
+// Create individual MeanDiff Charts
 function meanDiffDrawChart(time, dep, indep) {
 
 	// Create the data table.

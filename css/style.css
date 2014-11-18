@@ -789,10 +789,12 @@
 			font-weight: 300;
 			padding: 0 0.75em 0.75em 0.75em;
 			text-align: left;
+			
 		}
 
 		table thead {
 			border-bottom: solid 2px #e5e5e5;
+			
 		}
 
 		table tfoot {

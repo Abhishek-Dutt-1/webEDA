@@ -3,6 +3,7 @@ function diagnosticsDataLoaded(data) {
 	//var time = data.time;
 	//var dep = data.dependent;
 	console.log(data);
+	//console.log(data.independent[0]);
 	var outerChartDiv = document.createElement('div');
 
 	// Create empty divs for each chart
@@ -19,6 +20,7 @@ function diagnosticsDataLoaded(data) {
 	data.independent.forEach( function(indep) {
 		diagnosticsDrawChart(indep);
 	});
+	document.getElementById("loadingSpinner").innerHTML="";
 }
 
 function diagnosticsDrawChart(indep) {

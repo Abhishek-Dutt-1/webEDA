@@ -41,6 +41,8 @@ function compareDataLoaded(data) {
 	document.getElementById('selectTableVariablesList').innerHTML = str;
 	// Initial Load
 	updateSelectionTable();
+	document.getElementById("loadingSpinner").innerHTML="";
+	console.log(selectionData);
 }
 
 // Create the actual chart

@@ -2,6 +2,10 @@
 var chartData = {};
 // top level simData used later
 var simData = [];
+
+var TARGET_COLUMNS = TARGET_COLUMNS || [];
+var PERCENTAGE_REDUCTION = PERCENTAGE_REDUCTION || [];
+
 /////////////////// INIT
 $( document ).ready(function() {
 
@@ -139,10 +143,12 @@ function createInputTable() {
 			if(indep.coef >= 0) {
 				td = tr.insertCell(-1);
 				td.className = "editableCell";
-				if(keepZero)
+				if(keepZero) {
 					td.appendChild( document.createTextNode(0) );
-				else
-					td.appendChild( document.createTextNode( indep.data[indep.data.length - numPeriodSimulated + i] ) );
+				} else {
+					// Also round to 1 decimal
+					td.appendChild( document.createTextNode( Math.round(indep.data[indep.data.length - numPeriodSimulated + i] * 10)/10 ) );
+				}
 			}
 		});
 		// Neg
@@ -181,7 +187,15 @@ function calcDependentValues() {
                 simData.push( { name: col.innerHTML, data: [] } );
             } else {
             // Rest rows are data rows
-                simData[j].data.push( col.innerHTML || 0);
+				// AIRTEL Hack so that 1st input column will be read 0.x0% of its value
+				var tmpInd = TARGET_COLUMNS.indexOf(j);
+				if( tmpInd > -1) {
+					simData[j].data.push( ( col.innerHTML * PERCENTAGE_REDUCTION[tmpInd] ) || 0);
+					console.log(col.innerHTML + ' || ' + TARGET_COLUMNS[tmpInd] + ' || ' + PERCENTAGE_REDUCTION[tmpInd] + ' || ' + col.innerHTML * PERCENTAGE_REDUCTION[tmpInd]);
+				} else {
+					// No HACK Normal operation
+					simData[j].data.push( col.innerHTML || 0);
+				}
             }
         }
     } 
@@ -221,17 +235,18 @@ function calcDependentValues() {
 	});
 
 	// Add intercept to the contrib (yPred)
-	var lastDepData = chartData.modelData.dependent.data[chartData.modelData.dependent.data.length - 1];
-	var max, min, noise;
-	max = 10;  min = 5;	// <-- Range of random %
+	//var lastDepData = chartData.modelData.dependent.data[chartData.modelData.dependent.data.length - 1];
+	//var max, min, noise;
+	//max = 10;  min = 5;	// <-- Range of random %
 	for (j = 0; j < numPeriodSimulated; j++) {
 		tmpArray[j] = tmpArray[j] + chartData.modelData.intercept.contribSeries[j];
 
 		// FORCE Ypred TO BE ~ 5 - 10% of last dependent actual data point
+		/*
 		if(tmpArray[j] > (lastDepData * 1.05) ) {
 			noise = (Math.floor(Math.random() * (max - min + 1)) + min);
 			tmpArray[j] = lastDepData * (1 + noise/100);
-		}
+		}*/
 	};
 	simData[1].data = tmpArray;
 	//console.log(tmpArray);
@@ -248,7 +263,8 @@ function calcDependentValues() {
             } else {
             // Rest rows are data rows
                 if (j == 1) {
-                    col.innerHTML = simData[1].data[i-1];
+					// Round to 1 decimal
+                    col.innerHTML = Math.round( simData[1].data[i-1] * 10)/10;
                 }
             }
         }

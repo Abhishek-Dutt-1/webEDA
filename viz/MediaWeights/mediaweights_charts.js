@@ -41,7 +41,7 @@ function compareDataLoaded(data) {
 	// Initial Load
 	createThresholdInputs(selectionData);
 	updateSelectionTable();
-
+document.getElementById("loadingSpinner").innerHTML="";
 }
 
 // Create the actual chart
@@ -50,7 +50,9 @@ function drawGaugeChart(data, dataValue, maxValue) {
 //console.log(data);
 //console.log(dataValue);
 //console.log(maxValue);
-
+//$( '#'+ data.VarNameId).html('<div style="padding-top: 10px;"><h3 style="margin: 0;">'+dataValue.mediaWeight+'</h3>('+dataValue.totalSum+')</div>')
+$( '#'+ data.VarNameId).html('<div style="padding-top: 30px;"><h3 style="margin: 0;">'+ dataValue.mediaWeight.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</h3></div>')
+return;
 	$( '#'+ data.VarNameId).highcharts({
 
         chart: {
@@ -80,9 +82,14 @@ function drawGaugeChart(data, dataValue, maxValue) {
             min: 0,
             max: dataValue.totalSum,
             stops: [
-                [0.1, '#e74c3c'], // red
+				[0.1, '#ffffff'], // red
+                [0.5, '#ffffff'], // yellow
+                [0.8, '#ffffff'] // green			
+            /*
+				[0.1, '#e74c3c'], // red
                 [0.5, '#f1c40f'], // yellow
                 [0.8, '#2ecc71'] // green
+			*/
                 ],
             minorTickInterval: null,
             tickPixelInterval: 400,

@@ -18,7 +18,6 @@ function getData($edaId, $projectId)
 		$tableName = $row['tablename'];
 	}
 
-	$q = "SELECT * FROM " . DATABASE . "." . $tableName;
 	$q = "SELECT * FROM " .  DATABASE . ".`" . $tableName . "`";
 	//echo $q . "<br>";
 	$res = $mysqli->query($q);
@@ -121,7 +120,15 @@ function calcDiagnostics( $data, $numBins = 10 )
 
 	// Create bins
 	for($i = 0; $i < count( $data['independent'] ); $i++) {
-	
+
+//
+// Hack to only use Variable == drivers
+//
+//var_dump(getVariableTypeData( $data['independent'][$i]['name'], $_GET['edaId'], $_GET['projectId'])['Variable'] );
+if( getVariableTypeData( $data['independent'][$i]['name'], $_GET['edaId'], $_GET['projectId'])['Variable'] != 'Driver' ) {
+	continue;
+}
+
 		$max = max($data['independent'][$i]['data']);
 		$min = min($data['independent'][$i]['data']);
 		//$average = array_sum( $data['independent'][$i]['data'] )/count( $data['independent'][$i]['data'] );
@@ -169,7 +176,25 @@ function calcDiagnostics( $data, $numBins = 10 )
 		$binData['independent'][$i]['Bin-Freq'][$j] = 'More = '.$binData['independent'][$i]['data'][$j];
 	}
 	
-	return $binData;
+// this is required to reorder array index from 0 o/w javascript forEach breaks
+$binData2 = [];
+//for ($i = 0; $i < count( $binData['independent'] ); $i++) {
+foreach ($binData['independent'] as $val) {
+	$binData2['independent'][] = $val;
+}
+//var_dump($binData2);
+	
+	return $binData2;
+}
+
+/*
+ * Returns variable types info by name
+ */
+function getVariableTypeData($name, $edaId, $projectId) {
+	$q = "SELECT `Column Name` as VarName, Brand, Ownership, Variable, `Variable_Type` FROM `eda_column_mapping` WHERE `Column Name` = '$name' AND projectid = '$projectId' AND edaid = '$edaId'";
+	global $mysqli;
+	$typeData = $mysqli->query($q);
+	return mysqli_fetch_assoc($typeData);
 }
 
 

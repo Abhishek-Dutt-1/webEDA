@@ -76,8 +76,14 @@ sec_session_start();
 									<div id="trendChartContainer">
 									</div>
 									-->
-									<h3>Bivariate Charts</h3>
-									
+									<h3 style="float: left; width: 30%;">Bivariate Charts</h3>
+									<div style="width: 50%; float: right;">
+										<div class="select-wrapper">
+											<select id="edaChartSelect" onchange="recreateEDACharts(this.value); return false;"></select>
+										</div>
+									</div>
+									<div style="clear: both;"></div>
+									<?php include 'includes/loadingSpinner.php' ?>
 									<div id="edaChartContainer">
 										
 									</div>

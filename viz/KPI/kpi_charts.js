@@ -128,7 +128,7 @@ function updateTrendChart(data) {
 function trendDataLoaded(data) {
 	allDataOriginal = data;
 	reorganizeData(data);
-	//console.log(allData);
+	console.log(allData);
 	// Show the first one 
 	document.getElementById("trendChartSelect").onchange()
 
@@ -151,7 +151,7 @@ $( document ).ready(function() {
 
 	$.get( "viz/KPI/KPI.php", { edaId: edaId, projectId: projectId }, trendDataLoaded, "json" ).fail( function(err) {
 		console.log("Trend Chart ERROR!");
-		console.log(err); 
+		console.log(err);
 	});
 
 });

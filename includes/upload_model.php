@@ -10,6 +10,7 @@ $_SESSION['tablename']="";
 
 if (login_check($mysqli) == true) :
 		$fname= $_POST["dataset"];
+		$model_kpi=$_POST['kpi'];
 		 //echo $fname;
 		if ($fname==null || $fname=="")
 		{
@@ -20,8 +21,16 @@ if (login_check($mysqli) == true) :
 		<?php
 		return false;
 		}
-
-
+		if ($model_kpi==null || $model_kpi=="")
+		{
+		echo "<div align='center'> Please mention the KPI for the model dataset";
+		?>
+			<br></br>
+			<a href="javascript:history.go(-1)">Go Back</a> </html>
+		<?php
+		return false;
+		}
+		
 		$allowedExts = array("csv");
 		$temp = explode(".", $_FILES["file"]["name"]);
 		$extension = end($temp);
@@ -131,10 +140,10 @@ if (login_check($mysqli) == true) :
 				$variable = $variable.")) AS VALUE";
 				
 				echo "<br></br>$variable<br></br>";
-				$q_insert_model= "INSERT INTO model_mapping(model_table, model_name,model_details,rsquare,eda_id,project_id,created_date,modified_date) SELECT '$table',`Model No.`,$variable,'rsquare',$Edaid, $Projectid,now(),now() FROM `$table`";
+				$q_insert_model= "INSERT INTO model_mapping(model_table, model_name,model_kpi,model_details,rsquare,eda_id,project_id,created_date,modified_date) SELECT '$table',`Model No.`,'$model_kpi',$variable,'rsquare',$Edaid, $Projectid,now(),now() FROM `$table`";
 				echo $q_insert_model;
 				$mysqli->query($q_insert_model);
-							
+						
 				header('Location: ../models.php');
 			//}
 		  }

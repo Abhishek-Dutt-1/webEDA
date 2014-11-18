@@ -51,7 +51,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparediagnostics.php">Compare Diagnostics</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="mediaweights.php">Media Weights</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -78,6 +78,7 @@ sec_session_start();
 
 									</div>
 								</div>
+								<?php include 'includes/loadingSpinner.php' ?>
 							</div>
 						</section>
 					</div>
@@ -144,7 +145,7 @@ sec_session_start();
 	{#varTypes}
 		<div style="float: right; width: 90px; margin: 0 5px;">
 			<div style="font-size: 12px; text-align: center;">{varType}</div>		
-			<input type="text" id="{varTypeId}" style="height: 30px; font-size: 12px;" value="10" onchange="updateSelectionTable();">
+			<input type="text" id="{varTypeId}" style="height: 30px; font-size: 12px;" value="0" onchange="updateSelectionTable();">
 		</div>
 	{/varTypes}
 </div>

@@ -74,6 +74,7 @@ sec_session_start();
 									<div id="diagnosticsChartContainer">
 									</div>
 								</div>
+								<?php include 'includes/loadingSpinner.php' ?>
 							</div>
 						</section>
 					</div>

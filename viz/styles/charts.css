@@ -203,7 +203,7 @@ border-top: 1px solid #eae8e8;
 */
 border-bottom: 2px solid #ca0001;
 border-top: 2px solid #ca0001;
-background: #fefefe url(http://img.carwale.com/compare/v-shadow.png) repeat-y top right;
+background: #fefefe url(../../images/brand/rightShade.png) repeat-y top right;
 
 }
 .selectionLabelsFirstCombinedChart {
@@ -232,7 +232,7 @@ border-top: 2px solid #ca0001;
 .selectionLabelsInner {
 	vertical-align: middle;
 	display: table-cell;
-	background: #fefefe url(http://img.carwale.com/compare/v-shadow.png) repeat-y top right
+	background: #fefefe url(../../images/brand/rightShade.png) repeat-y top right
 }
 .selectionLabelsCombinedChart {
 	vertical-align: middle;
@@ -261,6 +261,7 @@ border-right: 1px dotted #d3d3d3;
 	width: 100%;
 	display: table;
 	padding: 0 0 0px 0;
+	overflow: hidden;
 /* border-bottom: 1px dotted #eae8e8; */
 border-right: 1px dotted #d3d3d3;
 /*
@@ -327,7 +328,8 @@ a.selectionAddMoreLink {
 }
 .selectionVarName  a{
 	border: 0px;
-	color: black;
+	/* color: black; 
+	font-weight: bold;*/
 	padding: 0 5px;
 	border-radius: 5px;
 }

@@ -197,7 +197,8 @@ sec_session_start();
 		
 		<script type="text/javascript">var modelId = "<?php echo $selectedModel; ?>";</script>
 		<script type="text/javascript">var edaId = "<?php echo $_SESSION['edaId']; ?>";</script>
-		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>		
+		<script type="text/javascript">var projectId = "<?php echo $_SESSION['projectid']; ?>";</script>
+		<script src="simulation_charts_settings.js"></script>
 		<script src="viz/Simulation/simulation_charts.js"></script>
     </body>
 </html>

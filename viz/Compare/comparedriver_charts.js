@@ -40,6 +40,7 @@ function compareDataLoaded(data) {
 	console.log(tableData.brands);
 	// Initial Load
 	updateSelectionTable();
+	document.getElementById("loadingSpinner").innerHTML="";
 }
 
 // Create the actual chart

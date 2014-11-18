@@ -48,7 +48,7 @@ sec_session_start();
 							<div class="row collapse-at-2">
 								<div class="6u">
 									<div class="breadCrumb">
-										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="comparekpi.php">Compare KPI</a>
+										<a href="index.php">Home</a> &raquo; <a href="project.php">Projects</a> &raquo; <a href="eda.php">Data</a> &raquo; <a href="Charts.php">EDA</a> &raquo; <a href="customquery.php">Query</a>
 									</div>
 								</div>
 								<div class="6u">
@@ -70,7 +70,7 @@ sec_session_start();
 										<a href="#" class="button small" onclick="updateChart(); return false;">3 : Chart</a>
 									</div>
 									<div style="clear: both;"></div>
-									<div id="trackSelection" style="color: #777; float: right;">KPI : <b>0</b> | Driver : <b>0</b></div>
+									<div id="trackSelection" style="color: #777; float: right;">Selected KPI : <b>0</b> | Driver : <b>0</b></div>
 									<div id="queryKPISelectionPanel" style="border: 0px solid lightgrey; overflow: hidden1; clear:both; line-height: 1em;">
 										<div id="slideToggleKPIPanel1" style="float: left; width: 25%; padding: 20px;"></div>
 										<div id="slideToggleKPIPanel2" style="float: left; width: 70%; padding: 20px;"></div>

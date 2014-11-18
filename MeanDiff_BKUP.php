@@ -67,15 +67,7 @@ sec_session_start();
 							<?php include 'viz/edaButtons.php' ?>
 							<div style="clear: both;">
 								<div id="chartContainer2">
-									
-									<h3 style="float: left; width: 30%;">Mean Difference Analysis</h3>
-									<div style="width: 50%; float: right;">
-										<div class="select-wrapper">
-											<select id="meanDiffChartSelect" onchange="recreateMeanDiffCharts(this.value); return false;"></select>
-										</div>
-									</div>
-									
-									<div style="clear: both;"></div>
+									<h3>Mean Difference Analysis</h3>
 									<?php include 'includes/loadingSpinner.php' ?>
 									<div id="meanDiffChartContainer">
 									</div>

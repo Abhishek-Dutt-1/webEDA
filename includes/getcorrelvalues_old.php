@@ -68,14 +68,12 @@
 		// }
 		// endif;
 	// }
-	//$BuiltTable =	'<div class="row uniform half">';
-	//$BuiltTable .= '<div class="6u" style="width:100%; overflow: auto; min-height:150px; max-height:500px;">';
+	$BuiltTable =	'<div class="row uniform half">';
+	$BuiltTable .= '<div class="6u" style="width:100%; overflow: auto; min-height:150px; max-height:500px;">';
 	//$BuiltTable .= '<div style="">';
-	$BuiltTable ='<div  class="outerbox">';
-	$BuiltTable .= '<div  class="innerbox" style="width:100%;" >';
-	$BuiltTable .= '<table class="bluetable" id="correltable" cellpadding="0" cellspacing="0">';
+	$BuiltTable .= '<table class="alt" >';
 	$BuiltTable .= '<thead><tr>';
-	$BuiltTable .= '<th id="firstcol" rowspan=2 ><div style="min-width: 100px; text-align: center;">KPI vs Driver Correlation</div></th>';	
+	$BuiltTable .= '<th></th>';	
 	
 	$temp="";
 	$count=0;
@@ -96,7 +94,7 @@
 			$count=$count+1;
 			if($lastelement == 1) :
 			{	 
-				$BuiltTable .= '<th  id="firstrow" colspan= "'. $count .'" style="text-align:center">'.  $variable  .'</th>';
+				$BuiltTable .= '<th colspan= "'. $count .'" style="text-align:center">'.  $variable  .'</th>';
 			}
 			endif;
 		}
@@ -104,11 +102,11 @@
 		else :
 		{
 			//echo $previousvalue. $count; 
-			$BuiltTable .= '<th id="firstrow" colspan= "'. $count .'" style="text-align:center">'.  $previousvalue  .'</th>';
+			$BuiltTable .= '<th colspan= "'. $count .'" style="text-align:center">'.  $previousvalue  .'</th>';
 			$previousvalue=$variable; 
 			if($lastelement == 1) :
 			{
-				$BuiltTable .= '<th id="firstrow" colspan= "'. $count .'" style="text-align:center">'. $variable  .'</th>';
+				$BuiltTable .= '<th colspan= "'. $count .'" style="text-align:center">'. $variable  .'</th>';
 			}
 			endif;
 			$count=1;	
@@ -120,19 +118,19 @@
 	
 	$BuiltTable .= '</tr>';
 	$BuiltTable .= '<tr>';
-	//$BuiltTable .= '<th>KPI vs Driver Correlation</th>';
+	$BuiltTable .= '<th align="middle"  >KPI <br>vs <br>Driver Correlation</th>';
 	
 	foreach ($Driver as $driver_value)
 	{
-		 $BuiltTable .= '<th id="secondrow"><div style="min-width: 100px; text-align: center;">' . $driver_value .'</div></th>';
+		 $BuiltTable .= '<th>' . $driver_value .' </th>';
 		 
 	} 
-	$BuiltTable .= '</tr></thead><tbody>';
+	$BuiltTable .= '</tr></thead>';
 	
 	
 	foreach ($KPI as $kpi_value)
 	{
-		$BuiltTable .= '<tr><td> '. $kpi_value['VarType'] .' </td>';
+		$BuiltTable .= '<tr><th> '. $kpi_value['VarType'] .' </th>';
 		foreach ($Driver as $driver_value)
 		{
 			foreach ( $correl_values as $row) 
@@ -145,21 +143,21 @@
 			$correlation = round(Correlation($array1, $array2),2);
 			unset($array1);
 			unset($array2);
-			$BuiltTable .= '<td style="background-color:'.Correlation_color($correlation).'; vertical-align: middle; text-align: center;"><div style="min-width: 100px;">';
+			$BuiltTable .= '<td style="background-color:'.Correlation_color($correlation).'; vertical-align: middle; text-align: center;">';
 			
 			$BuiltTable .=  '<a style="color: #646464;" href="#" onclick="displayGraphs(\''. $kpi_value['KPIName'].'\',\''. $driver_value.'\'); return false;">';
 			$BuiltTable .= $correlation;
 			$BuiltTable .= '</a>';
 			//print Correlation_color($correlation);
 			
-			$BuiltTable .= '</div></td>';
+			$BuiltTable .= '</td>';
 		}
 		$BuiltTable .= '</tr>';
 	}
-	$BuiltTable .= '</tbody></table>';
+	$BuiltTable .= '</table>';
 	$BuiltTable .= '</div>';
 	$BuiltTable .= '</div>';
-	//$BuiltTable .= '<hr>';
+	$BuiltTable .= '<hr>';
 	
 	echo $BuiltTable;
 

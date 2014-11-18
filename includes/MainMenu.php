@@ -19,7 +19,7 @@
 					<li><a href="kpi.php">KPI</a></li>
 					<li><a href="comparekpi.php">Compare KPI</a></li>
 					<li><a href="avp.php">Model</a></li>
-					<li><a href="Report Bug.php">Report an Issue</a></li>
+					<li><a href="Report Bug.php">Suggest Hypothesis</a></li>
 				</ul>
 			</li>
 			<?php 

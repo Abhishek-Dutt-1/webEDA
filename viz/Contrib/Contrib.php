@@ -26,8 +26,8 @@ include_once '../getColorByVarName.php';
 function getFinalData($edaId, $modelId, $projectId) {
 	 
 	$finalData['modelData'] = getModelData($modelId);
-	$finalData['tableData'] = getData($edaId, $projectId);
-	
+	$finalData['tableData'] = getData($edaId, $projectId, $finalData['modelData']['dependent']);
+	//var_dump($finalData['tableData']);
 	foreach( $finalData['modelData']['independent'] as $indep)
 	{
 		$indepNames[] = $indep['name'];
@@ -35,10 +35,13 @@ function getFinalData($edaId, $modelId, $projectId) {
 	// delete data that is not in models
 	foreach( $finalData['tableData']['independent'] as $key => $indep)
 	{
+		//var_dump($indep['name']);
 		if( !in_array($indep['name'], $indepNames) ) {
 			unset( $finalData['tableData']['independent'][$key] );
 		}
 	}
+	//var_dump($indepNames);
+	//var_dump($finalData['tableData']['independent']);
 	// Check if some variable is missing
 	if( count( $finalData['tableData']['independent'] ) != count($indepNames) )
 	{
@@ -73,11 +76,12 @@ function getModelData($modelId)
 	global $mysqli;
 
 	$r = $mysqli->query( "SELECT * FROM model_mapping WHERE id = $modelId" );
-	foreach( $r as $row)
+	foreach($r as $row)
 	{
 		//var_dump($row);
 		$modelTable = $row['model_table'];
 		$modelName = $row['model_name'];
+		$modelDependent = $row['model_kpi'];
 	}
 	$q = "SELECT * FROM `$modelTable` WHERE `Model No.` = '$modelName'" ;
 	$r = $mysqli->query( $q );
@@ -123,13 +127,14 @@ function getModelData($modelId)
 	$modelObj["dw"] = (float)( trim( $model["dw"] ) );
 	$modelObj["numVars"] = $numVars;
 	$modelObj["independent"] = $varArray;
+	$modelObj["dependent"] = trim( $modelDependent );
 	//var_dump( $modelObj );
 	return $modelObj;
 }
 
 
 
-function getData($edaId, $projectId)
+function getData($edaId, $projectId, $dependentName)
 {
 	if(!$edaId) return;
 	global $mysqli;
@@ -146,8 +151,8 @@ function getData($edaId, $projectId)
 	$q = "SELECT * FROM " .  DATABASE . ".`" . $tableName . "`";
 	//echo $q . "<br>";
 	$res = $mysqli->query($q);
-	$names = getVariableNames($res); 
-	
+	$names = getVariableNames($res, $dependentName); 
+	//var_dump($names);
 	// Save table name == Dataset name
 	$data['info']['name'] = $tableName;
 	// Save variable names
@@ -157,7 +162,7 @@ function getData($edaId, $projectId)
 	$data['dependent']['data'] = [];
 	
 	$data['dependent']['color'] = getColorByVarName($names['dependent'], $projectId);
-	
+	//var_dump($data);
 	for( $i = 0; $i < count($names['independent']); $i++ )
 	{
 		$data['independent'][$i]['name'] = $names['independent'][$i];
@@ -185,15 +190,19 @@ function getData($edaId, $projectId)
 * Returns the field names in a table
 * param: query object
 */
-function getVariableNames($res)
+function getVariableNames($res, $dependentName)
 {
 	$variables = [];
 	$tmp = $res->fetch_fields();
 	$variables['time'] = array_shift($tmp)->name;
-	$variables['dependent'] = array_shift($tmp)->name;
+	//$variables['dependent'] = array_shift($tmp)->name;		// Old assumption that second column will always be dependent NOT used any more
 	foreach( $tmp as $var)
 	{
-		$variables['independent'][] = $var->name;
+		if( $var->name == $dependentName) {
+			$variables['dependent'] = $var->name;
+		} else {
+			$variables['independent'][] = $var->name;
+		}
 	}
 	return $variables;
 }

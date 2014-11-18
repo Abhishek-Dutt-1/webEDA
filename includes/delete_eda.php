@@ -62,7 +62,8 @@ if (login_check($mysqli) == true) :
 			$_SESSION['EDADatePeriod']=$DateRange;
 			$_SESSION['selectedEDA']=$datasetname;
 			$_SESSION['edaId'] = $EDAid;
-			header('Location: ../kpi.php');
+			//header('Location: ../kpi.php');
+			header('Location: ../comparekpi.php');
 		}
 		
 		elseif ($_POST["Action"] == "Delete") :
