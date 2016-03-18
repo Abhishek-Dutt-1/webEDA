@@ -4,7 +4,7 @@
  */  
 define("HOST", "localhost");     // The host you want to connect to.
 define("USER", "root");    // The database username. 
-define("PASSWORD", "@admin123");    // The database password. 
+define("PASSWORD", "root");    // The database password. 
 define("DATABASE", "webeda");    // The database name.
  
 define("CAN_REGISTER", "any");
@@ -17,7 +17,7 @@ define("SECURE", FALSE);    // FOR DEVELOPMENT ONLY!!!!
 $config = array(
 	"db_name" => "webeda",
 	"db_user" => "root",
-	"db_password" => "@admin123",
+	"db_password" => "root",
 	"db_host" => "localhost"
 );                
 error_reporting(E_ALL);
